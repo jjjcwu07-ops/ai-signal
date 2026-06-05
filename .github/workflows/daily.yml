@@ -1,0 +1,32 @@
+name: 每日生成 AI Signal 日报
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 生成日报
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/generate.js
+
+      - name: 提交并推送更新
+        run: |
+          git config user.name  "AI Signal Bot"
+          git config user.email "bot@ai-signal.daily"
+          git add docs/
+          git add state.json
+          git diff --staged --quiet || git commit -m "📰 $(date +'%Y-%m-%d') 日报更新"
+          git push
