@@ -17,9 +17,19 @@ jobs:
         with:
           node-version: '20'
 
+      - name: 检查 Secret
+        run: |
+          if [ -z "$DEEPSEEK_API_KEY" ]; then
+            echo "❌ Secret 为空"
+          else
+            echo "✅ Secret 已读到，长度: ${#DEEPSEEK_API_KEY}"
+          fi
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+
       - name: 生成日报
         env:
-          DEEPSEEK_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: node scripts/generate.js
 
       - name: 提交并推送更新
