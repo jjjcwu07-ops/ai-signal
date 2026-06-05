@@ -290,58 +290,112 @@ function renderPodcastSection(podcast) {
   </div>`;
 }
 
-// ── Step 6: 渲染国内板块（AI 翻译标题和摘要）──
-async function renderChinaSection(blogs, translateFn) {
-  if (!blogs || blogs.length === 0) {
+// ── Step 0: 用 DeepSeek 搜索今日国内 AI 新闻 ──
+async function fetchChinaNews(today) {
+  console.log('🔍 搜索今日国内 AI 新闻...');
+  const prompt = `今天是 ${today}，请搜索并整理今日（或最近2天内）国内 AI 领域最重要的 4-6 条新闻资讯。
+
+重点关注：国内大模型进展、AI 产品发布、融资并购、政策监管、知名公司动态（百度、阿里、字节、腾讯、华为、DeepSeek、智谱、月之暗面等）。
+
+请直接输出 JSON 数组，格式如下（不要有任何 markdown 代码块）：
+[
+  {
+    "title": "新闻标题（中文，20字以内）",
+    "source": "来源媒体（如36氪、量子位、机器之心等）",
+    "summary": "两句话摘要，说清楚发生了什么、为什么重要（80字以内）",
+    "term": "一个关键名词解释（格式：名词：解释，30字以内）",
+    "url": "原文链接（如果知道的话，不知道填空字符串）"
+  }
+]`;
+
+  try {
+    const raw = await callDeepSeekSearch(prompt);
+    const cleaned = raw.replace(/```json\n?|\n?```/g, '').trim();
+    const news = JSON.parse(cleaned);
+    console.log(`✅ 国内新闻获取完成，共 ${news.length} 条`);
+    return news;
+  } catch (err) {
+    console.error('⚠️  国内新闻获取失败:', err.message);
+    return [];
+  }
+}
+
+// ── DeepSeek 联网搜索版本 ──
+async function callDeepSeekSearch(userMessage) {
+  const res = await fetch('https://api.deepseek.com/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: 'deepseek-chat',
+      max_tokens: 2000,
+      messages: [
+        {
+          role: 'system',
+          content: '你是专业的 AI 行业资讯编辑，熟悉国内外 AI 动态。请基于你的知识库，提供准确的近期资讯。直接输出 JSON，不要有任何多余文字。'
+        },
+        { role: 'user', content: userMessage }
+      ]
+    })
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`DeepSeek API error: ${res.status} ${err}`);
+  }
+  const data = await res.json();
+  return data.choices[0].message.content;
+}
+
+// ── Step 6: 渲染国内 AI 新闻板块 ──
+async function renderChinaSection(blogs, today) {
+  // 优先用 DeepSeek 搜索的新闻
+  const news = await fetchChinaNews(today);
+
+  if (news.length === 0) {
     return `
   <div class="sec-bar">
-    <span class="sec-tag orange">全球 AI 资讯</span>
-    <span class="sec-title">每日精选</span>
+    <span class="sec-tag">中文圈</span>
+    <span class="sec-title">国内 AI 前线</span>
   </div>
-  <p style="padding:24px;color:var(--ink3);">今日暂无资讯更新。</p>`;
-  }
-
-  // 批量翻译标题和摘要
-  const blogList = blogs.slice(0, 6); // 最多6条
-  const toTranslate = blogList.map((b, i) =>
-    `[${i}] 标题: ${b.title || ''}\n摘要: ${(b.description || b.content || '').slice(0, 300)}`
-  ).join('\n\n');
-
-  let translated = blogList.map(b => ({ title: b.title, desc: b.description || b.content || '' }));
-  try {
-    const raw = await translateFn(
-      '你是专业翻译，将以下英文内容翻译成简洁的中文。直接输出 JSON 数组，格式：[{"title":"中文标题","desc":"中文摘要（50字以内）"}]，不要有任何 markdown 代码块。',
-      toTranslate
-    );
-    const cleaned = raw.replace(/```json\n?|\n?```/g, '').trim();
-    translated = JSON.parse(cleaned);
-  } catch (e) {
-    console.error('⚠️  翻译失败，使用原文');
+  <p style="padding:24px;color:var(--ink3);">今日暂无国内 AI 动态。</p>`;
   }
 
   const rows = [];
-  for (let i = 0; i < blogList.length; i += 3) {
-    const chunk = blogList.slice(i, i + 3).map((b, j) => {
-      const t = translated[i + j] || { title: b.title, desc: '' };
-      return `
+  for (let i = 0; i < news.length; i += 2) {
+    const chunk = news.slice(i, i + 2).map(item => `
     <div class="gcol">
-      <div class="art-kicker">AI 资讯</div>
-      <h3 class="art-hed sm">${escapeHtml(t.title || b.title || '')}</h3>
-      <div class="byline">${escapeHtml(b.name || b.author || b.source || '')}</div>
-      <div class="art-body">${escapeHtml(t.desc || '')}</div>
-      <div style="margin-top:10px;">
-        <a href="${b.url}" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
-      </div>
-    </div>`;
-    }).join('');
-    rows.push(`<div class="${i === 0 ? 'grid-3' : 'grid-3-row2'}">${chunk}</div>`);
+      <div class="art-kicker">${escapeHtml(item.source || '国内动态')}</div>
+      <h3 class="art-hed">${escapeHtml(item.title || '')}</h3>
+      <div class="art-body" style="margin:10px 0;">${escapeHtml(item.summary || '')}</div>
+      ${item.term ? `
+      <div class="sumbox lime" style="margin:10px 0;">
+        <div class="lbl">名词解释</div>
+        <p>${escapeHtml(item.term)}</p>
+      </div>` : ''}
+      ${item.url ? `
+      <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
+        来源：<a href="${item.url}" target="_blank" style="color:var(--orange);text-decoration:none;">${escapeHtml(item.source || '查看原文')} ↗</a>
+      </div>` : `<div style="margin-top:10px;font-size:11px;color:var(--ink4);">来源：${escapeHtml(item.source || '')}</div>`}
+    </div>`).join('');
+
+    const gridClass = i === 0 ? 'grid-3' : 'grid-3-row2';
+    // 如果只有2条，用2列布局
+    const gridStyle = chunk.split('<div class="gcol">').length - 1 < 3
+      ? `display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--black);background:var(--black);`
+      : '';
+    rows.push(gridStyle
+      ? `<div class="${gridClass}" style="${gridStyle}">${chunk}</div>`
+      : `<div class="${gridClass}">${chunk}</div>`
+    );
   }
 
   return `
   <div class="sec-bar">
-    <span class="sec-tag orange">全球 AI 资讯</span>
-    <span class="sec-title">每日精选</span>
-    <span class="sec-count">公开来源 · ${blogList.length} 篇</span>
+    <span class="sec-tag">中文圈</span>
+    <span class="sec-title">国内 AI 前线</span>
+    <span class="sec-count">公开来源 · 每日更新</span>
   </div>
   ${rows.join('\n')}`;
 }
@@ -465,7 +519,7 @@ async function main() {
     .replace('{{QUOTE_ATTR}}', escapeHtml(editorial.quoteAttr))
     .replace('{{EDITORIAL_TEXT}}', escapeHtml(editorial.editorial))
     .replace('{{TAG_ITEMS}}', renderTags(editorial.tags))
-    .replace('{{CHINA_SECTION}}', await renderChinaSection(feedBlogs.blogs || [], callClaude))
+    .replace('{{CHINA_SECTION}}', await renderChinaSection(feedBlogs.blogs || [], today))
     .replace('{{BUILDER_CARDS}}', renderBuilderCards(builders))
     .replace('{{PODCAST_SECTION}}', renderPodcastSection(podcast));
 
