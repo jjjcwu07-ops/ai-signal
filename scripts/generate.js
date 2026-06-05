@@ -238,7 +238,7 @@ function renderBuilderCards(builders) {
       </div>` : ''}
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>${escapeHtml(b.summary || '本期无实质更新，建议查看原推。')}</p>
+        <p>${mdToHtml(escapeHtml(b.summary || '本期无实质更新，建议查看原推。'))}</p>
       </div>
       ${engageStr ? `<div class="engage">${engageStr}</div>` : ''}
     </div>`;
@@ -258,11 +258,26 @@ function renderBuilderCards(builders) {
 function renderPodcastSection(podcast) {
   if (!podcast) return '<p style="padding:24px;color:var(--ink3);">今日暂无播客更新。</p>';
 
+  // 把摘要按句号分段，每段不超过150字，最多取4段
+  const rawSummary = podcast.summary || '';
+  const sentences = rawSummary.split(/(?<=。|！|？)/).filter(s => s.trim().length > 0);
+  const paragraphs = [];
+  let current = '';
+  for (const s of sentences) {
+    if ((current + s).length > 150) {
+      if (current) paragraphs.push(current.trim());
+      current = s;
+    } else {
+      current += s;
+    }
+    if (paragraphs.length >= 3) break;
+  }
+  if (current && paragraphs.length < 4) paragraphs.push(current.trim());
+  const summaryHtml = paragraphs
+    .map((p, i) => `<p class="feat-body${i === 0 ? ' drop' : ''}">${mdToHtml(p)}</p>`)
+    .join('\n        ');
+
   return `
-  <div class="sec-bar" id="sec-podcast">
-    <span class="sec-tag">播客专题</span>
-    <span class="sec-title">深度访谈</span>
-  </div>
   <div class="feature-wrap">
     <div class="feature-hero">
       <div class="feat-kicker">播客 · Podcast</div>
@@ -271,7 +286,7 @@ function renderPodcastSection(podcast) {
     </div>
     <div class="feature-body-grid">
       <div class="feat-main">
-        <p class="feat-body drop">${escapeHtml(podcast.summary || '')}</p>
+        ${summaryHtml}
         <div class="feat-meta">
           <a href="${podcast.url}" target="_blank">↗ 查看原视频</a>
         </div>
@@ -282,12 +297,8 @@ function renderPodcastSection(podcast) {
 
 // ── Step 6: 渲染国内板块 ──
 function renderChinaSection(blogs) {
-  const cnBlogs = blogs.filter(b =>
-    b.url?.includes('36kr') || b.url?.includes('technode') ||
-    b.source?.includes('china') || b.source?.includes('cn')
-  );
-
-  if (cnBlogs.length === 0) {
+  // 不过滤，直接显示所有 blog 内容
+  if (!blogs || blogs.length === 0) {
     return `
   <div class="sec-bar">
     <span class="sec-tag orange">中文圈 · China Watch</span>
@@ -296,16 +307,31 @@ function renderChinaSection(blogs) {
   <p style="padding:24px;color:var(--ink3);">今日暂无国内 AI 动态。</p>`;
   }
 
-  const cards = cnBlogs.map(b => `
+  const cards = blogs.map(b => `
     <div class="gcol">
-      <div class="art-kicker">国内动态</div>
+      <div class="art-kicker">AI 资讯</div>
       <h3 class="art-hed sm">${escapeHtml(b.title || '')}</h3>
-      <div class="byline">${escapeHtml(b.name || b.source || '')}</div>
-      <div class="art-body">${escapeHtml((b.description || b.content || '').slice(0, 200))}…</div>
-      <div style="margin-top:8px;">
+      <div class="byline">${escapeHtml(b.name || b.author || b.source || '')}</div>
+      <div class="art-body">${mdToHtml(escapeHtml((b.description || b.content || '').slice(0, 200)))}…</div>
+      <div style="margin-top:10px;">
         <a href="${b.url}" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
       </div>
     </div>`).join('');
+
+  const rows = [];
+  for (let i = 0; i < cards.split('<div class="gcol">').length - 1; i += 3) {
+    const chunk = blogs.slice(i, i + 3).map(b => `
+    <div class="gcol">
+      <div class="art-kicker">AI 资讯</div>
+      <h3 class="art-hed sm">${escapeHtml(b.title || '')}</h3>
+      <div class="byline">${escapeHtml(b.name || b.author || b.source || '')}</div>
+      <div class="art-body">${mdToHtml(escapeHtml((b.description || b.content || '').slice(0, 200)))}…</div>
+      <div style="margin-top:10px;">
+        <a href="${b.url}" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
+      </div>
+    </div>`).join('');
+    rows.push(`<div class="${i === 0 ? 'grid-3' : 'grid-3-row2'}">${chunk}</div>`);
+  }
 
   return `
   <div class="sec-bar">
@@ -313,7 +339,18 @@ function renderChinaSection(blogs) {
     <span class="sec-title">国内 AI 前线</span>
     <span class="sec-count">公开来源 · 每日更新</span>
   </div>
-  <div class="grid-3">${cards}</div>`;
+  ${rows.join('\n')}`;
+}
+
+// ── Markdown 转 HTML（处理 DeepSeek 返回的 Markdown 格式）──
+function mdToHtml(str) {
+  if (!str) return '';
+  return str
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')  // **粗体**
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')               // *斜体*
+    .replace(/`(.+?)`/g, '<code>$1</code>')             // `代码`
+    .replace(/\n\n+/g, '</p><p>')                       // 段落
+    .replace(/\n/g, '<br>');                            // 换行
 }
 
 // ── HTML 转义 ──
