@@ -17,9 +17,9 @@ const FEED_PODCASTS_URL= 'https://raw.githubusercontent.com/zarazhangrui/follow-
 const FEED_BLOGS_URL   = 'https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-blogs.json';
 const PROMPTS_BASE     = 'https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/prompts';
 
-// ── Claude API ──
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-const MODEL = 'claude-sonnet-4-20250514';
+// ── DeepSeek API ──
+const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
+const MODEL = 'deepseek-chat';
 
 // ── 工具函数 ──
 async function fetchJSON(url) {
@@ -35,26 +35,27 @@ async function fetchText(url) {
 }
 
 async function callClaude(systemPrompt, userMessage) {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+  const res = await fetch('https://api.deepseek.com/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01'
+      'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
     },
     body: JSON.stringify({
       model: MODEL,
       max_tokens: 4000,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: userMessage }]
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userMessage }
+      ]
     })
   });
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(`Claude API error: ${res.status} ${err}`);
+    throw new Error(`DeepSeek API error: ${res.status} ${err}`);
   }
   const data = await res.json();
-  return data.content[0].text;
+  return data.choices[0].message.content;
 }
 
 // ── 日期工具 ──
@@ -358,8 +359,8 @@ function incrementVolNum(vol) {
 
 // ── 主流程 ──
 async function main() {
-  if (!ANTHROPIC_API_KEY) {
-    throw new Error('缺少 ANTHROPIC_API_KEY 环境变量');
+  if (!DEEPSEEK_API_KEY) {
+    throw new Error('缺少 DEEPSEEK_API_KEY 环境变量');
   }
 
   console.log('🚀 AI Signal 日报生成开始...\n');
