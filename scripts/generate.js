@@ -183,15 +183,15 @@ ${podcast ? `\n播客：${podcast.title}\n${podcast.summary}` : ''}
 请输出以下 JSON（不要有任何 markdown 代码块，直接输出 JSON）：
 {
   "headline": "今日最重要的一句话标题（20字以内，中文）",
-  "deck": "头条导语，1-2句话解释为什么重要（50字以内）",
+  "deck": "头条导语，1-2句话解释为什么重要（50字以内，中文）",
   "speedRead": [
-    {"name": "Builder名字", "text": "一句话核心信息（30字以内）"},
-    {"name": "Builder名字", "text": "一句话核心信息（30字以内）"},
-    {"name": "Builder名字", "text": "一句话核心信息（30字以内）"}
+    {"name": "Builder名字", "text": "一句话核心信息（30字以内，中文）"},
+    {"name": "Builder名字", "text": "一句话核心信息（30字以内，中文）"},
+    {"name": "Builder名字", "text": "一句话核心信息（30字以内，中文）"}
   ],
-  "quoteText": "今日最精彩的英文原句（直接引用推文原文）",
-  "quoteAttr": "作者名 · @handle on X",
-  "editorial": "主编按语，2-3句话串联今天的主题（80字以内）",
+  "quoteText": "今日最精彩的观点，用中文表达，可以是翻译自推文或播客（50字以内）",
+  "quoteAttr": "作者中文名 · @handle",
+  "editorial": "主编按语，2-3句话串联今天的主题（80字以内，中文）",
   "tags": ["#标签1", "#标签2", "#标签3", "#标签4"]
 }`;
 
@@ -217,15 +217,16 @@ ${podcast ? `\n播客：${podcast.title}\n${podcast.summary}` : ''}
 
 // ── Step 4: 渲染 Builder 卡片 ──
 function renderBuilderCards(builders) {
-  const cards = builders.map((b, i) => {
-    const isLead = i === 0;
-    const tweet = b.topTweet;
-    const engageStr = tweet ? `❤ ${tweet.likes} &nbsp;↻ ${tweet.retweets} &nbsp;💬 ${tweet.replies}` : '';
-
-    return `
-    <div class="gcol${isLead ? ' span-2' : ''}">
+  const rows = [];
+  for (let i = 0; i < builders.length; i += 3) {
+    const chunk = builders.slice(i, i + 3);
+    const cards = chunk.map(b => {
+      const tweet = b.topTweet;
+      const engageStr = tweet ? `❤ ${tweet.likes} &nbsp;↻ ${tweet.retweets} &nbsp;💬 ${tweet.replies}` : '';
+      return `
+    <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed${isLead ? ' lg' : ''}">${escapeHtml(b.summary?.split('。')[0] || b.name)}</h2>
+      <h2 class="art-hed sm">${mdToHtml(escapeHtml(b.summary?.split('。')[0] || b.name))}</h2>
       <div class="byline">
         ${escapeHtml(b.name)}
         <span class="handle">@${b.handle}</span>
@@ -233,7 +234,7 @@ function renderBuilderCards(builders) {
       </div>
       ${tweet ? `
       <div class="tweet-orig">
-        ${escapeHtml(tweet.text.slice(0, 200))}${tweet.text.length > 200 ? '…' : ''}
+        ${escapeHtml(tweet.text.slice(0, 180))}${tweet.text.length > 180 ? '…' : ''}
         <a href="${tweet.url}" target="_blank">↗ 查看原推</a>
       </div>` : ''}
       <div class="sumbox lime">
@@ -242,14 +243,8 @@ function renderBuilderCards(builders) {
       </div>
       ${engageStr ? `<div class="engage">${engageStr}</div>` : ''}
     </div>`;
-  });
-
-  // 每3个一行排列
-  const rows = [];
-  for (let i = 0; i < cards.length; i += 3) {
-    const chunk = cards.slice(i, i + 3);
-    const gridClass = i === 0 ? 'grid-3' : 'grid-3-row2';
-    rows.push(`<div class="${gridClass}">${chunk.join('')}</div>`);
+    }).join('');
+    rows.push(`<div class="${i === 0 ? 'grid-3' : 'grid-3-row2'}">${cards}</div>`);
   }
   return rows.join('\n');
 }
@@ -295,49 +290,58 @@ function renderPodcastSection(podcast) {
   </div>`;
 }
 
-// ── Step 6: 渲染国内板块 ──
-function renderChinaSection(blogs) {
-  // 不过滤，直接显示所有 blog 内容
+// ── Step 6: 渲染国内板块（AI 翻译标题和摘要）──
+async function renderChinaSection(blogs, translateFn) {
   if (!blogs || blogs.length === 0) {
     return `
   <div class="sec-bar">
-    <span class="sec-tag orange">中文圈 · China Watch</span>
-    <span class="sec-title">国内 AI 前线</span>
+    <span class="sec-tag orange">全球 AI 资讯</span>
+    <span class="sec-title">每日精选</span>
   </div>
-  <p style="padding:24px;color:var(--ink3);">今日暂无国内 AI 动态。</p>`;
+  <p style="padding:24px;color:var(--ink3);">今日暂无资讯更新。</p>`;
   }
 
-  const cards = blogs.map(b => `
-    <div class="gcol">
-      <div class="art-kicker">AI 资讯</div>
-      <h3 class="art-hed sm">${escapeHtml(b.title || '')}</h3>
-      <div class="byline">${escapeHtml(b.name || b.author || b.source || '')}</div>
-      <div class="art-body">${mdToHtml(escapeHtml((b.description || b.content || '').slice(0, 200)))}…</div>
-      <div style="margin-top:10px;">
-        <a href="${b.url}" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
-      </div>
-    </div>`).join('');
+  // 批量翻译标题和摘要
+  const blogList = blogs.slice(0, 6); // 最多6条
+  const toTranslate = blogList.map((b, i) =>
+    `[${i}] 标题: ${b.title || ''}\n摘要: ${(b.description || b.content || '').slice(0, 300)}`
+  ).join('\n\n');
+
+  let translated = blogList.map(b => ({ title: b.title, desc: b.description || b.content || '' }));
+  try {
+    const raw = await translateFn(
+      '你是专业翻译，将以下英文内容翻译成简洁的中文。直接输出 JSON 数组，格式：[{"title":"中文标题","desc":"中文摘要（50字以内）"}]，不要有任何 markdown 代码块。',
+      toTranslate
+    );
+    const cleaned = raw.replace(/```json\n?|\n?```/g, '').trim();
+    translated = JSON.parse(cleaned);
+  } catch (e) {
+    console.error('⚠️  翻译失败，使用原文');
+  }
 
   const rows = [];
-  for (let i = 0; i < cards.split('<div class="gcol">').length - 1; i += 3) {
-    const chunk = blogs.slice(i, i + 3).map(b => `
+  for (let i = 0; i < blogList.length; i += 3) {
+    const chunk = blogList.slice(i, i + 3).map((b, j) => {
+      const t = translated[i + j] || { title: b.title, desc: '' };
+      return `
     <div class="gcol">
       <div class="art-kicker">AI 资讯</div>
-      <h3 class="art-hed sm">${escapeHtml(b.title || '')}</h3>
+      <h3 class="art-hed sm">${escapeHtml(t.title || b.title || '')}</h3>
       <div class="byline">${escapeHtml(b.name || b.author || b.source || '')}</div>
-      <div class="art-body">${mdToHtml(escapeHtml((b.description || b.content || '').slice(0, 200)))}…</div>
+      <div class="art-body">${escapeHtml(t.desc || '')}</div>
       <div style="margin-top:10px;">
         <a href="${b.url}" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
       </div>
-    </div>`).join('');
+    </div>`;
+    }).join('');
     rows.push(`<div class="${i === 0 ? 'grid-3' : 'grid-3-row2'}">${chunk}</div>`);
   }
 
   return `
   <div class="sec-bar">
-    <span class="sec-tag orange">中文圈 · China Watch</span>
-    <span class="sec-title">国内 AI 前线</span>
-    <span class="sec-count">公开来源 · 每日更新</span>
+    <span class="sec-tag orange">全球 AI 资讯</span>
+    <span class="sec-title">每日精选</span>
+    <span class="sec-count">公开来源 · ${blogList.length} 篇</span>
   </div>
   ${rows.join('\n')}`;
 }
@@ -461,7 +465,7 @@ async function main() {
     .replace('{{QUOTE_ATTR}}', escapeHtml(editorial.quoteAttr))
     .replace('{{EDITORIAL_TEXT}}', escapeHtml(editorial.editorial))
     .replace('{{TAG_ITEMS}}', renderTags(editorial.tags))
-    .replace('{{CHINA_SECTION}}', renderChinaSection(feedBlogs.blogs || []))
+    .replace('{{CHINA_SECTION}}', await renderChinaSection(feedBlogs.blogs || [], callClaude))
     .replace('{{BUILDER_CARDS}}', renderBuilderCards(builders))
     .replace('{{PODCAST_SECTION}}', renderPodcastSection(podcast));
 
