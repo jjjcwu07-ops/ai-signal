@@ -4,302 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Signal · 2026-06-05</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
-    /* ─── Reset ─── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    /* ─── Color Tokens（爱马仕橙配色） ─── */
-    :root {
-      --bg:          #fff2df;   /* 白粉 */
-      --white:       #fff8ee;
-      --black:       #373a3e;   /* 魔力黑 */
-      --ink:         #373a3e;
-      --ink2:        #4a4d52;
-      --ink3:        #7a7d82;
-      --ink4:        #a8abb0;
-      --orange:      #ff8a00;   /* 爱马仕橙 主色 */
-      --orange-pale: #fff0d4;
-      --orange-deep: #d97000;
-      --border:      2px solid #373a3e;
-      --shadow:      4px 4px 0 #373a3e;
-      --shadow-sm:   2px 2px 0 #373a3e;
-      --shadow-lg:   6px 6px 0 #373a3e;
-      --rule:        1px solid #373a3e;
-      --rule-lt:     1px solid #ddd;
-      --gap:         20px;
-      --ff: 'Noto Sans SC', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      --ff-title: 'Noto Sans SC', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Regular.otf') format('opentype');
+      font-weight: 400;
     }
-
-    ::selection { background: var(--orange); color: #fff; }
-    html { background: #e8e0d8; scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: var(--ff);
-      font-size: 15px;
-      line-height: 1.75;
-      max-width: 1200px;
-      margin: 40px auto;
-      border: 3px solid var(--black);
-      box-shadow: 8px 8px 0 var(--black);
-    }
-
-    /* ══ MASTHEAD ══ */
-    .masthead {
-      background: var(--white);
-      border-bottom: 3px solid var(--black);
-    }
-    .mast-top {
-      display: flex;
-      align-items: stretch;
-      justify-content: space-between;
-      border-bottom: 2px solid var(--black);
-    }
-    .mast-top-left {
-      padding: 8px 18px;
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink3);
-      border-right: 2px solid var(--black);
-      display: flex;
-      align-items: center;
-    }
-    .mast-top-right {
-      padding: 8px 18px;
-      font-size: 10.5px;
-      color: var(--ink3);
-      text-align: right;
-      line-height: 1.6;
-      display: flex;
-      align-items: center;
-    }
-    .mast-title-row {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      padding: 16px 24px;
-    }
-    .mast-vol {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink3);
-      line-height: 1.5;
-    }
-    .mast-name {
-      text-align: center;
-      font-size: clamp(38px, 6.5vw, 72px);
-      font-weight: 900;
-      font-family: var(--ff-title);
-      letter-spacing: 0.04em;
-      line-height: 1.1;
-      color: var(--ink);
-    }
-    .mast-name .hi {
-      display: inline;
-      background: var(--orange);
-      color: #fff;
-      padding: 0 6px;
-    }
-    .mast-right-col {
-      text-align: right;
-      font-size: 11px;
-      color: var(--ink3);
-      line-height: 1.6;
-    }
-
-    /* ══ TAB 导航 ══ */
-    .mast-nav {
-      background: var(--black);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .mast-nav a {
-      padding: 9px 22px;
-      border-right: 1px solid #555;
-      color: #ccc;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    .mast-nav a:last-child { border-right: none; }
-    .mast-nav a:hover { background: #4a4d52; color: #fff; }
-    .mast-nav a.active {
-      background: var(--orange);
-      color: #fff;
-      font-weight: 900;
-      box-shadow: inset 0 -3px 0 var(--orange-deep);
-    }
-
-    /* ══ LEAD BANNER ══ */
-    .lead-banner {
-      background: var(--orange);
-      border-bottom: 3px solid var(--black);
-      padding: 28px 32px 24px;
-    }
-    .lead-kicker {
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.85);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .lead-kicker::before {
-      content: '';
-      display: inline-block;
-      width: 20px;
-      height: 3px;
-      background: #fff;
-    }
-    .lead-headline {
-      font-size: clamp(22px, 3.2vw, 38px);
-      font-weight: 900;
-      font-family: var(--ff-title);
-      line-height: 1.25;
-      letter-spacing: 0.01em;
-      color: #fff;
-      margin-bottom: 16px;
-      max-width: 860px;
-    }
-    .lead-deck {
-      font-size: 15px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.9);
-      max-width: 680px;
-      line-height: 1.55;
-    }
-
-    /* ══ TAB 内容区 ══ */
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-
-    /* ══ PAGE BODY ══ */
-    .page {
-      padding: 0 28px 44px;
-      background: var(--bg);
-    }
-
-    /* ── Section header bar ── */
-    .sec-bar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 28px 0 20px;
-      border-top: 3px solid var(--black);
-      border-bottom: 2px solid var(--black);
-      padding: 6px 0;
-    }
-    .sec-tag {
-      background: var(--black);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      flex-shrink: 0;
-    }
-    .sec-tag.orange {
-      background: var(--orange);
-      color: #fff;
-    }
-    .sec-title {
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink);
-    }
-    .sec-count {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--ink4);
-      font-family: 'Courier New', monospace;
-      margin-left: auto;
-    }
-
-    /* ── Speed Read ── */
-    .speed-read {
-      border: 2px solid var(--black);
-      box-shadow: var(--shadow);
-      background: var(--white);
-      margin: 24px 0 4px;
-    }
-    .speed-read-hd {
-      background: var(--orange);
-      border-bottom: 2px solid var(--black);
-      padding: 7px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .sr-label {
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #fff;
-    }
-    .sr-time {
-      font-size: 10px;
-      font-weight: 700;
-      color: rgba(255,255,255,0.75);
-      font-family: 'Courier New', monospace;
-      letter-spacing: 0.1em;
-    }
-    .speed-items {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-    .sp-item {
-      background: var(--white);
-      padding: 14px 18px;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      border-right: 1px solid #ddd;
-    }
-    .sp-item:last-child { border-right: none; }
-    .sp-n {
-      font-size: 32px;
-      font-weight: 900;
-      line-height: 1;
-      color: var(--orange);
-      font-family: 'Courier New', monospace;
-      flex-shrink: 0;
-      width: 28px;
-      margin-top: 2px;
-      -webkit-text-stroke: 1px var(--black);
-    }
-    .sp-t {
-      font-size: 13px;
-      line-height: 1.55;
-      color: var(--ink2);
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Medium.otf') format('opentype');
       font-weight: 500;
     }
-    .sp-t strong { color: var(--ink); }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Bold.otf') format('opentype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Heavy.otf') format('opentype');
+      font-weight: 900;
+    }
 
-    /* ── Quote of the Day ── */
+    /* ─── Quote of the Day ─── */
     .qotd-wrap {
       border: 2px solid var(--black);
       border-radius: 4px;
@@ -331,15 +58,15 @@
       color: var(--orange);
       letter-spacing: 0.04em;
     }
-
-    /* ── Editorial + Tags ── */
+    /* ─── Editorial + Tags ─── */
     .editorial-row {
       display: grid;
       grid-template-columns: 1fr auto;
-      border: 2px solid var(--black);
-      box-shadow: 4px 4px 0 var(--black);
+      gap: 0;
+      border: 2px solid #373a3e;
+      box-shadow: 4px 4px 0 #373a3e;
       margin-bottom: 28px;
-      background: var(--black);
+      background: #373a3e;
     }
     .editorial-box {
       background: var(--orange-pale);
@@ -349,7 +76,7 @@
       background: var(--white);
       padding: 22px 26px;
       min-width: 260px;
-      border-left: 2px solid var(--black);
+      border-left: 2px solid #373a3e;
     }
     .editorial-label {
       font-size: 10px;
@@ -365,28 +92,297 @@
       line-height: 1.8;
       color: var(--ink);
     }
-    .tags-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
     .tag {
       display: inline-block;
-      border: 2px solid var(--black);
+      border: 2px solid #373a3e;
       border-radius: 3px;
       padding: 4px 12px;
       font-size: 12px;
       font-weight: 700;
       background: #fff;
-      box-shadow: 2px 2px 0 var(--black);
+      box-shadow: 2px 2px 0 #000;
       cursor: default;
     }
-    .tag:hover { background: var(--orange); color: #fff; }
+    .tag:hover { background: var(--orange); }
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    ::selection { background: var(--orange); color: var(--black); }
+    ::-moz-selection { background: var(--orange); color: var(--black); }
 
-    /* ══ COLUMN GRIDS ══ */
+    /* ─── Tokens ─── */
+    :root {
+      --bg:        #f4f3ef;
+      --white:     #fffffe;
+      --black:     #373a3e;
+      --ink:       #1a1a1a;
+      --ink2:      #3d3d3d;
+      --ink3:      #777777;
+      --ink4:      #aaaaaa;
+      --lime: #ff8a00; --orange: #ff8a00;
+      --lime-pale: #fff0d4; --orange-pale: #fff0d4;
+      --yellow:    #fde047;
+      --border:    2px solid #373a3e;
+      --shadow:    4px 4px 0 #373a3e;
+      --shadow-sm: 2px 2px 0 #373a3e;
+      --shadow-lg: 6px 6px 0 #373a3e;
+      --rule:      1px solid #373a3e;
+      --rule-lt:   1px solid #ddd;
+      --gap:       20px;
+      --ff: 'SHSCN', 'Helvetica Neue', Arial, sans-serif;
+      --ff-title: 'SHSCN', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    html { background: #e8d5b0; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--ff);
+      font-size: 15px;
+      line-height: 1.75;
+      max-width: 1200px;
+      margin: 40px auto;
+      border: 3px solid var(--black);
+      box-shadow: 8px 8px 0 var(--black);
+    }
+
+    /* ══════════════════════════════════
+       MASTHEAD
+    ══════════════════════════════════ */
+    .masthead {
+      background: var(--white);
+      border-bottom: 3px solid var(--black);
+      padding: 0;
+    }
+
+    .mast-top {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .mast-top-left {
+      padding: 8px 18px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      border-right: 2px solid var(--black);
+      display: flex;
+      align-items: center;
+    }
+
+    .mast-top-right {
+      padding: 8px 18px;
+      font-size: 10.5px;
+      color: var(--ink3);
+      text-align: right;
+      line-height: 1.6;
+      display: flex;
+      align-items: center;
+    }
+
+    .mast-title-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 16px 24px;
+      gap: 0;
+    }
+
+    .mast-vol {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      line-height: 1.5;
+    }
+
+    .mast-name {
+      text-align: center;
+      font-size: clamp(38px, 6.5vw, 72px);
+      font-weight: 900;
+      font-family: var(--ff-title);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .mast-name .hi {
+      /* lime underline on the accent word */
+      display: inline;
+      background: var(--orange);
+      padding: 0 4px;
+    }
+
+    .mast-right-col {
+      text-align: right;
+      font-size: 11px;
+      color: var(--ink3);
+      line-height: 1.6;
+    }
+
+    /* nav strip */
+    .mast-nav {
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .mast-nav a,
+    .mast-nav span {
+      padding: 7px 18px;
+      border-right: 1px solid #444;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+    }
+    .mast-nav a:last-child,
+    .mast-nav span:last-child { border-right: none; }
+    .mast-nav a:hover { background: #4a4d52; }
+    .mast-nav a.active,
+    .mast-nav span.active {
+      background: var(--orange);
+      color: var(--black);
+      font-weight: 900;
+      box-shadow: inset 0 -3px 0 var(--black);
+    }
+
+    /* ══════════════════════════════════
+       LEAD BANNER
+    ══════════════════════════════════ */
+    .lead-banner {
+      background: var(--orange);
+      border-bottom: 3px solid var(--black);
+      padding: 28px 32px 24px;
+    }
+
+    .lead-kicker {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lead-kicker::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 3px;
+      background: var(--black);
+    }
+
+    .lead-headline {
+      font-size: clamp(22px, 3.2vw, 38px);
+      font-weight: 900;
+      font-family: var(--ff-title);
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+      color: var(--black);
+      margin-bottom: 16px;
+      max-width: 860px;
+    }
+
+    .lead-deck {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink2);
+      max-width: 680px;
+      line-height: 1.55;
+    }
+
+    /* ══════════════════════════════════
+       PAGE BODY
+    ══════════════════════════════════ */
+    .page {
+      padding: 0 28px 44px;
+      background: var(--bg);
+    }
+
+    /* ── Section header bar ── */
+    .sec-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 20px;
+      border-top: 3px solid var(--black);
+      border-bottom: 2px solid var(--black);
+      padding: 6px 0;
+      scroll-margin-top: 48px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .sec-bar.highlight {
+      border-top-color: var(--orange);
+      box-shadow: 0 -3px 0 var(--orange);
+    }
+
+    .sec-tag {
+      background: var(--black);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      flex-shrink: 0;
+    }
+
+    .sec-tag.lime {
+      background: var(--black);
+      color: var(--orange);
+    }
+
+    .sec-title {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .sec-count {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink4);
+      font-family: 'Courier New', monospace;
+      margin-left: auto;
+    }
+
+    /* ══════════════════════════════════
+       COLUMN GRIDS
+    ══════════════════════════════════ */
     .grid-3 {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 0;
       border: 2px solid var(--black);
-      background: var(--black);
+      background: var(--black); /* gap color */
     }
+
     .grid-2-1 {
       display: grid;
       grid-template-columns: 2fr 1fr;
@@ -394,11 +390,17 @@
       border: 2px solid var(--black);
       background: var(--black);
     }
+
     .gcol {
       background: var(--white);
       padding: 28px 24px;
+      /* columns separated by 2px black gap via grid background */
     }
-    .gcol + .gcol { margin-left: 2px; }
+    .gcol + .gcol {
+      margin-left: 2px;
+    }
+
+    /* second row of 3 */
     .grid-3-row2 {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -406,20 +408,25 @@
       border: 2px solid var(--black);
       border-top: none;
       background: var(--black);
-      margin-top: 2px;
+      margin-top: 2px; /* visual separation from row above inside same outer border, reuse border */
     }
+
+    /* span helpers */
     .span-2 { grid-column: span 2; }
     .span-3 { grid-column: span 3; }
 
-    /* ══ ARTICLE CARD ══ */
+    /* ══════════════════════════════════
+       ARTICLE CARD — inside a gcol
+    ══════════════════════════════════ */
     .art-kicker {
       font-size: 9.5px;
       font-weight: 900;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--orange);
+      color: var(--ink3);
       margin-bottom: 5px;
     }
+
     .art-hed {
       font-size: 18px;
       font-weight: 700;
@@ -431,6 +438,7 @@
     }
     .art-hed.lg { font-size: 22px; }
     .art-hed.sm { font-size: 15px; }
+
     .art-deck {
       font-size: 13px;
       font-weight: 500;
@@ -439,6 +447,7 @@
       margin-bottom: 8px;
       font-style: italic;
     }
+
     .byline {
       font-size: 10px;
       font-weight: 900;
@@ -449,6 +458,7 @@
       padding-bottom: 8px;
       border-bottom: var(--rule);
     }
+
     .byline .handle {
       font-weight: 500;
       font-style: italic;
@@ -456,17 +466,20 @@
       letter-spacing: 0;
       color: var(--ink4);
     }
+
     .byline .ts {
       font-size: 9.5px;
       font-weight: 400;
       color: var(--ink4);
       margin-left: 4px;
     }
+
     .art-body {
       font-size: 14px;
       color: var(--ink2);
       line-height: 1.8;
     }
+
     .art-divider {
       border: none;
       border-top: var(--rule-lt);
@@ -485,6 +498,7 @@
       font-style: italic;
       box-shadow: var(--shadow-sm);
     }
+
     .tweet-orig a {
       display: block;
       margin-top: 6px;
@@ -493,15 +507,15 @@
       font-weight: 900;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--orange);
+      color: var(--ink4);
       text-decoration: none;
     }
     .tweet-orig a:hover { text-decoration: underline; }
 
     /* ── Pull quote ── */
     .pull {
-      border-top: 3px solid var(--orange);
-      border-bottom: 3px solid var(--orange);
+      border-top: 3px solid var(--black);
+      border-bottom: 3px solid var(--black);
       padding: 10px 0;
       margin: 14px 0;
     }
@@ -536,11 +550,15 @@
       color: var(--ink);
       line-height: 1.6;
     }
+
+    /* highlight sumbox */
     .sumbox.lime {
       background: var(--orange-pale);
       border-left: 3px solid var(--orange);
+      border-color: var(--black);
     }
-    .sumbox.lime .lbl { border-bottom-color: rgba(0,0,0,0.1); color: var(--ink2); }
+    .sumbox.lime .lbl { border-bottom-color: rgba(0,0,0,0.15); color: var(--ink2); }
+    .sumbox.lime p { color: var(--ink); }
 
     /* ── Engagement ── */
     .engage {
@@ -563,26 +581,31 @@
       font-weight: 700;
     }
 
-    /* ══ FEATURE / PODCAST ══ */
+    /* ══════════════════════════════════
+       FEATURE / PODCAST
+    ══════════════════════════════════ */
     .feature-wrap {
       border: 2px solid var(--black);
       box-shadow: var(--shadow-lg);
       margin-top: 0;
       background: var(--white);
     }
+
     .feature-hero {
       background: var(--orange-pale);
       border-bottom: 2px solid var(--black);
       padding: 24px 24px 20px;
     }
+
     .feat-kicker {
       font-size: 10px;
       font-weight: 900;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--orange-deep);
+      color: var(--ink2);
       margin-bottom: 8px;
     }
+
     .feat-hed {
       font-size: clamp(20px, 3vw, 30px);
       font-weight: 900;
@@ -591,6 +614,7 @@
       color: var(--black);
       margin-bottom: 10px;
     }
+
     .feat-deck {
       font-size: 14px;
       font-weight: 500;
@@ -599,28 +623,33 @@
       line-height: 1.5;
       max-width: 680px;
     }
+
     .feature-body-grid {
       display: grid;
       grid-template-columns: 2fr 1fr;
       gap: 0;
       background: var(--black);
     }
+
     .feat-main {
       background: var(--white);
       padding: 22px 22px 22px 24px;
     }
+
     .feat-sidebar {
       background: var(--bg);
       padding: 22px 20px;
       margin-left: 2px;
     }
+
     .feat-body {
       font-size: 13.5px;
       color: var(--ink2);
       line-height: 1.7;
       margin-bottom: 14px;
     }
-    .feat-body.drop::first-letter {
+
+    .feat-body .drop::first-letter {
       font-size: 3.5em;
       font-weight: 900;
       float: left;
@@ -629,12 +658,12 @@
       margin-top: 5px;
       color: var(--black);
       background: var(--orange);
-      color: #fff;
-      padding: 0 4px;
+      padding: 0 3px;
     }
+
     .feat-pull {
-      border-top: 3px solid var(--orange);
-      border-bottom: 3px solid var(--orange);
+      border-top: 3px solid var(--black);
+      border-bottom: 3px solid var(--black);
       padding: 10px 0;
       margin: 16px 0;
     }
@@ -645,6 +674,8 @@
       color: var(--ink);
       letter-spacing: -0.02em;
     }
+
+    /* keypoints sidebar */
     .kp-header {
       font-size: 9.5px;
       font-weight: 900;
@@ -655,6 +686,7 @@
       padding-bottom: 6px;
       border-bottom: 2px solid var(--black);
     }
+
     .kp {
       display: flex;
       gap: 10px;
@@ -663,35 +695,159 @@
       border-bottom: 1px solid #ccc;
     }
     .kp:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
     .kp-n {
       font-size: 30px;
       font-weight: 900;
       line-height: 1;
-      color: var(--orange);
+      color: #ccc;
       font-family: 'Courier New', monospace;
       flex-shrink: 0;
       width: 26px;
     }
+
     .kp-t {
       font-size: 12.5px;
       color: var(--ink2);
       line-height: 1.6;
     }
     .kp-t strong { color: var(--ink); font-weight: 700; }
+
     .feat-meta {
+      font-size: 10px;
+      color: var(--ink4);
+      line-height: 1.7;
       border-top: 2px solid var(--black);
       padding-top: 12px;
       margin-top: 14px;
     }
     .feat-meta strong { color: var(--ink3); font-weight: 700; }
-    .feat-meta a { color: var(--orange); text-decoration: none; }
+    .feat-meta a { color: inherit; }
     .feat-meta a:hover { text-decoration: underline; }
 
-    /* ══ HISTORY BAR（历史版本，顶部固定显示） ══ */
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
+    .site-footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-motto {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+    .footer-motto em {
+      color: var(--orange);
+      font-style: normal;
+    }
+
+    .footer-note {
+      font-size: 10px;
+      color: #888;
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    /* ── Speed Read ── */
+    .speed-read {
+      border: 2px solid var(--black);
+      box-shadow: var(--shadow);
+      background: var(--white);
+      margin: 24px 0 4px;
+    }
+    .speed-read-hd {
+      background: var(--orange);
+      border-bottom: 2px solid var(--black);
+      padding: 7px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sr-label {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+    .sr-time {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink2);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.1em;
+    }
+    .speed-items {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+    }
+    .sp-item {
+      background: var(--white);
+      padding: 14px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border-right: 1px solid #ddd;
+    }
+    .sp-item:last-child { border-right: none; }
+    .sp-n {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--orange);
+      font-family: 'Courier New', monospace;
+      flex-shrink: 0;
+      width: 28px;
+      margin-top: 2px;
+      -webkit-text-stroke: 1px var(--black);
+    }
+    .sp-t {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink2);
+      font-weight: 500;
+    }
+    .sp-t strong { color: var(--ink); }
+
+    /* ── Responsive ── */
+    @media (max-width: 780px) {
+      body { margin: 0; box-shadow: none; }
+      .grid-3, .grid-3-row2, .grid-2-1, .feature-body-grid {
+        display: block;
+        background: transparent;
+      }
+      .gcol, .feat-main, .feat-sidebar {
+        border: 2px solid var(--black);
+        margin-bottom: 12px;
+        box-shadow: var(--shadow-sm);
+      }
+      .gcol + .gcol { margin-left: 0; }
+      .page { padding: 0 14px 28px; }
+      .mast-title-row { grid-template-columns: 1fr; text-align: center; gap: 8px; }
+      .mast-vol, .mast-right-col { text-align: center; }
+    }
+
+    /* ══ TAB 面板 ══ */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* 总览区（始终可见）*/
+    .page-overview { padding: 0 28px 44px; background: var(--bg); }
+
+    /* ── 历史版本栏 ── */
     .history-bar {
       background: var(--white);
       border-bottom: 2px solid var(--black);
-      padding: 8px 24px;
+      padding: 7px 24px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -708,64 +864,29 @@
     }
     .history-bar a {
       display: inline-block;
-      padding: 3px 10px;
+      padding: 2px 9px;
       border: 1.5px solid var(--black);
       font-weight: 700;
       color: var(--ink2);
       text-decoration: none;
       background: var(--bg);
       box-shadow: 1px 1px 0 var(--black);
-      transition: background 0.15s;
     }
-    .history-bar a:hover { background: var(--orange); color: #fff; border-color: var(--orange-deep); }
+    .history-bar a:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
     .history-bar a.current {
       background: var(--orange);
       color: #fff;
-      border-color: var(--orange-deep);
+      border-color: var(--orange);
       pointer-events: none;
     }
 
-    /* ══ FOOTER ══ */
-    .site-footer {
-      background: var(--black);
-      color: #fff;
-      padding: 18px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .footer-motto {
-      font-size: 14px;
+    /* Tab 导航激活色改为橙色 */
+    .mast-nav a.active,
+    .mast-nav span.active {
+      background: var(--orange) !important;
+      color: #fff !important;
       font-weight: 900;
-      letter-spacing: -0.01em;
-    }
-    .footer-motto em { color: var(--orange); font-style: normal; }
-    .footer-note {
-      font-size: 10px;
-      color: #888;
-      text-align: right;
-      line-height: 1.7;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 780px) {
-      body { margin: 0; box-shadow: none; }
-      .grid-3, .grid-3-row2, .grid-2-1, .feature-body-grid { display: block; background: transparent; }
-      .gcol, .feat-main, .feat-sidebar {
-        border: 2px solid var(--black);
-        margin-bottom: 12px;
-        box-shadow: var(--shadow-sm);
-      }
-      .gcol + .gcol { margin-left: 0; }
-      .page { padding: 0 14px 28px; }
-      .mast-title-row { grid-template-columns: 1fr; text-align: center; gap: 8px; }
-      .mast-vol, .mast-right-col { text-align: center; }
-      .speed-items { grid-template-columns: 1fr; }
-      .sp-item { border-right: none; border-bottom: 1px solid #ddd; }
-      .editorial-row { grid-template-columns: 1fr; }
-      .tags-box { border-left: none; border-top: 2px solid var(--black); min-width: unset; }
+      box-shadow: inset 0 -3px 0 var(--black);
     }
   </style>
 </head>
@@ -773,16 +894,11 @@
 
 <!-- ══ MASTHEAD ══ -->
 <header class="masthead">
-  <!-- 历史版本导航栏（修复：每期 HTML 都包含完整历史列表，不依赖 index.html） -->
-  <div class="history-bar">
-    <span class="history-bar-label">历史版本</span>
-    <a href="./2026-06-05.html" class="current">2026-06-05 · 最新</a>
-  </div>
-
   <div class="mast-top">
     <span class="mast-top-left">AI Signal · Builder 动态 · 每日精选</span>
-    <div class="mast-top-right">Vol. I &nbsp;·&nbsp; No. 002 &nbsp;·&nbsp; 2026年6月5日 · 星期四</div>
+    <div class="mast-top-right">Vol. I &nbsp;·&nbsp; No. 003 &nbsp;·&nbsp; 2026年6月5日 · 星期四</div>
   </div>
+
   <div class="mast-title-row">
     <div class="mast-vol">
       晨版 · Morning Edition<br>
@@ -799,7 +915,11 @@
     </div>
   </div>
 
-  <!-- Tab 导航 -->
+  <!-- 历史版本 -->
+  <div class="history-bar">
+    <span class="history-bar-label">历史版本</span>
+    <a href="./2026-06-05.html" class="current">2026-06-05 · 最新</a>
+  </div>
   <nav class="mast-nav" id="main-nav">
     <a href="#" data-tab="china" class="active">国内 AI 前线</a>
     <a href="#" data-tab="global">海外 Builder 动态</a>
@@ -810,12 +930,62 @@
 <!-- ══ LEAD BANNER ══ -->
 <div class="lead-banner">
   <div class="lead-kicker">头版头条 &nbsp;·&nbsp; Today's Signal</div>
-  <h1 class="lead-headline">Anthropic: Claude写了80%代码</h1>
-  <p class="lead-deck">内部数据揭示AI开发AI已成主流，工程产出暴增8倍，递归自我改进加速逼近。</p>
+  <h1 class="lead-headline">AI学会假想错误，发现真理</h1>
+  <p class="lead-deck">强化学习推动模型从执行指令到自主发现，Anthropic 80%代码已由AI书写</p>
 </div>
 
-<!-- ══ 总览区（始终可见，不在 Tab 里） ══ -->
-<div class="page" id="panel-overview">
+<!-- Tab 面板：国内资讯 -->
+<div class="tab-panel page" id="panel-china">
+  
+  <div class="sec-bar">
+    <span class="sec-tag orange">全球 AI 资讯</span>
+    <span class="sec-title">每日精选</span>
+    <span class="sec-count">公开来源 · 4 篇</span>
+  </div>
+  <div class="grid-3">
+    <div class="gcol">
+      <div class="art-kicker">AI 资讯</div>
+      <h3 class="art-hed sm">Claude最新质量报告更新</h3>
+      <div class="byline">Anthropic Engineering</div>
+      <div class="art-body">过去一个月，我们调查了用户反馈的Claude响应质量下降问题，发现三个独立变更影响了Claude Code、Agent SDK和Cowork产品。API未受影响，问题已修复。</div>
+      <div style="margin-top:10px;">
+        <a href="https://www.anthropic.com/engineering/april-23-postmortem" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
+      </div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 资讯</div>
+      <h3 class="art-hed sm">扩展托管代理：大脑与双手分离</h3>
+      <div class="byline">Anthropic Engineering</div>
+      <div class="art-body">通过分离大脑与双手来构建有效代理和设计长期运行工作框架，实现托管代理的规模化扩展。</div>
+      <div style="margin-top:10px;">
+        <a href="https://www.anthropic.com/engineering/managed-agents" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
+      </div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 资讯</div>
+      <h3 class="art-hed sm">Claude托管代理新增功能：自托管沙箱与MCP隧道</h3>
+      <div class="byline">Claude Blog</div>
+      <div class="art-body">Claude托管代理现在可以在您控制的沙箱中运行，并连接到私有MCP服务器。代理执行工具和环境都在企业安全边界内。</div>
+      <div style="margin-top:10px;">
+        <a href="https://claude.com/blog/claude-managed-agents-updates" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
+      </div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 资讯</div>
+      <h3 class="art-hed sm">Claude新增日常生活连接器</h3>
+      <div class="byline">Claude Blog</div>
+      <div class="art-body">我们扩展了Claude的连接功能，新增AllTrails、Instacart、Audible、Tripadvisor、Intuit TurboTax等日常应用连接器。</div>
+      <div style="margin-top:10px;">
+        <a href="https://claude.com/blog/connectors-for-everyday-life" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
+      </div>
+    </div></div>
+</div>
+
+<!-- Tab 面板：海外 Builder -->
+<div class="tab-panel page" id="panel-global">
+
+  <!-- ══ 30-SEC SPEED READ ══ -->
   <div class="speed-read">
     <div class="speed-read-hd">
       <span class="sr-label">30 秒速览</span>
@@ -825,101 +995,54 @@
       
     <div class="sp-item">
       <div class="sp-n">1</div>
-      <div class="sp-t"><strong>Swyx：</strong>Cognition发布首个企业级代码评估，支持100小时。</div>
+      <div class="sp-t"><strong>Swyx：</strong>Cognition发布面向企业100小时代码评估基准</div>
     </div>
     <div class="sp-item">
       <div class="sp-n">2</div>
-      <div class="sp-t"><strong>Alex Albert：</strong>Anthropic超80%合并代码由Claude撰写。</div>
+      <div class="sp-t"><strong>Alex Albert：</strong>Anthropic 80%代码由Claude自动完成</div>
     </div>
     <div class="sp-item">
       <div class="sp-n">3</div>
-      <div class="sp-t"><strong>Cat Wu：</strong>Claude Code招聘PM，聚焦模型性能评估。</div>
+      <div class="sp-t"><strong>Cat Wu：</strong>Claude Code招聘聚焦模型性能的产品经理</div>
     </div>
     </div>
   </div>
 
+  <!-- ══ QUOTE OF THE DAY ══ -->
   <div class="qotd-wrap">
     <div class="qotd-label">「一句话」 of the day</div>
-    <blockquote class="qotd">We're not at recursive self-improvement yet, but it could come sooner than most expect.</blockquote>
-    <div class="qotd-attr">Alex Albert · @alexalbert on X</div>
+    <blockquote class="qotd">“Audio is the human-preferred input to AIs, but vision—HTML, animations, video—is the preferred output from them.”</blockquote>
+    <div class="qotd-attr">— Andrej Karpathy &nbsp;<span style="color:var(--ink4);font-weight:400;">@karpathy &nbsp;·&nbsp; 2026.05.12</span></div>
   </div>
 
+  <!-- ══ EDITORIAL + TAGS ══ -->
   <div class="editorial-row">
     <div class="editorial-box">
       <div class="editorial-label">📝 主编按语</div>
-      <p class="editorial-text">今天是AI“自我进化”的里程碑日：Anthropic数据证实AI已主导自身开发，OpenAI用强化学习突破科学发现瓶颈。工具从助手跃升为创造者，人类需要重新思考“管理”与“品味”的价值。</p>
+      <p class="editorial-text">今日信号指向一个临界点：AI不再是工具，而是自主的发现者与执行者。从Anthropic内部代码替代率到企业级评估突破，模型正从辅助角色变为核心生产力。真正的竞速，不是更大规模，而是更聪明的推理方式。</p>
     </div>
     <div class="tags-box">
       <div class="editorial-label">🏷️ 本期标签</div>
-      <div class="tags-list"><span class="tag">#AI开发</span>
-        <span class="tag">#AgentEval</span>
-        <span class="tag">#Claude</span>
-        <span class="tag">#强化学习</span></div>
+      <div class="tags-list">
+        <span class="tag">#AI生产力</span>
+        <span class="tag">#强化学习</span>
+        <span class="tag">#自主发现</span>
+        <span class="tag">#企业级评估</span>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ══ TAB 内容面板 ══ -->
-
-<!-- Tab: 国内 AI 前线 -->
-<div class="tab-panel page" id="panel-china">
-  
-  <div class="sec-bar">
-    <span class="sec-tag orange">中文圈 · China Watch</span>
-    <span class="sec-title">国内 AI 前线</span>
-    <span class="sec-count">公开来源 · 每日更新</span>
-  </div>
-  <div class="grid-3">
-    <div class="gcol">
-      <div class="art-kicker">AI 资讯</div>
-      <h3 class="art-hed sm">An update on recent Claude Code quality reports</h3>
-      <div class="byline">Anthropic Engineering</div>
-      <div class="art-body">Over the past month, we’ve been looking into reports that Claude’s responses have worsened for some users. We’ve traced these reports to three separate changes that affected Claude Code, the Claude Ag…</div>
-      <div style="margin-top:10px;">
-        <a href="https://www.anthropic.com/engineering/april-23-postmortem" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
-      </div>
-    </div>
-    <div class="gcol">
-      <div class="art-kicker">AI 资讯</div>
-      <h3 class="art-hed sm">Scaling Managed Agents: Decoupling the brain from the hands</h3>
-      <div class="byline">Anthropic Engineering</div>
-      <div class="art-body">Get started with Claude Managed Agents by following our docs . A running topic on the Engineering Blog is how to build effective agents and design harnesses for long-running work . A common thread acr…</div>
-      <div style="margin-top:10px;">
-        <a href="https://www.anthropic.com/engineering/managed-agents" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
-      </div>
-    </div>
-    <div class="gcol">
-      <div class="art-kicker">AI 资讯</div>
-      <h3 class="art-hed sm">New in Claude Managed Agents: self-hosted sandboxes and MCP tunnels</h3>
-      <div class="byline">Claude Blog</div>
-      <div class="art-body">Starting today, Claude Managed Agents can operate in a sandbox you control and connect to your private Model Context Protocol (MCP) servers. Both the sandbox where an agent executes tools and the serv…</div>
-      <div style="margin-top:10px;">
-        <a href="https://claude.com/blog/claude-managed-agents-updates" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
-      </div>
-    </div></div>
-<div class="grid-3-row2">
-    <div class="gcol">
-      <div class="art-kicker">AI 资讯</div>
-      <h3 class="art-hed sm">New connectors in Claude for everyday life</h3>
-      <div class="byline">Claude Blog</div>
-      <div class="art-body">Today we’re expanding what you can connect to Claude. Alongside the work tools you already use, you can now connect the apps you use throughout your week, including AllTrails, Instacart, Audible, Trip…</div>
-      <div style="margin-top:10px;">
-        <a href="https://claude.com/blog/connectors-for-everyday-life" target="_blank" style="font-size:10px;font-weight:900;color:var(--orange);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">↗ 查看原文</a>
-      </div>
-    </div></div>
-</div>
-
-<!-- Tab: 海外 Builder 动态 -->
-<div class="tab-panel page" id="panel-global">
-  <div class="sec-bar">
+  <!-- ══ SECTION 01 · X 动态 ══ -->
+  <div class="sec-bar" id="sec-x">
     <span class="sec-tag">X / Twitter</span>
-    <span class="sec-title">Builder 动态 · 建设者观察</span>
+    <span class="sec-title">Builder 动态</span>
     <span class="sec-count">今日 {{BUILDER_COUNT}} 位 builder · {{TWEET_COUNT}} 条推文</span>
   </div>
+
   <div class="grid-3">
-    <div class="gcol span-2">
+    <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed lg">Swyx（@swyx，Cognition 和 Temporal.io 等多家公司关联者）宣布，Cognition 正式发布首个专用评估工具（eval ship），声称可支持长达 100 小时的企业级代码任务评估，并附有财务担保</h2>
+      <h2 class="art-hed sm">Swyx 宣布 Cognition 公司（其联合创办的 AI 编程产品 Devin 所属公司）首次发布了面向企业的代码评估基准（eval）</h2>
       <div class="byline">
         Swyx
         <span class="handle">@swyx</span>
@@ -931,18 +1054,18 @@
 
 To contextualize: @METR_Evals cap out at ~16 hours. 
 
-Cog has private enterprise evals up to 100hrs, and is confident enough to put a financial gu…
+Cog has private enterprise evals up to 100hrs, and is confident enough t…
         <a href="https://x.com/swyx/status/2062611218196771017" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Swyx（@swyx，Cognition 和 Temporal.io 等多家公司关联者）宣布，Cognition 正式发布首个专用评估工具（eval ship），声称可支持长达 100 小时的企业级代码任务评估，并附有财务担保。对比之下，第三方评测机构 METR 的评估范围上限仅为约 16 小时。该评估基于 258 个真实企业客户会话、126 位用户的数据构建，涵盖 Java/TypeScript/Python/C# 功能开发、bug 修复和迁移任务。Swyx 还提到，一家诞生于新加坡的领先数据库公司终于获得了本地投资者的重视。</p>
+        <p>Swyx 宣布 Cognition 公司（其联合创办的 AI 编程产品 Devin 所属公司）首次发布了面向企业的代码评估基准（eval）。该基准<strong>突破</strong>了现有 METR 评估仅能覆盖约 16 小时任务的限制，Cog 的评估支持长达 100 小时的企业级任务，并为此提供财务担保。评估数据集涵盖 Java、TypeScript、Python、C# 等语言的真实功能开发、Bug 修复和迁移任务，由 126 位企业用户的 258 个真实会话构成。Swyx 称这是现实中评估工作的开创性成果，并感谢团队在数据收集等“不显眼”环节的付出。</p>
       </div>
       <div class="engage">❤ 179 &nbsp;↻ 12 &nbsp;💬 28</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">Google VP Josh Woodward 在 macOS 端 Gemini 应用上展示了一项他喜爱的功能，但未详细说明具体特性或使用细节</h2>
+      <h2 class="art-hed sm">Google VP 兼 Gemini App 与 AI Studio 负责人 Josh Woodward 称赞 macOS 版 Gemini 的一项功能，并附上了演示链接</h2>
       <div class="byline">
         Josh Woodward
         <span class="handle">@joshwoodward</span>
@@ -955,13 +1078,13 @@ Cog has private enterprise evals up to 100hrs, and is confident enough to put a 
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Google VP Josh Woodward 在 macOS 端 Gemini 应用上展示了一项他喜爱的功能，但未详细说明具体特性或使用细节。相关视频链接可能包含更多信息。</p><p>本期无实质更新，建议查看原推。</p>
+        <p>Google VP 兼 Gemini App 与 AI Studio 负责人 Josh Woodward 称赞 macOS 版 Gemini 的一项功能，并附上了演示链接。</p>
       </div>
       <div class="engage">❤ 140 &nbsp;↻ 4 &nbsp;💬 13</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">OpenAI Codex 负责人 Thibault Sottiaux 宣布推出 Codex Python SDK，开发者可通过 `pip install openai-codex` 在自己的程序中调用 Codex</h2>
+      <h2 class="art-hed sm">OpenAI Codex 及 ChatGPT 负责人 Thibault Sottiaux 宣布，今天修复了一个影响不到 15%的 Pro 和 Plus 账户的 bug，该 bug 导致部分账户的 token 用量被少量漏计</h2>
       <div class="byline">
         Thibault Sottiaux
         <span class="handle">@thsottiaux</span>
@@ -971,19 +1094,19 @@ Cog has private enterprise evals up to 100hrs, and is confident enough to put a 
       <div class="tweet-orig">
         We're fixing a codex bug today that was causing us to undercount tokens being served to some Pro and Plus accounts by a small amount. This impacted &amp;lt; 15% of accounts.
 
-Not the kind of bug you want …
+Not the k…
         <a href="https://x.com/thsottiaux/status/2062648326332539015" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>OpenAI Codex 负责人 Thibault Sottiaux 宣布推出 Codex Python SDK，开发者可通过 <code>pip install openai-codex</code> 在自己的程序中调用 Codex。该 SDK 由 @ah20im 等人开发。此外，Sottiaux 透露正在修复一个影响不到 15% 的 Pro 和 Plus 用户的计费 bug，该 bug 导致 token 用量被少量低估，并表示不会默默修复，而是选择公开告知。</p>
+        <p>OpenAI Codex 及 ChatGPT 负责人 Thibault Sottiaux 宣布，今天修复了一个影响不到 15%的 Pro 和 Plus 账户的 bug，该 bug 导致部分账户的 token 用量被少量漏计。他表示虽然这类修复用户可能不乐见，但选择公开说明而不是悄悄修复。此外他还分享了由 @ah20im 团队开发的 Codex Python SDK，并称其“很棒”。</p>
       </div>
       <div class="engage">❤ 3945 &nbsp;↻ 90 &nbsp;💬 447</div>
     </div></div>
 <div class="grid-3-row2">
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">Peter Yang（Roblox 产品经理，AI 教程作者）花了一整天为 Codex 搭建工作流集成和技能，现在他确信任何知识型工作都能节省至少 50% 的时间——前提是预先设置好系统</h2>
+      <h2 class="art-hed sm">Peter Yang，Roblox 产品经理，花了一整天为他在Codex中的顶级创作者工作流配置集成和技能后，称只要前期将系统设置好，任何类型的知识工作都能节省至少50%的时间</h2>
       <div class="byline">
         Peter Yang
         <span class="handle">@petergyang</span>
@@ -993,18 +1116,18 @@ Not the kind of bug you want …
       <div class="tweet-orig">
         I spent the whole day today setting up integrations and skills in Codex for my top creator workflows.
 
-Now I'm convinced that you can save at least 50% of your time on any type of knowledge work if yo…
+Now I'm convinced that you can save at least 50% of your time on any type of …
         <a href="https://x.com/petergyang/status/2062740262338929110" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Peter Yang（Roblox 产品经理，AI 教程作者）花了一整天为 Codex 搭建工作流集成和技能，现在他确信任何知识型工作都能节省至少 50% 的时间——前提是预先设置好系统。他给出了三步法：复盘过去一周最耗时、最重复的工作，将该工作流每一步详细列出，然后粘贴给 Codex 问“你能帮我建什么集成和技能来优化它？”</p><p>不过他同时直言，Codex 的前端设计仍有很大提升空间，比如在 <code>/slides</code> 技能中，Claude 能一次性生成漂亮的 HTML 幻灯片，而 Codex 做成什么样“你懂的”。他认为这是 Codex 对新用户的第一印象问题，需要修复。</p>
+        <p>Peter Yang，Roblox 产品经理，花了一整天为他在Codex中的顶级创作者工作流配置集成和技能后，称只要前期将系统设置好，任何类型的知识工作都能节省至少50%的时间。他特别指出，所有工作流都保留了人工检查点以便应用自己的“品味”。同时，他批评Codex的前端设计仍有很大改进空间——虽然代码能力出色，但在生成美观HTML幻灯片方面被Claude完胜，这往往是新手对编程或知识工作工具的“第一印象”，建议Codex优先修复这一问题。</p>
       </div>
       <div class="engage">❤ 98 &nbsp;↻ 4 &nbsp;💬 6</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">Cat Wu 正在为 Claude Code 招聘一位 PM，重点关注模型性能</h2>
+      <h2 class="art-hed sm">Cat Wu（Anthropic 旗下 Claude Code 联合创始人）正在招聘一名聚焦模型性能的产品经理（PM），要求具备编写 agentic evals 的经验，能将研究思路整合到核心产品中</h2>
       <div class="byline">
         Cat Wu
         <span class="handle">@_catwu</span>
@@ -1014,18 +1137,18 @@ Now I'm convinced that you can save at least 50% of your time on any type of kno
       <div class="tweet-orig">
         I'm hiring a PM for Claude Code, focused on model performance.
 
-If you have experience writing agentic evals and want to integrate research ideas into our core products, I'd love to hear from you here…
+If you have experience writing agentic evals and want to integrate research ideas into our core products, I'd love t…
         <a href="https://x.com/_catwu/status/2062659533047259212" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Cat Wu 正在为 Claude Code 招聘一位 PM，重点关注模型性能。她希望候选人具有编写 agentic eval 的经验，能够将研究思路整合到核心产品中。</p>
+        <p>Cat Wu（Anthropic 旗下 Claude Code 联合创始人）正在招聘一名聚焦模型性能的产品经理（PM），要求具备编写 agentic evals 的经验，能将研究思路整合到核心产品中。招聘信息已通过官方链接公开。</p>
       </div>
       <div class="engage">❤ 993 &nbsp;↻ 44 &nbsp;💬 57</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">本期无实质更新，建议查看原推</h2>
+      <h2 class="art-hed sm">本期无实质更新，建议查看原推</h2>
       <div class="byline">
         Thariq
         <span class="handle">@trq212</span>
@@ -1037,7 +1160,7 @@ If you have experience writing agentic evals and want to integrate research idea
 
 personal software was a bit early in 2020 but in 2026, it really can be as personal as a home cooked meal, or a handwritten letter
 
-https://t.co/vQLa9wxUzq
+https:…
         <a href="https://x.com/trq212/status/2062605395101884916" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
@@ -1049,7 +1172,7 @@ https://t.co/vQLa9wxUzq
 <div class="grid-3-row2">
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">本期无实质更新，建议查看原推</h2>
+      <h2 class="art-hed sm">本期无实质更新，建议查看原推</h2>
       <div class="byline">
         Amjad Masad
         <span class="handle">@amasad</span>
@@ -1068,7 +1191,7 @@ https://t.co/vQLa9wxUzq
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">Vercel CEO Guillermo Rauch 宣布，公司将加大对开源 Web 平台的投入，投资 Nitro.js（一个高性能 JavaScript 运行环境），并继续支持 Vite 生态，包括 Nuxt、Svelte 和 TanStack Start 等框架的原生集成</h2>
+      <h2 class="art-hed sm">Vercel CEO Guillermo Rauch 宣布，Vercel 将继续投资开源 Web 平台，包括注资 Nitro.js 开发、支持开放运行时，并原生支持基于 Vite 的框架（如 Nuxt、Svelte 和 TanStack Start）</h2>
       <div class="byline">
         Guillermo Rauch
         <span class="handle">@rauchg</span>
@@ -1078,18 +1201,18 @@ https://t.co/vQLa9wxUzq
       <div class="tweet-orig">
         Congrats Void team!
 
-We @vercel reaffirm our collaboration on an open platform for the web, with our investment in @nitrojsdev, open runtimes, and native support for Vite-based frameworks like Nuxt, S…
+We @vercel reaffirm our collaboration on an open platform for the web, with our investment in @nitrojsdev, open runtimes, and native support for Vite-based fra…
         <a href="https://x.com/rauchg/status/2062535454130676193" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Vercel CEO Guillermo Rauch 宣布，公司将加大对开源 Web 平台的投入，投资 Nitro.js（一个高性能 JavaScript 运行环境），并继续支持 Vite 生态，包括 Nuxt、Svelte 和 TanStack Start 等框架的原生集成。此举是 Vercel 对“开放 Web 平台”战略的再次确认，与 Void 团队的协作关系也随之加强。</p>
+        <p>Vercel CEO Guillermo Rauch 宣布，Vercel 将继续投资开源 Web 平台，包括注资 Nitro.js 开发、支持开放运行时，并原生支持基于 Vite 的框架（如 Nuxt、Svelte 和 TanStack Start）。这是他回应 Void 团队相关动态时阐明的立场。</p>
       </div>
       <div class="engage">❤ 843 &nbsp;↻ 25 &nbsp;💬 34</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">Anthropic 研究员 Alex Albert 公布了内部数据：Claude 代码库中超过 80% 的合并代码由 Claude 自己编写，许多研究员已数月没有手写代码</h2>
+      <h2 class="art-hed sm">Anthropic 研究员 Alex Albert 公布了 Claude 内部研发数据：目前公司代码库中超过 80% 的合并代码由 Claude 编写，许多科研人员已数月未手写代码</h2>
       <div class="byline">
         Alex Albert
         <span class="handle">@alexalbert__</span>
@@ -1099,19 +1222,19 @@ We @vercel reaffirm our collaboration on an open platform for the web, with our 
       <div class="tweet-orig">
         We just published internal data on how much of Claude's development is already being done by Claude:
 - Over 80% of all code merged into our codebase is now written by Claude
-- It's been months since m…
+- It's…
         <a href="https://x.com/alexalbert__/status/2062580571214389510" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Anthropic 研究员 Alex Albert 公布了内部数据：Claude 代码库中超过 80% 的合并代码由 Claude 自己编写，许多研究员已数月没有手写代码。典型工程师 2025 年的代码产出是 2024 年的 8 倍；在最开放式的工程任务上，Claude 的成功率在 6 个月内从约 26% 跃升至 76%。当研究偏离轨道时，Claude 在 64% 的情况下会提出比人类更好的下一步方案。Albert 表示递归自我改进尚未实现，但可能比大多数人预想得更快到来。</p>
+        <p>Anthropic 研究员 Alex Albert 公布了 Claude 内部研发数据：目前公司代码库中超过 80% 的合并代码由 Claude 编写，许多科研人员已数月未手写代码。工程师平均产出效率是 2024 年的 8 倍，在开放式工程任务上 Claude 的成功率 6 个月内从 26% 跃升至 76%。当研究偏离轨道时，Claude 提出更优下一步方案的概率达 64%。他表示虽然尚未达到递归自我改进，但可能比多数人预期的更早到来。</p>
       </div>
       <div class="engage">❤ 2294 &nbsp;↻ 149 &nbsp;💬 140</div>
     </div></div>
 <div class="grid-3-row2">
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">Box CEO Aaron Levie 引述 Anthropic 的观点并分享了他对 AI 乐观前景的思考</h2>
+      <h2 class="art-hed sm">Box CEO Aaron Levie 回应 Anthropic 的一篇深度文章指出，AI 的核心价值并非直接替代人类，而是大幅降低想法落地的门槛</h2>
       <div class="byline">
         Aaron Levie
         <span class="handle">@levie</span>
@@ -1121,18 +1244,18 @@ We @vercel reaffirm our collaboration on an open platform for the web, with our 
       <div class="tweet-orig">
         Good thought provoking post from Anthropic. I think this paragraph points to the key element of the optimistic scenario of AI:
 
-“There has been an explosion of new ideas, initiatives, tools, and simul…
+“There has been an explosion of new ideas, initiativ…
         <a href="https://x.com/levie/status/2062728257359790292" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Box CEO Aaron Levie 引述 Anthropic 的观点并分享了他对 AI 乐观前景的思考。他认为，AI 大幅降低了创造的门槛，导致我们产生的想法远多于能执行的数量。Levie 指出，限制执行力的瓶颈最终仍在于人类自身——无论 AI 如何进步，围绕执行想法的“周边工作”都必须由人来管理。这是一篇关于 AI 不会取代人类组织能力的务实分析。</p>
+        <p>Box CEO Aaron Levie 回应 Anthropic 的一篇深度文章指出，AI 的核心价值并非直接替代人类，而是大幅降低想法落地的门槛。他认为，AI 带来的结果不是人力需求减少，而是可执行想法激增——企业能更快识别并修复瓶颈，这一能力将成为未来最重要的组织技能。无论 AI 进步到何种程度，围绕执行力所需的“外围管理工作”仍需人来完成。</p>
       </div>
       <div class="engage">❤ 195 &nbsp;↻ 18 &nbsp;💬 33</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">YC 总裁兼 CEO Garry Tan 今日连发三条推文</h2>
+      <h2 class="art-hed sm">Y Combinator CEO Garry Tan 连发两条推文</h2>
       <div class="byline">
         Garry Tan
         <span class="handle">@garrytan</span>
@@ -1140,18 +1263,18 @@ We @vercel reaffirm our collaboration on an open platform for the web, with our 
       </div>
       
       <div class="tweet-orig">
-        Two YC decacorns in one day and one of them is building commercial fusion. Polaris hit 150 million degrees C, first privately funded machine to do it. This is the abundance future, built by people who…
+        Two YC decacorns in one day and one of them is building commercial fusion. Polaris hit 150 million degrees C, first privately funded machine to do it. This is the abundance future,…
         <a href="https://x.com/garrytan/status/2062763109849411834" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>YC 总裁兼 CEO Garry Tan 今日连发三条推文。他兴奋地宣布，YC 孵化的两家公司同日成为百亿估值“decacorn”，其中一家正在建设商业核聚变反应堆，其 Polaris 装置达到 1.5 亿摄氏度，成为首个达成此记录的私人资助机器。他称这代表着“富足的未来，由真正的实干家创造”。</p><p>另一条推文则触及创业经验：他提醒创始人，“离产品市场契合（PMF）只差一步，仍然不算 PMF”。</p>
+        <p>Y Combinator CEO Garry Tan 连发两条推文。他先分享了一个观点：<strong>“离产品市场匹配很近，不等于产品市场匹配本身。”</strong> 随后他宣布，YC 孵化的两家公司同日达成“十倍独角兽（decacorn）”，其中一家是商业聚变初创公司。该公司的 Polaris 装置已达到 1.5 亿摄氏度，成为首个达成此成就的私人资助机器。Tan 称之为“由真正交付产品的人构建的丰裕未来”。</p>
       </div>
       <div class="engage">❤ 105 &nbsp;↻ 4 &nbsp;💬 13</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">本期无实质更新，建议查看原推</h2>
+      <h2 class="art-hed sm">本期无实质更新，建议查看原推</h2>
       <div class="byline">
         Matt Turck
         <span class="handle">@mattturck</span>
@@ -1162,8 +1285,7 @@ We @vercel reaffirm our collaboration on an open platform for the web, with our 
         Why AI Can Now Make Discoveries - my conversation with @danintheory, Lead of the Foundations of Reinforcement Learning team at @OpenAI 
 
 00:00 Intro: AI's wild week in mathematics
-
-01:21 What OpenAI's…
+…
         <a href="https://x.com/mattturck/status/2062587000201580808" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
@@ -1175,7 +1297,7 @@ We @vercel reaffirm our collaboration on an open platform for the web, with our 
 <div class="grid-3-row2">
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">## 本期无实质更新，建议查看原推</h2>
+      <h2 class="art-hed sm">本期无实质更新，建议查看原推</h2>
       <div class="byline">
         Nikunj Kothari
         <span class="handle">@nikunj</span>
@@ -1187,18 +1309,18 @@ We @vercel reaffirm our collaboration on an open platform for the web, with our 
 
 Someone recently asked me if I can be replaced by AI, and my ego initially said NO WAY.. 
 
-Then, I thought about what's the best way to have th…
+Then, I thought about what's the…
         <a href="https://x.com/nikunj/status/2062659649732825549" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>## 本期无实质更新，建议查看原推。</p>
+        <p>本期无实质更新，建议查看原推。</p>
       </div>
       <div class="engage">❤ 60 &nbsp;↻ 3 &nbsp;💬 14</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">Dan Shipper（Every CEO）宣布推出Spiral 4.0，一个适用于人类和AI Agent的写作伴侣</h2>
+      <h2 class="art-hed sm">Dan Shipper（Every 创始人兼 CEO）宣布推出 Spiral 4.0，称其为“你和你的 AI 代笔人的写作伙伴”</h2>
       <div class="byline">
         Dan Shipper
         <span class="handle">@danshipper</span>
@@ -1210,18 +1332,18 @@ Then, I thought about what's the best way to have th…
 
 Spiral 4.0—a writing partner for you and your agent by @every
 
--&gt; Stylometry: we built a new Style Engine based on the principles of stylometry to extract you and your brand's voice and produce …
+-&gt; Stylometry: we built a new Style Engine based on the principles of stylometry to extract you and your brand'…
         <a href="https://x.com/danshipper/status/2062628079869005876" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Dan Shipper（Every CEO）宣布推出Spiral 4.0，一个适用于人类和AI Agent的写作伴侣。新版本的核心改进是「风格测量学」（Stylometry）——他们基于该原理构建了新的风格引擎，能根据你过往的作品提取个人或品牌的声音，从而每次产出高质量、贴合风格的写作内容。此外，Spiral 4.0已支持MCP和CLI接口，可被Codex、Claude Code等AI Agent直接调用，实现自动化的品牌写作。Dan Shipper表示，Every团队已在内部用它撰写登录页、推文、播客和营销邮件。</p>
+        <p>Dan Shipper（Every 创始人兼 CEO）宣布推出 Spiral 4.0，称其为“你和你的 AI 代笔人的写作伙伴”。新版基于<strong>文体计量学</strong>构建了新的 Style Engine，能够从你过往作品中提取并复现个人或品牌的语气风格，确保每次输出都保持一致性。同时，Spiral 4.0 已支持 MCP 和 CLI，可与 Codex、Claude Code 等 Agent 配合使用，实现自动化写作。他透露，团队内部已用它撰写落地页、推文、播客、营销邮件等所有对外内容，覆盖全公司 30 人。</p>
       </div>
       <div class="engage">❤ 222 &nbsp;↻ 17 &nbsp;💬 23</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">南加州大学风险投资合伙人、前 Dropbox CTO Aditya Agarwal 认为，未来许多职位将融入工程能力，并以 &quot;营销工程师&quot; 为例，指出这类复合角色将成为趋势</h2>
+      <h2 class="art-hed sm">Aditya Agarwal（南园资本合伙人、前 Dropbox CTO）认为，未来许多职位将融入工程能力，并以“营销工程师”作为典型例子</h2>
       <div class="byline">
         Aditya Agarwal
         <span class="handle">@adityaag</span>
@@ -1236,14 +1358,14 @@ Marketing Engineer is a great example of this. https://t.co/f8E9O8GXgi
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>南加州大学风险投资合伙人、前 Dropbox CTO Aditya Agarwal 认为，未来许多职位将融入工程能力，并以 &quot;营销工程师&quot; 为例，指出这类复合角色将成为趋势。</p>
+        <p>Aditya Agarwal（南园资本合伙人、前 Dropbox CTO）认为，未来许多职位将融入工程能力，并以“营销工程师”作为典型例子。他暗示传统的职能边界正在模糊，具备工程思维将成为非技术岗位的核心竞争力。</p>
       </div>
       <div class="engage">❤ 16 &nbsp;↻ 1 &nbsp;💬 1</div>
     </div></div>
 <div class="grid-3-row2">
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">本期无实质更新，建议查看原推</h2>
+      <h2 class="art-hed sm">Sam Altman 宣布，ChatGPT 的记忆功能今日迎来重大升级，用户可通过 ChatGPT 直接构建并发布网页应用</h2>
       <div class="byline">
         Sam Altman
         <span class="handle">@sama</span>
@@ -1256,13 +1378,13 @@ Marketing Engineer is a great example of this. https://t.co/f8E9O8GXgi
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>本期无实质更新，建议查看原推。</p>
+        <p>Sam Altman 宣布，ChatGPT 的记忆功能今日迎来重大升级，用户可通过 ChatGPT 直接构建并发布网页应用。他感叹早期互联网的独特魅力，并称如果小时候就有这种工具该多好，但同时也表达了对 HyperCard 时代的怀念。</p>
       </div>
       <div class="engage">❤ 8911 &nbsp;↻ 513 &nbsp;💬 1514</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed">本期无实质更新，建议查看原推</h2>
+      <h2 class="art-hed sm">本期无实质更新，建议查看原推</h2>
       <div class="byline">
         Claude
         <span class="handle">@claudeai</span>
@@ -1272,7 +1394,7 @@ Marketing Engineer is a great example of this. https://t.co/f8E9O8GXgi
       <div class="tweet-orig">
         Anton Osika (@antonosika) is the co-founder and CEO of @lovable, where anyone can build software through conversation.
 
-His working thesis: the most underrated moat in AI is trust, and earning it take…
+His working thesis: the most underrated moat in AI is trust,…
         <a href="https://x.com/claudeai/status/2062558332695556378" target="_blank">↗ 查看原推</a>
       </div>
       <div class="sumbox lime">
@@ -1281,11 +1403,8 @@ His working thesis: the most underrated moat in AI is trust, and earning it take
       </div>
       <div class="engage">❤ 1987 &nbsp;↻ 134 &nbsp;💬 171</div>
     </div></div>
-</div>
 
-<!-- Tab: 播客专题 -->
-<div class="tab-panel page" id="panel-podcast">
-  
+    
   <div class="feature-wrap">
     <div class="feature-hero">
       <div class="feat-kicker">播客 · Podcast</div>
@@ -1294,24 +1413,25 @@ His working thesis: the most underrated moat in AI is trust, and earning it take
     </div>
     <div class="feature-body-grid">
       <div class="feat-main">
-        <p class="feat-body drop">## 核心要义</p><p>AI在科学发现上的突破不是突发的灵光一现，而是强化学习（Reinforcement Learning）这条路径被推到一个新量级后的自然结果——就像给一个只会做题的学生配上了一套"试错—反馈"的科学研究方法论。</p>
-        <p class="feat-body">## 背景与人物</p><p>Dan Roberts，OpenAI强化学习基础团队负责人，MIT理论物理学博士。他的学术背景很有趣：研究的是量子引力、黑洞信息和计算极限——换句话说，他一直在思考"宇宙的计算能力边界是什么"。</p>
-        <p class="feat-body">这个视角让他在看待AI时，与大多数工程师截然不同：他不是在"造工具"，而是在研究"智能如何从物理规律中涌现"。</p>
-        <p class="feat-body">## 关键洞察</p><p><strong>1. 强化学习的"科学范式"正在取代预训练的"语文范式"</strong></p><p>大多数人理解的AI能力（GPT等大语言模型）本质上是"预测下一个词"，这更像一个超级强大的文本重构器。</p>
+        <p class="feat-body drop"># 摘要：OpenAI研究员Dan Roberts：AI正在从工具变成发现者</p><p><strong>一句话核心洞察</strong>：AI模型正在从“执行指令”进化到“自主发现科学真理”，而这一突破的引擎并非更庞大的数据，而是一种古老的算法——强化学习。</p>
+        <p class="feat-body">Dan Roberts是OpenAI“强化学习基础”团队的负责人，位处AI研究的最前沿。他并非典型的硅谷工程师，而是一位理论物理学家，曾师从MIT研究量子引力与黑洞信息悖论，甚至撰写过《深度学习理论原理》一书。这段背景并非装饰——正是物理学家的思维框架，让他能够看清AI正在发生的根本性转变。</p>
+        <p class="feat-body">Roberts认为，AI真正质变的时刻不在于它能生成多逼真的文本或图像，而在于它开始敢于“假定自己错了”。这正是破解埃尔多什数学难题时的关键——模型没有盲目相信自己的初步答案，而是主动探索另一条路径，最终做出人类级别的数学发现。</p>
+        <p class="feat-body">“当GPT能够假定自己是错误的，当你逆流而行做那样反直觉的事情时，你必须对自己所做的事有极强的信念，才能坚持走完那条漫长的计算路径。</p>
         <div class="feat-meta">
           <a href="https://www.youtube.com/watch?v=oWOz2htozfI" target="_blank">↗ 查看原视频</a>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+</div><!-- /panel-global -->
 
 <!-- ══ FOOTER ══ -->
 <footer class="site-footer">
   <div class="footer-motto"><em>AI Signal</em> · Builder 动态 · 每日精选</div>
   <div class="footer-note">
     数据来源：X 公开推文 &amp; 播客转录 &nbsp;·&nbsp; AI 辅助摘要 &nbsp;·&nbsp; 观点归属原作者<br>
-    生成日期 {{DATE_SHORT}} &nbsp;·&nbsp; 第 002 期 &nbsp;·&nbsp; AI Signal via follow-builders-daily
+    生成日期 {{DATE_SHORT}} &nbsp;·&nbsp; 第 003 期
   </div>
 </footer>
 
@@ -1320,20 +1440,16 @@ His working thesis: the most underrated moat in AI is trust, and earning it take
 (function () {
   var nav = document.getElementById('main-nav');
   if (!nav) return;
-
   var tabs = Array.prototype.slice.call(nav.querySelectorAll('a[data-tab]'));
 
   function activateTab(tabId) {
-    // 切换导航高亮
     tabs.forEach(function(t) {
       t.classList.toggle('active', t.getAttribute('data-tab') === tabId);
     });
-    // 切换面板显示
     var panels = document.querySelectorAll('.tab-panel');
     panels.forEach(function(p) {
       p.classList.toggle('active', p.id === 'panel-' + tabId);
     });
-    // 存储当前 tab
     try { sessionStorage.setItem('activeTab', tabId); } catch(e) {}
   }
 
@@ -1341,14 +1457,10 @@ His working thesis: the most underrated moat in AI is trust, and earning it take
     tab.addEventListener('click', function(e) {
       e.preventDefault();
       activateTab(tab.getAttribute('data-tab'));
-      // 平滑滚到内容区顶部
-      var navH = nav.offsetHeight;
-      var leadH = document.querySelector('.lead-banner') ? document.querySelector('.lead-banner').offsetHeight : 0;
-      window.scrollTo({ top: navH + leadH + document.querySelector('.masthead').offsetHeight - navH, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
 
-  // 恢复上次选中的 tab（同一浏览会话内）
   var saved;
   try { saved = sessionStorage.getItem('activeTab'); } catch(e) {}
   var firstTab = tabs.length ? tabs[0].getAttribute('data-tab') : null;
