@@ -1,0 +1,10 @@
+{
+  "name": "ai-signal",
+  "version": "1.0.0",
+  "description": "AI Signal · Builder 动态 · 每日精选",
+  "type": "module",
+  "scripts": {
+    "generate": "node scripts/generate.js",
+    "dev": "node scripts/generate.js"
+  }
+}
