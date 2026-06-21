@@ -377,7 +377,6 @@ async function callDeepSeekSearch(userMessage) {
 
 // ── Step 6: 渲染国内 AI 新闻板块 ──
 async function renderChinaSection(blogs, today) {
-  // 优先用 DeepSeek 搜索的新闻
   const news = await fetchChinaNews(today);
 
   if (news.length === 0) {
@@ -391,7 +390,9 @@ async function renderChinaSection(blogs, today) {
 
   const rows = [];
   for (let i = 0; i < news.length; i += 2) {
-      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(item.title + ' ' + (item.source || ''))}`;
+    const chunk = news.slice(i, i + 2).map(item => {
+      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent((item.title || '') + ' ' + (item.source || ''))}`;
+      const linkUrl = item.url || searchUrl;
       return `
     <div class="gcol">
       <div class="art-kicker">${escapeHtml(item.source || '国内动态')}</div>
@@ -403,19 +404,17 @@ async function renderChinaSection(blogs, today) {
         <p>${escapeHtml(item.term)}</p>
       </div>` : ''}
       <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
-        来源：<a href="${item.url || searchUrl}" target="_blank" style="color:var(--orange);text-decoration:underline;">${escapeHtml(item.source || '查看原文')} ↗</a>
+        来源：<a href="${linkUrl}" target="_blank" style="color:var(--orange);text-decoration:underline;">${escapeHtml(item.source || '查看原文')} ↗</a>
       </div>
     </div>`;
+    }).join('');
 
-    const gridClass = i === 0 ? 'grid-3' : 'grid-3-row2';
-    // 如果只有2条，用2列布局
-    const gridStyle = chunk.split('<div class="gcol">').length - 1 < 3
-      ? `display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--black);background:var(--black);`
+    const count = news.slice(i, i + 2).length;
+    const gridStyle = count < 3
+      ? `display:grid;grid-template-columns:${count === 1 ? '1fr' : '1fr 1fr'};gap:0;border:2px solid var(--black);background:var(--black);`
       : '';
-    rows.push(gridStyle
-      ? `<div class="${gridClass}" style="${gridStyle}">${chunk}</div>`
-      : `<div class="${gridClass}">${chunk}</div>`
-    );
+    const gridClass = i === 0 ? 'grid-3' : 'grid-3-row2';
+    rows.push(`<div class="${gridClass}"${gridStyle ? ` style="${gridStyle}"` : ''}>${chunk}</div>`);
   }
 
   return `
