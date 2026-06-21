@@ -510,8 +510,12 @@ async function main() {
     ? readFileSync(join(ROOT, 'prompts', 'summarize-tweets.md'), 'utf-8')
     : tweetPrompt;
 
-  // 3. 生成摘要
-  const builders = await summarizeTweets(feedX.x || [], localTweetPrompt);
+  // 3. 生成摘要，过滤掉无实质内容的 Builder
+  const allBuilders = await summarizeTweets(feedX.x || [], localTweetPrompt);
+  const builders = allBuilders.filter(b =>
+    b.summary && !b.summary.includes('本期无实质更新')
+  );
+  console.log(`✅ 有效 Builder：${builders.length} 位（过滤掉 ${allBuilders.length - builders.length} 位无实质内容）`);
   const podcast  = await summarizePodcast(feedPodcasts.podcasts?.[0], podcastPrompt);
 
   // 4. 编辑决策
