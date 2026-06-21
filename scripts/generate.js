@@ -203,14 +203,17 @@ ${podcast ? `\n播客：${podcast.title}\n${podcast.summary}` : ''}
     {"name": "Builder名字", "text": "一句话核心信息（30字以内，中文）"},
     {"name": "Builder名字", "text": "一句话核心信息（30字以内，中文）"}
   ],
-  "quoteText": "今日最精彩的观点，用中文表达，可以是翻译自推文或播客（50字以内）",
+  "quoteText": "今日最值得记住的一句话。翻译要求：1)必须是中文；2)地道自然，像中国人说的话，绝不逐字直译；3)长度不限，但要精炼；4)最重要：要有洞见、能引发思考，让人读完想停下来回味一下",
   "quoteAttr": "作者中文名 · @handle",
   "editorial": "主编按语，2-3句话串联今天的主题（80字以内，中文）",
   "tags": ["#标签1", "#标签2", "#标签3", "#标签4"]
 }`;
 
   try {
-    const raw = await callClaude('你是专业的 AI 行业日报主编，擅长提炼关键信号。', prompt);
+    const raw = await callClaude(
+      '你是专业的 AI 行业日报主编，擅长提炼关键信号。特别注意：金句翻译要像中国人说的话，简洁有力，绝不机器直译。',
+      prompt
+    );
     const cleaned = raw.replace(/```json\n?|\n?```/g, '').trim();
     const result = JSON.parse(cleaned);
     console.log('✅ 编辑决策完成');
