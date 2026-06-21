@@ -79,20 +79,28 @@ function formatChineseDate(dateStr) {
 
 // ── 获取历史版本列表 ──
 function getHistoryLinks(currentDate) {
-  if (!existsSync(DOCS_DIR)) return `<a href="./${currentDate}.html" class="current">${currentDate} · 最新</a>`;
+  let files = [];
 
-  const files = readdirSync(DOCS_DIR)
-    .filter(f => /^\d{4}-\d{2}-\d{2}\.html$/.test(f))
-    .map(f => f.replace('.html', ''))
-    .sort((a, b) => b.localeCompare(a))
-    .slice(0, 7);
+  if (existsSync(DOCS_DIR)) {
+    files = readdirSync(DOCS_DIR)
+      .filter(f => /^\d{4}-\d{2}-\d{2}\.html$/.test(f))
+      .map(f => f.replace('.html', ''))
+      .sort((a, b) => b.localeCompare(a)); // 倒序：最新在前
+  }
 
+  // 确保今日日期在列表里
   if (!files.includes(currentDate)) files.unshift(currentDate);
 
-  return files.map((date, i) => {
-    const label = i === 0 ? `${date} · 最新` : date;
-    const cls = date === currentDate ? ' class="current"' : '';
-    return `<a href="./${date}.html"${cls}>${label}</a>`;
+  // 最多显示 7 条，今日永远第一
+  const display = files.slice(0, 7);
+
+  return display.map((date) => {
+    const isToday = date === currentDate;
+    const label = isToday ? `${date} · 最新` : date;
+    const cls = isToday ? ' class="current"' : '';
+    // 今日用 index.html（保证始终可达），历史用具体日期文件
+    const href = isToday ? './index.html' : `./${date}.html`;
+    return `<a href="${href}"${cls}>${label}</a>`;
   }).join('\n    ');
 }
 
@@ -259,13 +267,13 @@ function renderBuilderCards(builders) {
 function renderPodcastSection(podcast) {
   if (!podcast) return '<p style="padding:24px;color:var(--ink3);">今日暂无播客更新。</p>';
 
-  // 把摘要按句号分段，每段不超过150字，最多取4段
+  // 先转 Markdown 再转义（顺序很重要：先处理格式，再 escape）
   const rawSummary = podcast.summary || '';
   const sentences = rawSummary.split(/(?<=。|！|？)/).filter(s => s.trim().length > 0);
   const paragraphs = [];
   let current = '';
   for (const s of sentences) {
-    if ((current + s).length > 150) {
+    if ((current + s).length > 180) {
       if (current) paragraphs.push(current.trim());
       current = s;
     } else {
@@ -274,9 +282,18 @@ function renderPodcastSection(podcast) {
     if (paragraphs.length >= 3) break;
   }
   if (current && paragraphs.length < 4) paragraphs.push(current.trim());
+
+  // 注意：先 mdToHtml（处理**），再 escape 只对纯文本部分
   const summaryHtml = paragraphs
-    .map((p, i) => `<p class="feat-body${i === 0 ? ' drop' : ''}">${mdToHtml(p)}</p>`)
+    .map((p, i) => `<p class="feat-body${i === 0 ? ' drop' : ''}">${mdToHtml(p.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'))}</p>`)
     .join('\n        ');
+
+  // 提取关键词作为右侧侧边栏
+  const keyPoints = sentences.slice(0, 4).map((s, i) => `
+      <div class="kp">
+        <div class="kp-n">${i + 1}</div>
+        <div class="kp-t">${mdToHtml(s.trim().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'))}</div>
+      </div>`).join('');
 
   return `
   <div class="feature-wrap">
@@ -291,6 +308,10 @@ function renderPodcastSection(podcast) {
         <div class="feat-meta">
           <a href="${podcast.url}" target="_blank">↗ 查看原视频</a>
         </div>
+      </div>
+      <div class="feat-sidebar">
+        <div class="kp-header">核心要点</div>
+        ${keyPoints}
       </div>
     </div>
   </div>`;
@@ -370,7 +391,8 @@ async function renderChinaSection(blogs, today) {
 
   const rows = [];
   for (let i = 0; i < news.length; i += 2) {
-    const chunk = news.slice(i, i + 2).map(item => `
+      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(item.title + ' ' + (item.source || ''))}`;
+      return `
     <div class="gcol">
       <div class="art-kicker">${escapeHtml(item.source || '国内动态')}</div>
       <h3 class="art-hed">${escapeHtml(item.title || '')}</h3>
@@ -380,12 +402,10 @@ async function renderChinaSection(blogs, today) {
         <div class="lbl">名词解释</div>
         <p>${escapeHtml(item.term)}</p>
       </div>` : ''}
-      ${item.url ? `
       <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
-        来源：<a href="${item.url}" target="_blank" style="color:var(--orange);text-decoration:underline;">${escapeHtml(item.source || '查看原文')} ↗</a>
-      </div>` : `
-      <div style="margin-top:10px;font-size:11px;color:var(--ink3);">来源：${escapeHtml(item.source || '')}</div>`}
-    </div>`).join('');
+        来源：<a href="${item.url || searchUrl}" target="_blank" style="color:var(--orange);text-decoration:underline;">${escapeHtml(item.source || '查看原文')} ↗</a>
+      </div>
+    </div>`;
 
     const gridClass = i === 0 ? 'grid-3' : 'grid-3-row2';
     // 如果只有2条，用2列布局
