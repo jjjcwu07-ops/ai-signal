@@ -954,8 +954,8 @@
   <!-- ══ QUOTE OF THE DAY ══ -->
   <div class="qotd-wrap">
     <div class="qotd-label">「一句话」 of the day</div>
-    <blockquote class="qotd">“Audio is the human-preferred input to AIs, but vision—HTML, animations, video—is the preferred output from them.”</blockquote>
-    <div class="qotd-attr">— Andrej Karpathy &nbsp;<span style="color:var(--ink4);font-weight:400;">@karpathy &nbsp;·&nbsp; 2026.05.12</span></div>
+    <blockquote class="qotd">{{QUOTE_TEXT}}</blockquote>
+    <div class="qotd-attr">{{QUOTE_ATTR}}</div>
   </div>
 
   <!-- ══ EDITORIAL + TAGS ══ -->
@@ -981,9 +981,12 @@
 
   {{BUILDER_CARDS}}
 
-    {{PODCAST_SECTION}}
-
 </div><!-- /panel-global -->
+
+<!-- Tab 面板：播客专题 -->
+<div class="tab-panel page" id="panel-podcast">
+  {{PODCAST_SECTION}}
+</div>
 
 <!-- ══ FOOTER ══ -->
 <footer class="site-footer">
