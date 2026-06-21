@@ -122,7 +122,13 @@ Builder 信息：
 - Bio：${builder.bio || '无'}
 
 推文内容：
-${tweetsText}`;
+${tweetsText}
+
+要求：
+1. 用自然流畅的中文写作，像人写的文章，不是机器翻译
+2. 直接陈述事实和观点，不要用"该推文""作者表示"这类新闻腔
+3. 专有名词保留英文（如 Claude Code、GPT-4 等），其他内容用中文
+4. 如果内容不够，直接写"本期无实质更新，建议查看原推"`;
 
     try {
       const summary = await callClaude(prompt, userMsg);
@@ -376,8 +382,9 @@ async function renderChinaSection(blogs, today) {
       </div>` : ''}
       ${item.url ? `
       <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
-        来源：<a href="${item.url}" target="_blank" style="color:var(--orange);text-decoration:none;">${escapeHtml(item.source || '查看原文')} ↗</a>
-      </div>` : `<div style="margin-top:10px;font-size:11px;color:var(--ink4);">来源：${escapeHtml(item.source || '')}</div>`}
+        来源：<a href="${item.url}" target="_blank" style="color:var(--orange);text-decoration:underline;">${escapeHtml(item.source || '查看原文')} ↗</a>
+      </div>` : `
+      <div style="margin-top:10px;font-size:11px;color:var(--ink3);">来源：${escapeHtml(item.source || '')}</div>`}
     </div>`).join('');
 
     const gridClass = i === 0 ? 'grid-3' : 'grid-3-row2';
