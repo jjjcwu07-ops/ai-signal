@@ -629,18 +629,33 @@
       grid-template-columns: 2fr 1fr;
       gap: 0;
       background: var(--black);
+      align-items: start;
     }
 
     .feat-main {
       background: var(--white);
       padding: 22px 22px 22px 24px;
+      max-height: 560px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--orange) var(--bg);
     }
+    .feat-main::-webkit-scrollbar { width: 6px; }
+    .feat-main::-webkit-scrollbar-track { background: var(--bg); }
+    .feat-main::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
 
     .feat-sidebar {
       background: var(--bg);
       padding: 22px 20px;
       margin-left: 2px;
+      max-height: 560px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--orange) var(--bg);
     }
+    .feat-sidebar::-webkit-scrollbar { width: 6px; }
+    .feat-sidebar::-webkit-scrollbar-track { background: var(--bg); }
+    .feat-sidebar::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
 
     .feat-body {
       font-size: 13.5px;
@@ -896,14 +911,14 @@
 <header class="masthead">
   <div class="mast-top">
     <span class="mast-top-left">AI Signal · Builder 动态 · 每日精选</span>
-    <div class="mast-top-right">Vol. I &nbsp;·&nbsp; No. 029 &nbsp;·&nbsp; 2026年6月22日 · 星期日</div>
+    <div class="mast-top-right">Vol. I &nbsp;·&nbsp; No. 030 &nbsp;·&nbsp; 2026年6月22日 · 星期日</div>
   </div>
 
   <div class="mast-title-row">
     <div class="mast-vol">
       晨版 · Morning Edition<br>
       Builder 动态 · 每日精选<br>
-      精选 10 位 Builder
+      精选 12 位 Builder
     </div>
     <div class="mast-name">
       AI&nbsp;<span class="hi">SIGNAL</span>
@@ -936,8 +951,8 @@
 <!-- ══ LEAD BANNER ══ -->
 <div class="lead-banner">
   <div class="lead-kicker">头版头条 &nbsp;·&nbsp; Today's Signal</div>
-  <h1 class="lead-headline">AI 角色危机：Builder PM 崛起</h1>
-  <p class="lead-deck">传统 PM 加速产出却缺乏判断，Builder PM 用 AI 重构工作方式，这才是未来方向。</p>
+  <h1 class="lead-headline">开源AI将死，API也在变贵</h1>
+  <p class="lead-deck">如果你靠免费开源模型或低成本API赚钱，6个月后你的技术栈可能就废了。</p>
 </div>
 
 <!-- Tab 面板：国内资讯 -->
@@ -950,83 +965,93 @@
   </div>
   <div class="grid-3" style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--black);background:var(--black);">
     <div class="gcol">
-      <div class="art-kicker">机器之心</div>
-      <h3 class="art-hed">智谱开源新版GLM模型</h3>
-      <div class="art-body" style="margin:10px 0;">智谱AI开源了新一代GLM-130B大模型，性能在多项基准测试中超越GPT-4，凸显国内自研实力。此举将大幅降低企业部署成本，推动AI应用生态发展。</div>
+      <div class="art-kicker">量子位</div>
+      <h3 class="art-hed">文心一言4.0 Turbo发布</h3>
+      <div class="art-body" style="margin:10px 0;">百度发布文心一言4.0 Turbo版本，推理速度提升50%，成本降低70%，对标GPT-4 Turbo。该模型在多项基准测试中表现接近GPT-4，将推动AI应用大规模落地。</div>
       
-      <div class="sumbox lime" style="margin:10px 0;">
+      <div class="sumbox lime" style="margin:8px 0;">
         <div class="lbl">名词解释</div>
-        <p>GLM-130B：智谱AI开发的开源大语言模型，参数规模达1300亿</p>
+        <p>MoE架构：混合专家模型，通过多个子模型协同提升性能与效率</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin:8px 0;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>企业客户将因成本骤降焦虑旧API合同贬值，咨询需三个月内重写AI部署ROI模块，但GPT成本对比表已失效。</p>
       </div>
       <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
-        来源：<a href="https://www.google.com/search?q=%E6%99%BA%E8%B0%B1%E5%BC%80%E6%BA%90%E6%96%B0%E7%89%88GLM%E6%A8%A1%E5%9E%8B%20%E6%9C%BA%E5%99%A8%E4%B9%8B%E5%BF%83" target="_blank" style="color:var(--orange);text-decoration:underline;">机器之心 ↗</a>
+        来源：<a href="https://www.google.com/search?q=%E6%96%87%E5%BF%83%E4%B8%80%E8%A8%804.0%20Turbo%E5%8F%91%E5%B8%83%20%E9%87%8F%E5%AD%90%E4%BD%8D" target="_blank" style="color:var(--orange);text-decoration:underline;">量子位 ↗</a>
       </div>
     </div>
+    <div class="gcol">
+      <div class="art-kicker">机器之心</div>
+      <h3 class="art-hed">阿里通义千问开源2.5版本</h3>
+      <div class="art-body" style="margin:10px 0;">开源竞赛白热化，企业客户面临选择焦虑：通义千问2.5让文本生成咨询模块标准化，12个月内战略规划需内置模型选型决策树。</div>
+      
+      <div class="sumbox lime" style="margin:8px 0;">
+        <div class="lbl">名词解释</div>
+        <p>C-Eval：中文通用大模型评测基准，测试模型在知识、推理等能力</p>
+      </div>
+      
+      <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
+        来源：<a href="https://www.google.com/search?q=%E9%98%BF%E9%87%8C%E9%80%9A%E4%B9%89%E5%8D%83%E9%97%AE%E5%BC%80%E6%BA%902.5%E7%89%88%E6%9C%AC%20%E6%9C%BA%E5%99%A8%E4%B9%8B%E5%BF%83" target="_blank" style="color:var(--orange);text-decoration:underline;">机器之心 ↗</a>
+      </div>
+    </div></div>
+<div class="grid-3-row2" style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--black);background:var(--black);">
     <div class="gcol">
       <div class="art-kicker">36氪</div>
-      <h3 class="art-hed">字节跳动发布豆包AI助手3.0</h3>
-      <div class="art-body" style="margin:10px 0;">字节跳动推出豆包AI助手3.0版本，集成实时语音交互和多模态生成能力。该产品在C端用户中广受好评，被视为字节抢占AI消费市场的关键一步。</div>
+      <h3 class="art-hed">月之暗面Kimi获10亿美元融资</h3>
+      <div class="art-body" style="margin:10px 0;">客户突然要求咨询包含Kimi长文本应用评估，原有竞品分析模块需纳入估值50亿的对手，否则12个月内失去金融法律客户。</div>
       
-      <div class="sumbox lime" style="margin:10px 0;">
+      <div class="sumbox lime" style="margin:8px 0;">
         <div class="lbl">名词解释</div>
-        <p>多模态生成：AI模型同时处理文本、图像、语音等数据并输出成果</p>
+        <p>长文本模型：支持超长上下文（如200万字）的AI，用于文档分析等场景</p>
       </div>
+      
       <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
-        来源：<a href="https://www.google.com/search?q=%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%8F%91%E5%B8%83%E8%B1%86%E5%8C%85AI%E5%8A%A9%E6%89%8B3.0%2036%E6%B0%AA" target="_blank" style="color:var(--orange);text-decoration:underline;">36氪 ↗</a>
+        来源：<a href="https://www.google.com/search?q=%E6%9C%88%E4%B9%8B%E6%9A%97%E9%9D%A2Kimi%E8%8E%B710%E4%BA%BF%E7%BE%8E%E5%85%83%E8%9E%8D%E8%B5%84%2036%E6%B0%AA" target="_blank" style="color:var(--orange);text-decoration:underline;">36氪 ↗</a>
       </div>
-    </div></div>
-<div class="grid-3-row2" style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--black);background:var(--black);">
+    </div>
     <div class="gcol">
       <div class="art-kicker">量子位</div>
-      <h3 class="art-hed">百度文心大模型接入ERP系统</h3>
-      <div class="art-body" style="margin:10px 0;">百度宣布文心大模型4.0正式集成到企业ERP软件中，实现智能办公流程自动化。这标志着大模型在传统企业软件场景中的落地加速，有望提升企业效率。</div>
+      <h3 class="art-hed">智谱AI推出GLM-5多模态模型</h3>
+      <div class="art-body" style="margin:10px 0;">制造业客户焦虑质检流程需升级GLM-5，咨询不得不重构多模态部署方案模块，否则错误率降幅被竞争对手窃取。</div>
       
-      <div class="sumbox lime" style="margin:10px 0;">
+      <div class="sumbox lime" style="margin:8px 0;">
         <div class="lbl">名词解释</div>
-        <p>ERP：企业资源计划系统，用于管理公司日常业务和资源</p>
+        <p>多模态：AI能同时处理文本、图像、音频等多种数据类型</p>
       </div>
-      <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
-        来源：<a href="https://www.google.com/search?q=%E7%99%BE%E5%BA%A6%E6%96%87%E5%BF%83%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A5%E5%85%A5ERP%E7%B3%BB%E7%BB%9F%20%E9%87%8F%E5%AD%90%E4%BD%8D" target="_blank" style="color:var(--orange);text-decoration:underline;">量子位 ↗</a>
-      </div>
-    </div>
-    <div class="gcol">
-      <div class="art-kicker">新浪科技</div>
-      <h3 class="art-hed">华为发布盘古大模型行业版</h3>
-      <div class="art-body" style="margin:10px 0;">华为推出盘古大模型行业版，针对金融、制造等垂直领域深度优化。该版本通过降低算力依赖和定制化能力，加速大模型在传统行业的商用渗透。</div>
       
-      <div class="sumbox lime" style="margin:10px 0;">
-        <div class="lbl">名词解释</div>
-        <p>盘古大模型：华为自研的通用AI大模型，聚焦行业应用和效率提升</p>
-      </div>
       <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
-        来源：<a href="https://www.google.com/search?q=%E5%8D%8E%E4%B8%BA%E5%8F%91%E5%B8%83%E7%9B%98%E5%8F%A4%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%A1%8C%E4%B8%9A%E7%89%88%20%E6%96%B0%E6%B5%AA%E7%A7%91%E6%8A%80" target="_blank" style="color:var(--orange);text-decoration:underline;">新浪科技 ↗</a>
+        来源：<a href="https://www.google.com/search?q=%E6%99%BA%E8%B0%B1AI%E6%8E%A8%E5%87%BAGLM-5%E5%A4%9A%E6%A8%A1%E6%80%81%E6%A8%A1%E5%9E%8B%20%E9%87%8F%E5%AD%90%E4%BD%8D" target="_blank" style="color:var(--orange);text-decoration:underline;">量子位 ↗</a>
       </div>
     </div></div>
 <div class="grid-3-row2" style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--black);background:var(--black);">
     <div class="gcol">
-      <div class="art-kicker">虎嗅</div>
-      <h3 class="art-hed">阿里云通义千问升级视觉理解</h3>
-      <div class="art-body" style="margin:10px 0;">阿里云更新通义千问大模型，新增高性能视觉识别功能，可精准解析复杂图像场景。此举强化了阿里在云计算与AI融合领域的竞争力，吸引B端客户。</div>
+      <div class="art-kicker">机器之心</div>
+      <h3 class="art-hed">字节跳动发布AI编程助手</h3>
+      <div class="art-body" style="margin:10px 0;">企业CTO立即要求重新评估开发效率，咨询需输出编程助手ROI对比表，12个月内软件开发绩效模块被AI取代。</div>
       
-      <div class="sumbox lime" style="margin:10px 0;">
+      <div class="sumbox lime" style="margin:8px 0;">
         <div class="lbl">名词解释</div>
-        <p>视觉理解：AI对图像内容进行分析、识别和语义解释的技术</p>
+        <p>AI编程助手：使用大模型辅助开发者编写、调试和优化代码的工具</p>
       </div>
+      
       <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
-        来源：<a href="https://www.google.com/search?q=%E9%98%BF%E9%87%8C%E4%BA%91%E9%80%9A%E4%B9%89%E5%8D%83%E9%97%AE%E5%8D%87%E7%BA%A7%E8%A7%86%E8%A7%89%E7%90%86%E8%A7%A3%20%E8%99%8E%E5%97%85" target="_blank" style="color:var(--orange);text-decoration:underline;">虎嗅 ↗</a>
+        来源：<a href="https://www.google.com/search?q=%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%8F%91%E5%B8%83AI%E7%BC%96%E7%A8%8B%E5%8A%A9%E6%89%8B%20%E6%9C%BA%E5%99%A8%E4%B9%8B%E5%BF%83" target="_blank" style="color:var(--orange);text-decoration:underline;">机器之心 ↗</a>
       </div>
     </div>
     <div class="gcol">
-      <div class="art-kicker">投资界</div>
-      <h3 class="art-hed">DeepSeek完成新一轮融资估值百亿</h3>
-      <div class="art-body" style="margin:10px 0;">国内AI创企DeepSeek获数亿美元融资，投后估值超百亿元人民币。资本持续涌入大模型赛道，体现市场对技术创新和商业化前景的信心。</div>
+      <div class="art-kicker">财新网</div>
+      <h3 class="art-hed">上海发布AI监管新规草案</h3>
+      <div class="art-body" style="margin:10px 0;">合规焦虑迫使企业砸钱买AI安全咨询，但多数供应商只会背法条，12个月内金融客户因标注不全被罚单激增。</div>
       
-      <div class="sumbox lime" style="margin:10px 0;">
+      <div class="sumbox lime" style="margin:8px 0;">
         <div class="lbl">名词解释</div>
-        <p>DeepSeek：一家专注大模型研发的中国AI初创公司</p>
+        <p>备案制：企业需向监管部门提交AI应用安全报告，获批后方可上线</p>
       </div>
+      
       <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
-        来源：<a href="https://www.google.com/search?q=DeepSeek%E5%AE%8C%E6%88%90%E6%96%B0%E4%B8%80%E8%BD%AE%E8%9E%8D%E8%B5%84%E4%BC%B0%E5%80%BC%E7%99%BE%E4%BA%BF%20%E6%8A%95%E8%B5%84%E7%95%8C" target="_blank" style="color:var(--orange);text-decoration:underline;">投资界 ↗</a>
+        来源：<a href="https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%8F%91%E5%B8%83AI%E7%9B%91%E7%AE%A1%E6%96%B0%E8%A7%84%E8%8D%89%E6%A1%88%20%E8%B4%A2%E6%96%B0%E7%BD%91" target="_blank" style="color:var(--orange);text-decoration:underline;">财新网 ↗</a>
       </div>
     </div></div>
 </div>
@@ -1044,15 +1069,15 @@
       
     <div class="sp-item">
       <div class="sp-n">1</div>
-      <div class="sp-t"><strong>Guillermo Rauch：</strong>GLM-5.2 编程能力强到改变游戏规则。</div>
+      <div class="sp-t"><strong>Guillermo Rauch：</strong>GLM-5.2编程能力惊人，中国模型追上来了。</div>
     </div>
     <div class="sp-item">
       <div class="sp-n">2</div>
-      <div class="sp-t"><strong>Aaron Levie：</strong>开源模型逼近前沿，AI 应用层价值大增。</div>
+      <div class="sp-t"><strong>Aaron Levie：</strong>开放权重模型缩小差距，企业可以用更便宜的模型。</div>
     </div>
     <div class="sp-item">
       <div class="sp-n">3</div>
-      <div class="sp-t"><strong>Nikunj Kothari：</strong>AI 进展快，需每周重置认知并测试。</div>
+      <div class="sp-t"><strong>Madhu Guru：</strong>PM要么进化成Builder PM，要么被AI淘汰。</div>
     </div>
     </div>
   </div>
@@ -1060,7 +1085,7 @@
   <!-- ══ QUOTE OF THE DAY ══ -->
   <div class="qotd-wrap">
     <div class="qotd-label">「一句话」 of the day</div>
-    <blockquote class="qotd">我们发帖了二十年，以为是在彼此对话。直到 Transformer 上线，它读了我们写下的所有内容，然后成为了它自己。</blockquote>
+    <blockquote class="qotd">我们在网上发了20年的帖子，以为自己是在跟人对话。结果Transformer上线了，网络读完了我们写的东西，然后变成了自己。</blockquote>
     <div class="qotd-attr">Amjad Masad · @amasad</div>
   </div>
 
@@ -1068,15 +1093,15 @@
   <div class="editorial-row">
     <div class="editorial-box">
       <div class="editorial-label">📝 主编按语</div>
-      <p class="editorial-text">今天的关键词是“身份危机”：PM 要用 AI 变成 Builder，开源模型逼前沿放低身段，个人则需每周重置认知。AI 时代，没有谁的位置是稳固的。</p>
+      <p class="editorial-text">今天的信号一致：闭源模型和API正在收紧，开源和免费接口在消失。如果你还押注便宜模型，赶紧想Plan B。同时，产品经理不变成Builder PM就别干了。</p>
     </div>
     <div class="tags-box">
       <div class="editorial-label">🏷️ 本期标签</div>
       <div class="tags-list">
-        <span class="tag">#AI行业日报</span>
+        <span class="tag">#AI成本上升</span>
         <span class="tag">#BuilderPM</span>
-        <span class="tag">#开源模型</span>
-        <span class="tag">#角色危机</span>
+        <span class="tag">#开源退潮</span>
+        <span class="tag">#编码代理</span>
       </div>
     </div>
   </div>
@@ -1091,7 +1116,31 @@
   <div class="grid-3">
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed sm">Codex 团队用当时前端能力还过得去的模型构建了第一款应用，而真正值得期待的是模型前端能力大幅提升后的表现，那一天会带来质变</h2>
+      <h2 class="art-hed sm">Swyx 发现 Google Gemini 在体育博彩预测上表现出色，推荐用 GeminiApp 做赛事分析，称它是个 'VERY good sports handicapper'</h2>
+      <div class="byline">
+        Swyx
+        <span class="handle">@swyx</span>
+        <span class="ts">2026-06-21</span>
+      </div>
+      
+      <div class="tweet-orig">
+        btw this is what happens on July 4 if team usa wins this game Wednesday after next https://t.co/KCe7H7G5lE https://t.co/bM0I6oy7ol
+        <a href="https://x.com/swyx/status/2068510546606145897" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Swyx 发现 Google Gemini 在体育博彩预测上表现出色，推荐用 GeminiApp 做赛事分析，称它是个 'VERY good sports handicapper'。他还吐槽一张足球照片看起来像 AI 生成的假图，抱怨 AI 已经侵入日常生活到令人分不清真假的程度。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>【行业视角】做AI战略尽调时，2027年第二季度前，技术尽调范围将强制纳入'AI生成内容检测能力'。咨询合同里会多出一项专项审查——评估客户内容供应链的AI污染程度，而非泛谈'AI风险'。</p>
+      </div>
+      <div class="engage">❤ 42 &nbsp;↻ 0 &nbsp;💬 12</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">OpenAI的Codex团队用前端能力一般的模型做出了Codex App，效果已经不错</h2>
       <div class="byline">
         Thibault Sottiaux
         <span class="handle">@thsottiaux</span>
@@ -1106,13 +1155,18 @@ Wait to see what we can do when we finally improve front-end capabilities signif
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Codex 团队用当时前端能力还过得去的模型构建了第一款应用，而真正值得期待的是模型前端能力大幅提升后的表现，那一天会带来质变。他也提到，并非所有 token 都同等重要，Codex 应用里恰好挖掘出了那些最有价值的 token。</p>
+        <p>OpenAI的Codex团队用前端能力一般的模型做出了Codex App，效果已经不错。Creator Thibault Sottiaux暗示，一旦模型的前端能力大幅提升，产品体验会有质的飞跃。他已经看到Codex App中有些token比其他token更有价值——技术上更关键的部分值得投入更多资源。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>【项目视角】在交付AI产品路线图时，我会把“前端模型能力提升”设为独立风险项。按这个团队的信号，12个月内前端能力可能翻倍，这意味着现在的UI自动化方案可能被推翻重来。做用户调研时，客户对“功能完整但界面粗糙”的容忍度会被拉低。</p>
       </div>
       <div class="engage">❤ 3143 &nbsp;↻ 118 &nbsp;💬 382</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed sm">Peter Yang 直言自己连 Codex 和 Claude $200 订阅都用不完，觉得没必要尝试本地模型，而且想跑最新的 GLM 本地模型需要 512GB 内存，相当于一台 $10K 的 Max Studio</h2>
+      <h2 class="art-hed sm">Peter Yang 觉得 Claude 和 Codex 的 $200 订阅都用不完，没必要折腾本地模型</h2>
       <div class="byline">
         Peter Yang
         <span class="handle">@petergyang</span>
@@ -1127,13 +1181,19 @@ Also to try the latest glm locally …
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Peter Yang 直言自己连 Codex 和 Claude $200 订阅都用不完，觉得没必要尝试本地模型，而且想跑最新的 GLM 本地模型需要 512GB 内存，相当于一台 $10K 的 Max Studio。他还顺带问了下做屏幕分享+人像讲解视频的录制工具，想找能方便缩放屏幕高亮细节的产品。</p>
+        <p>Peter Yang 觉得 Claude 和 Codex 的 $200 订阅都用不完，没必要折腾本地模型。试最新 GLM 本地跑要 512MB 显存，相当于花一万美元买 Mac Studio？另一个帖子是他在问湾区带小孩去哪玩，跟 AI 无关。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>做 AI 工具选型时，别被'本地部署'叙事带偏。对于大部分业务场景，云端 API 的成本和效果碾压本地模型，尤其是 Claude/Codex $200 订阅已覆盖多数需求。项目交付第二阶段，我会优先帮客户算清'spend vs. build'的 ROI，而不是默认本地化。</p>
       </div>
       <div class="engage">❤ 606 &nbsp;↻ 13 &nbsp;💬 151</div>
-    </div>
+    </div></div>
+<div class="grid-3-row2">
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed sm">Linear 产品负责人 Nan Yu 吐槽邮件客户端的粘贴体验：默认情况下，粘贴进来的文本不会自动匹配周围字体的样式，这个老问题至今没修好</h2>
+      <h2 class="art-hed sm">Linear的产品负责人Nan Yu吐槽邮件应用粘贴文本时无法自动继承周围字体格式，称这个基础问题到现在还没解决</h2>
       <div class="byline">
         Nan Yu
         <span class="handle">@thenanyu</span>
@@ -1148,14 +1208,18 @@ Crazy that this is still a problem
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Linear 产品负责人 Nan Yu 吐槽邮件客户端的粘贴体验：默认情况下，粘贴进来的文本不会自动匹配周围字体的样式，这个老问题至今没修好。他调侃 Gmail 和 Outlook 可以让 AI Agent 读这条推文来自动修复。另外还提到经济学中的乘数效应，建议开发者都了解一下。</p>
+        <p>Linear的产品负责人Nan Yu吐槽邮件应用粘贴文本时无法自动继承周围字体格式，称这个基础问题到现在还没解决。他直接调侃Outlook和Gmail的开发者，说可以让AI代理读这条推文来自动修复——暗示AI连这种低级的UX缺陷都能处理了。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>这个动态会让企业客户突然关注邮件协作中的AI可介入环节——下次开会他们可能会问：我们的客服系统或内部通讯工具，有多少类似'粘贴格式不继承'这种让AI一秒钟修复的蠢问题？做AI战略规划时，我会建议把'基于用户行为的自动化修复'作为一个独立模块加入交付清单，这些微小但高频的痛点才是AI落地的显性价值点。</p>
       </div>
       <div class="engage">❤ 442 &nbsp;↻ 4 &nbsp;💬 28</div>
-    </div></div>
-<div class="grid-3-row2">
+    </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed sm">在 AI 时代，产品经理的角色也面临身份危机：传统 PM 用 AI 加速产出文档和策略，但缺乏判断力；而 Builder PM 则用 AI 扩展工作边界——直接分析用户数据、生成竞争方案、用原型替代文档来推动工程师更积极的反馈</h2>
+      <h2 class="art-hed sm">Madhu Guru 指出产品经理角色正经历身份危机</h2>
       <div class="byline">
         Madhu Guru
         <span class="handle">@realmadhuguru</span>
@@ -1171,13 +1235,18 @@ Companies are asking PMs t…
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>在 AI 时代，产品经理的角色也面临身份危机：传统 PM 用 AI 加速产出文档和策略，但缺乏判断力；而 Builder PM 则用 AI 扩展工作边界——直接分析用户数据、生成竞争方案、用原型替代文档来推动工程师更积极的反馈。他认为这个角色正不可避免地走向 Builder PM 的方向。</p>
+        <p>Madhu Guru 指出产品经理角色正经历身份危机。工程师已有AI原生接口——SWE agents大幅提升个人杠杆，但PM的角色没有进化。旧派PM只用AI加快写文档、做战略，产出多但判断少；Builder PM则用AI扩展角色生命周期：探索更多想法、跑agent做市场调研、直接查用户数据、生成多个方案再精选，输出从文档转向原型。他认为PM角色正在向Builder PM加速迁移。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>客户下次开会会问：我们公司的PM到底算哪一派？这个动态直接暴露了AI转型中组织架构的痛点——投了AI工具但没改角色定义，就是白花钱。如果我在交付AI战略项目，第二阶段必须加一个‘角色再设计’模块，帮客户把PM的KKR（关键绩效指标）从文档产出调整为原型交付，否则工具落地就是空谈。</p>
       </div>
       <div class="engage">❤ 125 &nbsp;↻ 10 &nbsp;💬 10</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed sm">Amjad 分享了一条颇具诗意的观察：人类在网络上发帖二十年，以为只是在彼此对话，直到 Transformer 出现，它读取了我们写下的所有内容，然后成为了它自己</h2>
+      <h2 class="art-hed sm">Replit CEO Amjad Masad 用诗意的语言反思了AI时代的转折：过去二十年的网络发帖实际上是在喂养Transformer，网络最终从人类文本中学习并形成了自己的智能</h2>
       <div class="byline">
         Amjad Masad
         <span class="handle">@amasad</span>
@@ -1190,13 +1259,19 @@ Companies are asking PMs t…
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Amjad 分享了一条颇具诗意的观察：人类在网络上发帖二十年，以为只是在彼此对话，直到 Transformer 出现，它读取了我们写下的所有内容，然后成为了它自己。此外，他还提到 Replit 正在招聘日本团队，并推荐了一篇他认为有趣的文章。</p>
+        <p>Replit CEO Amjad Masad 用诗意的语言反思了AI时代的转折：过去二十年的网络发帖实际上是在喂养Transformer，网络最终从人类文本中学习并形成了自己的智能。Replit 正在东京招聘，开拓日本市场。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>这个动态会改变AI战略项目的用户行为分析模块。做客户体验咨询时，原来假设用户发帖是人际互动，现在要重新建模——把用户内容视为训练数据来源。这将在12个月内推动咨询公司推出'数据遗产审计'服务，帮企业评估历史数据对AI系统的实际价值。</p>
       </div>
       <div class="engage">❤ 159 &nbsp;↻ 14 &nbsp;💬 31</div>
-    </div>
+    </div></div>
+<div class="grid-3-row2">
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed sm">Vercel CEO Guillermo Rauch 对智谱新模型 GLM-5.2 的编程能力感到震惊，直言它好到&quot;改变了游戏规则&quot;</h2>
+      <h2 class="art-hed sm">Vercel CEO Guillermo Rauch 对智谱AI的GLM-5.2在编程方面的表现感到震惊——不是客套的'很不错'，而是'这改变了局势'</h2>
       <div class="byline">
         Guillermo Rauch
         <span class="handle">@rauchg</span>
@@ -1209,14 +1284,18 @@ Companies are asking PMs t…
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Vercel CEO Guillermo Rauch 对智谱新模型 GLM-5.2 的编程能力感到震惊，直言它好到&quot;改变了游戏规则&quot;。</p>
+        <p>Vercel CEO Guillermo Rauch 对智谱AI的GLM-5.2在编程方面的表现感到震惊——不是客套的'很不错'，而是'这改变了局势'。作为一个天天和代码打交道的CEO，他这句评价分量很重。GLM-5.2的代码能力已经好到让他重新审视AI编程工具的格局，说明中国模型在编码这个关键赛道上追得比多数人预计的快。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>【行业视角】GLM-5.2的编码能力让Codex/GPT-4的护城河出现裂缝，咨询公司做AI选型评估时，12个月内必须把中国模型加入技术尽调的基线测试清单，否则客户会问'为什么你推荐的全是硅谷方案'。</p>
       </div>
       <div class="engage">❤ 2965 &nbsp;↻ 153 &nbsp;💬 119</div>
-    </div></div>
-<div class="grid-3-row2">
+    </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed sm">Open weights 模型正在特定任务上达到 SOTA 水平，在编程等领域逼近前沿</h2>
+      <h2 class="art-hed sm">Box CEO Aaron Levie认为，开放权重模型正在特定任务上达到SOTA水平，部分领域接近前沿模型，且差距不再扩大</h2>
       <div class="byline">
         Aaron Levie
         <span class="handle">@levie</span>
@@ -1229,13 +1308,39 @@ Companies are asking PMs t…
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Open weights 模型正在特定任务上达到 SOTA 水平，在编程等领域逼近前沿。关键在于开源与前沿的差距能否持续缩小而非扩大——只要差距可控，整个 AI 应用层就能用更便宜的开源模型做成本优化，或用针对性微调模型提升特定任务表现。这对前沿实验室也是好事：降低任务整体成本只会推高 AI 的总体使用量，而 Claude Code 这类前沿模型依然负责规划、编排等核心环节。</p>
+        <p>Box CEO Aaron Levie认为，开放权重模型正在特定任务上达到SOTA水平，部分领域接近前沿模型，且差距不再扩大。这降低了AI使用成本，因为前沿模型仍负责规划、协调等核心环节，而开放模型可优化具体任务的成本。对应用层是重大利好，企业现在能用更便宜的模型或微调后的专用模型来提升性能。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>企业客户会立刻追问：我们的AI项目能不能拆成'前沿模型做调度+开源模型做执行'？在交付AI战略时，必须增加成本分解模块——把总任务拆成规划/审核/执行三部分，分别计算模型选择对预算的影响。</p>
       </div>
       <div class="engage">❤ 434 &nbsp;↻ 45 &nbsp;💬 46</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed sm">Zara Zhang 为了治自己收藏积灰的毛病，专门写了个浏览器插件：每次打开 X，它会像广告一样把一条已收藏的帖子插进首页信息流</h2>
+      <h2 class="art-hed sm">YC CEO Garry Tan 推了一个链接，建议读者自己去看看是什么</h2>
+      <div class="byline">
+        Garry Tan
+        <span class="handle">@garrytan</span>
+        <span class="ts">2026-06-20</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Try https://t.co/NH6AWPWWkY and find out https://t.co/FWIESSlIy4
+        <a href="https://x.com/garrytan/status/2068279782815801541" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>YC CEO Garry Tan 推了一个链接，建议读者自己去看看是什么。内容很薄，没有提供任何具体信息或观点，就是一个纯粹的外链转发。</p>
+      </div>
+      
+      <div class="engage">❤ 169 &nbsp;↻ 7 &nbsp;💬 29</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Zara Zhang 做了一个 X 浏览器扩展，把书签帖当广告强行塞进主时间线，解决自己“收藏不看”的问题</h2>
       <div class="byline">
         Zara Zhang
         <span class="handle">@zarazhangrui</span>
@@ -1248,13 +1353,18 @@ Companies are asking PMs t…
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>Zara Zhang 为了治自己收藏积灰的毛病，专门写了个浏览器插件：每次打开 X，它会像广告一样把一条已收藏的帖子插进首页信息流。核心思路不难——重新利用一个你每天本来就会看几十次的界面空间。</p>
+        <p>Zara Zhang 做了一个 X 浏览器扩展，把书签帖当广告强行塞进主时间线，解决自己“收藏不看”的问题。核心思路不是做新入口，而是占领她每天刷 50 次的老页面。另外她也在推上讨论大公司 vs 创业公司的风险，以及“主动”这件事实际操作有多难。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>对客户来说，这条动态最直接的启示是：内部知识管理或培训材料没人看，根本不是内容问题，而是触达机制问题。下次开会别再说“建个知识库”，应该直接要求 IT 把关键文档作为弹窗嵌入员工每天必用的三个系统里，比如审批流程页面或仪表盘。转化率可以翻 10 倍，但前提是愿意承受“像广告一样烦人”的体验。</p>
       </div>
       <div class="engage">❤ 144 &nbsp;↻ 7 &nbsp;💬 24</div>
     </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed sm">AI 进展快得离谱，几个月前不能用的东西现在可能完全不一样了</h2>
+      <h2 class="art-hed sm">Nikunj 指出 AI 最大的问题是人们的前置假设需要每几周重置一次，但大多数人做不到</h2>
       <div class="byline">
         Nikunj Kothari
         <span class="handle">@nikunj</span>
@@ -1269,14 +1379,18 @@ I talk to so many people who say xyz does…
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>AI 进展快得离谱，几个月前不能用的东西现在可能完全不一样了。Nikunj 说很多人还在用几个月前的经验判断&quot;这个不行&quot;，但这在 AI 时间线里简直是远古时代。他的建议很简单：每周自己做一遍关键任务的评测，同时也去跟那些比市场落后两年的企业买家聊——两个视角结合，就知道该往哪投时间和钱了。</p>
+        <p>Nikunj 指出 AI 最大的问题是人们的前置假设需要每几周重置一次，但大多数人做不到。他说总有人跟他说某个工具不行，一问上次测试时间，回答永远是“几个月前”——这在AI时间线里相当于远古时代。他建议每人每周为自己做硬任务的评估和动手时间，才能真正理解前沿。另外每周跟企业买家聊聊，虽然他们通常落后两年，但他们是掏钱的人。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>【项目视角】做AI战略交付时，我会把“评估模型能力更新频率”作为一个硬性模块加入交付物。很多企业客户半年前的PoC失败就全盘否定某条技术路线，但过去三个月已经换了4个模型版本。需要帮客户建立月度能力重置机制，否则战略规划第二阶段就会卡死在过时的假设上。</p>
       </div>
       <div class="engage">❤ 70 &nbsp;↻ 7 &nbsp;💬 14</div>
-    </div></div>
-<div class="grid-3-row2">
+    </div>
     <div class="gcol">
       <div class="art-kicker">AI 动态 · X Signal</div>
-      <h2 class="art-hed sm">住在日本或跟日本有生意往来的朋友注意了，Peter 说他这边有个机会能一次性拿到大量 tokens，具体看链接里的内容</h2>
+      <h2 class="art-hed sm">Peter Steinberger 提醒日本市场或与日本有业务往来的人，现在有机会获得大量 tokens</h2>
       <div class="byline">
         Peter Steinberger
         <span class="handle">@steipete</span>
@@ -1289,7 +1403,12 @@ I talk to so many people who say xyz does…
       </div>
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>住在日本或跟日本有生意往来的朋友注意了，Peter 说他这边有个机会能一次性拿到大量 tokens，具体看链接里的内容。</p>
+        <p>Peter Steinberger 提醒日本市场或与日本有业务往来的人，现在有机会获得大量 tokens。他给出了一个指向 OpenAI 相关活动的链接，适合需要更多计算资源的开发者或企业关注。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>客户视角：这条动态让日本市场的客户立刻焦虑——对手是否在靠OpenAI的token红利跑马圈地？下次开会他们会问:'我们为什么没拿到这些资源？'项目视角：在战略规划第二阶段，必须将日本的token配额谈判纳入合同前提，否则交付模型可能因算力不足无法scaling。</p>
       </div>
       <div class="engage">❤ 578 &nbsp;↻ 58 &nbsp;💬 20</div>
     </div></div>
@@ -1307,7 +1426,7 @@ I talk to so many people who say xyz does…
     </div>
     <div class="feature-body-grid">
       <div class="feat-main">
-        <p class="feat-body drop"><h3 style="font-size:16px;font-weight:900;margin:16px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px;">核心洞察</h3></p><p style="margin:10px 0;">未来前沿AI模型可能将不再开源——API服务甚至可能彻底消失，这是一个你无法忽视的趋势。</p><p style="margin:10px 0;"><h3 style="font-size:16px;font-weight:900;margin:16px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px;">背景</h3></p><p style="margin:10px 0;">本期的对话来自三位AI领域的深度参与者：前DeepMind和Meta研究员、现Datalogy创始人Ari，以及AI风投机构Radical的合伙人Rob。当行业外还在争论"AI能否写诗"时，他们已经在面对一个更尖锐的问题：最聪明的模型，你将不再能自由使用。</p><p style="margin:10px 0;"><h3 style="font-size:16px;font-weight:900;margin:16px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px;">三个反直觉的观点</h3></p><p style="margin:10px 0;"><strong>1. 代码智能体真的变了——但效率提升被高估了</strong></p><p style="margin:10px 0;">Ari指出，过去半年最大的变化是"代码智能体能跑更长时间了"。2025年底圣诞假期后，几乎所有人回来后都惊呼"这东西真能干活"。</p><p style="margin:10px 0;">但反直觉的是：这反而制造了新的瓶颈。"你更擅长写大量代码，但理解代码的能力缺口变得巨大，"Ari直言，"我们现在最大的瓶颈是代码审查。你不可能让一个智能体去审查另一个智能体的输出——瓶颈只是转移了。"</p><p style="margin:10px 0;"><strong>2. 开源AI正在死亡——没人会不赚钱地活着</strong></p><p style="margin:10px 0;">Rob抛出今年最尖锐的预测：开源前沿模型正在消失。Meta可能放弃开源策略，中国实验室（Qwen、DeepSeek等）也开始只开源小型模型，把最强版本藏在付费API后面。</p><p style="margin:10px 0;">"服务这些开源模型太贵了，而且没有收入进来。"Rob说。当公司已经通过开源建立了信誉，下一步就是开始销售托管推理服务——开源反而成了自掘坟墓。</p><p style="margin:10px 0;"><strong>3. API业务可能彻底消失</strong></p><p style="margin:10px 0;">这是最激进的预测。随着算力持续紧缺，顶级实验室可能直接砍掉API服务，只保留面向最终用户的产品。也就是说，你未来可能根本无法"调用"一个前沿模型——只能用它们做好的产品。</p><p style="margin:10px 0;"><h3 style="font-size:16px;font-weight:900;margin:16px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px;">最值得记住的一句话</h3></p><p style="margin:10px 0;">"现在更多人正在从独立贡献者转变为智能体管理者。"——Ari</p>
+        <p class="feat-body drop"><h2 style="font-size:18px;font-weight:900;margin:16px 0 8px;">AI Vibe Check：开源模型正在消亡，你的API可能也要没了</h2></p><p style="margin:10px 0;"><strong>核心结论：</strong> 未来6-12个月，前沿开源AI模型可能消失，API服务也可能被实验室砍掉——如果你现在依赖免费或低成本的开放模型，需要立刻重新规划技术栈。</p><p style="margin:10px 0;">本期节目嘉宾是两位AI圈内人：前DeepMind和Meta研究员、现Datalogy创始人Ari，以及顶级AI风投Radical的合伙人Rob。主持人Jacob Efron把他们聚在一起做了次"AI脉搏检测"——不是泛泛而谈，而是给出具体判断。</p><p style="margin:10px 0;">Ari说了一个反常识的观察："编码代理真的开始能长时间稳定工作了，工程师正在从个人贡献者变成代理管理者。"但紧接着他补了一刀："生产代码变容易了，但理解差距变大了——现在代码审查成了新瓶颈。你不能让一个代理去审查另一个代理的输出，瓶颈只是转移了。"</p><p style="margin:10px 0;">Rob的判断更尖锐。他说过去6个月让他开始怀疑开源AI是否还能存活。"Meta这个西方开源旗手正在退缩，中国实验室（通义千问、DeepSeq）现在也只把最强模型留在API后面，开源的是缩水版。"原因很简单：服务开源模型要烧钱却没收入，实验室不想再做慈善了。</p><p style="margin:10px 0;">Ari补了一刀："2025年开源模型达到顶峰，现在开始回落。一旦实验室建立了信誉，他们就会关门卖服务。"</p><p style="margin:10px 0;">最刺激的预测：随着算力越来越贵，实验室可能直接砍掉API业务，只做闭源产品。如果你现在用OpenAI、Anthropic或任何API做产品——这些接口随时可能涨价或消失，需要准备Plan B。</p><p style="margin:10px 0;"><strong>我的判断：</strong> 过去两年"开源必将赶超闭源"的叙事正在被经济现实碾压。如果你是一家依赖AI的创业公司，现在就应该假设：半年后你可能买不到便宜的模型了。要么砸钱签长期API合同，要么攒团队自己训模型。犹豫的成本正在变高。</p>
         <div class="feat-meta">
           <a href="https://www.youtube.com/watch?v=W_iO8XxgD_I" target="_blank">↗ 查看原视频</a>
         </div>
@@ -1317,19 +1436,7 @@ I talk to so many people who say xyz does…
         
       <div class="kp">
         <div class="kp-n">1</div>
-        <div class="kp-t"><h3 style="font-size:16px;font-weight:900;margin:16px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px;">核心洞察</h3></p><p style="margin:10px 0;">未来前沿AI模型可能将不再开源——API服务甚至可能彻底消失，这是一个你无法忽视的趋势。</div>
-      </div>
-      <div class="kp">
-        <div class="kp-n">2</div>
-        <div class="kp-t"><h3 style="font-size:16px;font-weight:900;margin:16px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px;">背景</h3></p><p style="margin:10px 0;">本期的对话来自三位AI领域的深度参与者：前DeepMind和Meta研究员、现Datalogy创始人Ari，以及AI风投机构Radical的合伙人Rob。</div>
-      </div>
-      <div class="kp">
-        <div class="kp-n">3</div>
-        <div class="kp-t">当行业外还在争论"AI能否写诗"时，他们已经在面对一个更尖锐的问题：最聪明的模型，你将不再能自由使用。</div>
-      </div>
-      <div class="kp">
-        <div class="kp-n">4</div>
-        <div class="kp-t"><h3 style="font-size:16px;font-weight:900;margin:16px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px;">三个反直觉的观点</h3></p><p style="margin:10px 0;">**1.</div>
+        <div class="kp-t">AI Vibe Check：开源模型正在消亡，你的API可能也要没了</div>
       </div>
       </div>
     </div>
@@ -1341,7 +1448,7 @@ I talk to so many people who say xyz does…
   <div class="footer-motto"><em>AI Signal</em> · Builder 动态 · 每日精选</div>
   <div class="footer-note">
     数据来源：X 公开推文 &amp; 播客转录 &nbsp;·&nbsp; AI 辅助摘要 &nbsp;·&nbsp; 观点归属原作者<br>
-    生成日期 {{DATE_SHORT}} &nbsp;·&nbsp; 第 029 期
+    生成日期 {{DATE_SHORT}} &nbsp;·&nbsp; 第 030 期
   </div>
 </footer>
 
