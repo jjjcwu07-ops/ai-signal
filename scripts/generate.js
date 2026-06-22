@@ -293,15 +293,24 @@ function renderPodcastSection(podcast) {
   const safeRaw = rawSummary.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const summaryHtml = `<p class="feat-body drop">${mdToHtml(safeRaw)}</p>`;
 
-  // 右侧要点：优先提取 ## 标题，没有则取段落，不用句号切
+  // 右侧要点：优先提取 ## 标题，没有则按句号切取前4句有意义的句子
   const headings = [...rawSummary.matchAll(/^#{1,3}\s+(.+)$/gm)].map(m => m[1].trim());
-  const keyItems = headings.length > 0
-    ? headings.slice(0, 4)
-    : rawSummary.split(/\n\n+/).filter(s => s.trim().length > 15).slice(0, 4);
+  let keyItems;
+  if (headings.length >= 2) {
+    keyItems = headings.slice(0, 4);
+  } else {
+    // 按句号、问号、感叹号切句子，过滤掉太短的
+    keyItems = rawSummary
+      .replace(/#{1,3}\s+/g, '') // 去掉标题符号
+      .split(/(?<=[。！？])\s*/)
+      .map(s => s.trim())
+      .filter(s => s.length > 20)
+      .slice(0, 4);
+  }
   const keyPoints = keyItems.map((s, i) => `
       <div class="kp">
         <div class="kp-n">${i + 1}</div>
-        <div class="kp-t">${mdToHtml(s.trim().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'))}</div>
+        <div class="kp-t">${mdToHtml(s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'))}</div>
       </div>`).join('');
 
   return `
