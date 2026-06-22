@@ -171,7 +171,11 @@ async function summarizePodcast(podcast, prompt) {
   if (!podcast) return null;
   console.log(`🎙️  生成播客摘要: ${podcast.title}...`);
 
-  const userMsg = `请为以下播客生成中文摘要。
+  const userMsg = `请为以下播客生成中文摘要，要求：
+1. 用流畅自然的中文段落写作，不要用编号列表（不要出现"1." "2."这样的格式）
+2. 分3-4个自然段，每段聚焦一个核心话题
+3. 语言像专业媒体的深度报道，不是逐字翻译
+4. 保留重要的英文专有名词
 
 播客信息：
 - 节目名：${podcast.name}
@@ -182,7 +186,7 @@ async function summarizePodcast(podcast, prompt) {
 ${(podcast.transcript || '').slice(0, 8000)}`;
 
   try {
-    const summary = await callClaude(prompt, userMsg);
+    const summary = await callClaude('你是专业的播客内容编辑，擅长把英文播客提炼成深度中文报道。', userMsg);
     console.log('✅ 播客摘要完成');
     return { ...podcast, summary };
   } catch (err) {
@@ -338,34 +342,39 @@ function renderPodcastSection(podcast) {
 // ── Step 0: 用 DeepSeek 搜索今日国内 AI 新闻 ──
 async function fetchChinaNews(today) {
   console.log('🔍 搜索今日国内 AI 新闻...');
-  const prompt = `今天是 ${today}，请整理今日（或最近2天内）国内 AI 领域最重要的 4-6 条新闻资讯。
 
-重点关注：国内大模型进展、AI 产品发布、融资并购、政策监管、知名公司动态（百度、阿里、字节、腾讯、华为、DeepSeek、智谱、月之暗面等）。
+  // 第一步：获取新闻基本信息（简单 JSON，不容易出错）
+  const newsPrompt = `今天是 ${today}，请整理今日（或最近2天内）国内 AI 领域最重要的4条新闻。
+重点关注：国内大模型进展、AI产品发布、融资并购、政策监管、百度/阿里/字节/腾讯/华为/DeepSeek/智谱/月之暗面等公司动态。
+直接输出JSON数组，不要有任何其他文字：
+[{"title":"标题(20字内)","source":"来源媒体","summary":"两句话说清楚发生了什么和为什么重要(80字内)","term":"名词：解释(30字内)"}]`;
 
-请直接输出 JSON 数组（不要有任何 markdown 代码块）：
-[
-  {
-    "title": "新闻标题（中文，20字以内）",
-    "source": "来源媒体（如36氪、量子位、机器之心等）",
-    "summary": "两句话摘要，说清楚发生了什么、为什么重要（80字以内）",
-    "term": "一个关键名词解释（格式：名词：解释，30字以内）",
-    "consulting": "你是咨询行业资深专家。先判断这条新闻对咨询公司的工作提效、组织效能、AI产品创新、顾问角色转型或咨询公司AI转型是否有实质启示。没有就返回空字符串。有的话，写下你的洞见，像和同行聊天时说的那句话。不要刻意套主语，自然表达。普通咨询经理听完能懂。50-100字。禁止：值得关注/带来机遇/面临挑战/赋能/加速/布局/深刻/不可忽视",
-    "url": ""
-  }
-]`;
-
+  let news = [];
   try {
-    const raw = await callDeepSeekSearch(prompt);
-    // R1 会输出思考链，需要提取 JSON 数组部分
-    const match = raw.match(/\[[\s\S]*\]/);
+    const raw = await callDeepSeekSearch(newsPrompt);
+    const match = raw.match(/\[[\s\S]*?\]/);
     if (!match) throw new Error('未找到 JSON 数组');
-    const news = JSON.parse(match[0]);
+    news = JSON.parse(match[0]);
     console.log(`✅ 国内新闻获取完成，共 ${news.length} 条`);
-    return news;
   } catch (err) {
     console.error('⚠️  国内新闻获取失败:', err.message);
     return [];
   }
+
+  // 第二步：单独为每条新闻生成顾问洞见
+  for (const item of news) {
+    try {
+      const consultingPrompt = `新闻：${item.title}。${item.summary}
+
+你是咨询行业资深专家。判断这条新闻对咨询公司的工作提效、顾问角色转型或咨询公司AI转型是否有实质启示。没有就回复"无"。有的话用一两句话说你的判断，像和同行聊天，自然表达，普通咨询经理听完能懂。禁止：值得关注/带来机遇/面临挑战/赋能/加速/布局。`;
+      const result = await callDeepSeekSearch(consultingPrompt);
+      item.consulting = result.trim() === '无' ? '' : result.trim();
+    } catch (e) {
+      item.consulting = '';
+    }
+  }
+
+  return news;
 }
 
 // ── DeepSeek 联网搜索版本 ──
@@ -458,9 +467,12 @@ function mdToHtml(str) {
     .replace(/^### (.+)$/gm, '<h4 style="font-size:14px;font-weight:900;margin:12px 0 6px;">$1</h4>')
     .replace(/^## (.+)$/gm, '<h3 style="font-size:16px;font-weight:900;margin:16px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px;">$1</h3>')
     .replace(/^# (.+)$/gm, '<h2 style="font-size:18px;font-weight:900;margin:16px 0 8px;">$1</h2>')
-    .replace(/^\d+\. (.+)$/gm, '<li style="margin:6px 0 6px 16px;list-style:decimal;">$1</li>')
-    .replace(/^[-*] (.+)$/gm, '<li style="margin:6px 0 6px 16px;list-style:disc;">$1</li>')
-    .replace(/(<li.*<\/li>\n?)+/g, '<ol style="padding-left:8px;margin:8px 0;">$&</ol>')
+    .replace(/^\d+\. (.+)$/gm, '<li style="margin:4px 0 4px 16px;list-style:decimal;">$1</li>')
+    .replace(/^[-*] (.+)$/gm, '<li style="margin:4px 0 4px 16px;list-style:disc;">$1</li>')
+    // 把连续的 li 包进同一个 ol/ul，而不是每个都单独包
+    .replace(/((?:<li[^>]*>.*<\/li>\n?)+)/g, (match) => {
+      return `<ol style="padding-left:8px;margin:8px 0;">${match}</ol>`;
+    })
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     .replace(/`(.+?)`/g, '<code>$1</code>')
