@@ -393,7 +393,8 @@ async function fetchChinaNews(today) {
       } catch(e) {
         // 不是 JSON，直接用
       }
-      // 过滤掉"无"或空
+      // 过滤掉"无"或空，以及开头多余的"有。""有："等
+      result = result.replace(/^有[。：:]\s*/,'').trim();
       item.consulting = (result === '无' || result === '' || result.length < 5) ? '' : result;
     } catch (e) {
       item.consulting = '';
