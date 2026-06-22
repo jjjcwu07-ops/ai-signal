@@ -19,7 +19,7 @@ const PROMPTS_BASE     = 'https://raw.githubusercontent.com/zarazhangrui/follow-
 
 // ── DeepSeek API ──
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
-const MODEL = 'deepseek-chat';
+const MODEL = 'deepseek-reasoner';
 
 // ── 工具函数 ──
 async function fetchJSON(url) {
@@ -50,8 +50,8 @@ async function callClaude(systemPrompt, userMessage) {
       model: MODEL,
       max_tokens: 4000,
       messages: [
-        { role: 'system', content: baseSystem + '\n\n' + systemPrompt },
-        { role: 'user', content: userMessage }
+        // deepseek-reasoner 不支持 system 角色，合并进第一条 user 消息
+        { role: 'user', content: `${baseSystem}\n\n${systemPrompt}\n\n${userMessage}` }
       ]
     })
   });
@@ -130,7 +130,7 @@ async function summarizeTweets(builders, prompt) {
     const userMsg = `请为以下 Builder 的推文生成两部分内容，直接输出 JSON（不要 markdown 代码块）：
 {
   "summary": "中文摘要，3-5句话，自然流畅，像人写的，不是机器翻译，专有名词保留英文",
-  "consulting": "你是顶级咨询公司资深合伙人。看完这条动态，用正常人能听懂的中文，写下你对团队会说的一句判断或提醒。标准是：一个从没接触过这个话题的咨询经理听完，能立刻明白你在说什么、为什么重要、我们该怎么应对。主语用'我们'。不要用行话堆砌，不要压缩到语义模糊。50-80字。禁止词：值得关注/带来机遇/面临挑战/赋能/加速/布局/深刻/不可忽视/骤降/贬值"
+  "consulting": "你是咨询行业资深专家，在判断这条动态是否值得写顾问洞见之前，先问自己：这条信息对咨询公司的工作提效、组织效能、AI产品创新、顾问角色转型或咨询公司AI转型，有没有实质性的启示？如果没有，直接返回空字符串。如果有，用简洁自然的中文写下你的洞见，就像你在和同行聊天时说的那句话。不需要每句都带主语，不要刻意套'我们'，用到时自然带上就好。不要用行话堆砌，一个普通咨询经理听完能懂。50-100字。禁止词：值得关注/带来机遇/面临挑战/赋能/加速/布局/深刻/不可忽视"
 }
 
 Builder 信息：
@@ -336,7 +336,7 @@ async function fetchChinaNews(today) {
     "source": "来源媒体（如36氪、量子位、机器之心等）",
     "summary": "两句话摘要，说清楚发生了什么、为什么重要（80字以内）",
     "term": "一个关键名词解释（格式：名词：解释，30字以内）",
-    "consulting": "你是顶级咨询公司资深合伙人。看完这条国内AI动态，用正常人能听懂的中文，写下你对团队会说的一句判断或提醒。标准：一个咨询经理听完能立刻明白你在说什么、为什么重要、我们该怎么应对。主语用'我们'。不要堆砌行话，不要压缩到语义模糊。50-80字。禁止词：值得关注/带来机遇/面临挑战/赋能/加速/布局/深刻/不可忽视",
+    "consulting": "你是咨询行业资深专家。先判断这条新闻对咨询公司的工作提效、组织效能、AI产品创新、顾问角色转型或咨询公司AI转型是否有实质启示。没有就返回空字符串。有的话，写下你的洞见，像和同行聊天时说的那句话。不要刻意套主语，自然表达。普通咨询经理听完能懂。50-100字。禁止：值得关注/带来机遇/面临挑战/赋能/加速/布局/深刻/不可忽视",
     "url": ""
   }
 ]`;
@@ -362,14 +362,13 @@ async function callDeepSeekSearch(userMessage) {
       'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
     },
     body: JSON.stringify({
-      model: 'deepseek-chat',
+      model: MODEL,
       max_tokens: 2000,
       messages: [
         {
-          role: 'system',
-          content: '你是专业的 AI 行业资讯编辑，熟悉国内外 AI 动态。请基于你的知识库，提供准确的近期资讯。直接输出 JSON，不要有任何多余文字。'
-        },
-        { role: 'user', content: userMessage }
+          role: 'user',
+          content: `你是专业的AI行业资讯编辑，熟悉国内外AI动态。请基于你的知识库，提供准确的近期资讯。直接输出JSON，不要有任何多余文字。\n\n${userMessage}`
+        }
       ]
     })
   });
