@@ -270,28 +270,13 @@ function renderBuilderCards(builders) {
 function renderPodcastSection(podcast) {
   if (!podcast) return '<p style="padding:24px;color:var(--ink3);">今日暂无播客更新。</p>';
 
-  // 先转 Markdown 再转义（顺序很重要：先处理格式，再 escape）
   const rawSummary = podcast.summary || '';
-  const sentences = rawSummary.split(/(?<=。|！|？)/).filter(s => s.trim().length > 0);
-  const paragraphs = [];
-  let current = '';
-  for (const s of sentences) {
-    if ((current + s).length > 180) {
-      if (current) paragraphs.push(current.trim());
-      current = s;
-    } else {
-      current += s;
-    }
-    if (paragraphs.length >= 3) break;
-  }
-  if (current && paragraphs.length < 4) paragraphs.push(current.trim());
+  // 完整保留内容，不截断
+  const safeRaw = rawSummary.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const summaryHtml = `<p class="feat-body drop">${mdToHtml(safeRaw)}</p>`;
 
-  // 注意：先 mdToHtml（处理**），再 escape 只对纯文本部分
-  const summaryHtml = paragraphs
-    .map((p, i) => `<p class="feat-body${i === 0 ? ' drop' : ''}">${mdToHtml(p.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'))}</p>`)
-    .join('\n        ');
-
-  // 提取关键词作为右侧侧边栏
+  // 右侧要点：取前4个有意义的句子
+  const sentences = rawSummary.split(/(?<=。|！|？|\.)\s*/).filter(s => s.trim().length > 10);
   const keyPoints = sentences.slice(0, 4).map((s, i) => `
       <div class="kp">
         <div class="kp-n">${i + 1}</div>
@@ -429,15 +414,21 @@ async function renderChinaSection(blogs, today) {
   ${rows.join('\n')}`;
 }
 
-// ── Markdown 转 HTML（处理 DeepSeek 返回的 Markdown 格式）──
+// ── Markdown 转 HTML ──
 function mdToHtml(str) {
   if (!str) return '';
   return str
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')  // **粗体**
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')               // *斜体*
-    .replace(/`(.+?)`/g, '<code>$1</code>')             // `代码`
-    .replace(/\n\n+/g, '</p><p>')                       // 段落
-    .replace(/\n/g, '<br>');                            // 换行
+    .replace(/^### (.+)$/gm, '<h4 style="font-size:14px;font-weight:900;margin:12px 0 6px;">$1</h4>')
+    .replace(/^## (.+)$/gm, '<h3 style="font-size:16px;font-weight:900;margin:16px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px;">$1</h3>')
+    .replace(/^# (.+)$/gm, '<h2 style="font-size:18px;font-weight:900;margin:16px 0 8px;">$1</h2>')
+    .replace(/^\d+\. (.+)$/gm, '<li style="margin:6px 0 6px 16px;list-style:decimal;">$1</li>')
+    .replace(/^[-*] (.+)$/gm, '<li style="margin:6px 0 6px 16px;list-style:disc;">$1</li>')
+    .replace(/(<li.*<\/li>\n?)+/g, '<ol style="padding-left:8px;margin:8px 0;">$&</ol>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/\n\n+/g, '</p><p style="margin:10px 0;">')
+    .replace(/\n/g, '<br>');
 }
 
 // ── HTML 转义 ──
