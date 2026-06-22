@@ -122,7 +122,11 @@ async function summarizeTweets(builders, prompt) {
       `[${t.createdAt}] ${t.text}\n链接: ${t.url}\n互动: ❤${t.likes} ↻${t.retweets} 💬${t.replies}`
     ).join('\n\n---\n\n');
 
-    const userMsg = `请为以下 Builder 的推文生成中文摘要。
+    const userMsg = `请为以下 Builder 的推文生成两部分内容，直接输出 JSON（不要 markdown 代码块）：
+{
+  "summary": "中文摘要，3-5句话，自然流畅，像人写的，不是机器翻译，专有名词保留英文",
+  "consulting": "顾问视角：从管理咨询和咨询行业AI转型的角度，写2-3句精炼的洞察。要有深度，不要泛泛而谈。比如：这个动态对咨询项目交付方式意味着什么？对咨询顾问的能力要求有何影响？客户会怎么问这个问题？"
+}
 
 Builder 信息：
 - 姓名：${builder.name}
@@ -132,17 +136,17 @@ Builder 信息：
 推文内容：
 ${tweetsText}
 
-要求：
-1. 用自然流畅的中文写作，像人写的文章，不是机器翻译
-2. 直接陈述事实和观点，不要用"该推文""作者表示"这类新闻腔
-3. 专有名词保留英文（如 Claude Code、GPT-4 等），其他内容用中文
-4. 如果内容不够，直接写"本期无实质更新，建议查看原推"`;
+注意：如果内容实在太空洞，summary 写"本期无实质更新"，consulting 写空字符串。`;
 
     try {
-      const summary = await callClaude(prompt, userMsg);
+      const raw = await callClaude(prompt, userMsg);
+      const cleaned = raw.replace(/```json\n?|\n?```/g, '').trim();
+      let parsed = { summary: raw, consulting: '' };
+      try { parsed = JSON.parse(cleaned); } catch(e) { parsed.summary = raw; }
       results.push({
         ...builder,
-        summary,
+        summary: parsed.summary || '',
+        consulting: parsed.consulting || '',
         topTweet: builder.tweets.reduce((a, b) => (a.likes + a.retweets > b.likes + b.retweets) ? a : b)
       });
       process.stdout.write('.');
@@ -256,8 +260,13 @@ function renderBuilderCards(builders) {
       </div>` : ''}
       <div class="sumbox lime">
         <div class="lbl">中文摘要</div>
-        <p>${mdToHtml(escapeHtml(b.summary || '本期无实质更新，建议查看原推。'))}</p>
+        <p>${mdToHtml(escapeHtml(b.summary || ''))}</p>
       </div>
+      ${b.consulting ? `
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>${mdToHtml(escapeHtml(b.consulting))}</p>
+      </div>` : ''}
       ${engageStr ? `<div class="engage">${engageStr}</div>` : ''}
     </div>`;
     }).join('');
@@ -275,9 +284,12 @@ function renderPodcastSection(podcast) {
   const safeRaw = rawSummary.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const summaryHtml = `<p class="feat-body drop">${mdToHtml(safeRaw)}</p>`;
 
-  // 右侧要点：取前4个有意义的句子
-  const sentences = rawSummary.split(/(?<=。|！|？|\.)\s*/).filter(s => s.trim().length > 10);
-  const keyPoints = sentences.slice(0, 4).map((s, i) => `
+  // 右侧要点：优先提取 ## 标题，没有则取段落，不用句号切
+  const headings = [...rawSummary.matchAll(/^#{1,3}\s+(.+)$/gm)].map(m => m[1].trim());
+  const keyItems = headings.length > 0
+    ? headings.slice(0, 4)
+    : rawSummary.split(/\n\n+/).filter(s => s.trim().length > 15).slice(0, 4);
+  const keyPoints = keyItems.map((s, i) => `
       <div class="kp">
         <div class="kp-n">${i + 1}</div>
         <div class="kp-t">${mdToHtml(s.trim().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'))}</div>
@@ -308,18 +320,19 @@ function renderPodcastSection(podcast) {
 // ── Step 0: 用 DeepSeek 搜索今日国内 AI 新闻 ──
 async function fetchChinaNews(today) {
   console.log('🔍 搜索今日国内 AI 新闻...');
-  const prompt = `今天是 ${today}，请搜索并整理今日（或最近2天内）国内 AI 领域最重要的 4-6 条新闻资讯。
+  const prompt = `今天是 ${today}，请整理今日（或最近2天内）国内 AI 领域最重要的 4-6 条新闻资讯。
 
 重点关注：国内大模型进展、AI 产品发布、融资并购、政策监管、知名公司动态（百度、阿里、字节、腾讯、华为、DeepSeek、智谱、月之暗面等）。
 
-请直接输出 JSON 数组，格式如下（不要有任何 markdown 代码块）：
+请直接输出 JSON 数组（不要有任何 markdown 代码块）：
 [
   {
     "title": "新闻标题（中文，20字以内）",
     "source": "来源媒体（如36氪、量子位、机器之心等）",
     "summary": "两句话摘要，说清楚发生了什么、为什么重要（80字以内）",
     "term": "一个关键名词解释（格式：名词：解释，30字以内）",
-    "url": "原文链接（如果知道的话，不知道填空字符串）"
+    "consulting": "顾问视角：从管理咨询和企业AI转型角度，写1-2句精炼洞察。要有具体的咨询判断，不要泛泛而谈（60字以内）",
+    "url": ""
   }
 ]`;
 
@@ -387,9 +400,14 @@ async function renderChinaSection(blogs, today) {
       <h3 class="art-hed">${escapeHtml(item.title || '')}</h3>
       <div class="art-body" style="margin:10px 0;">${escapeHtml(item.summary || '')}</div>
       ${item.term ? `
-      <div class="sumbox lime" style="margin:10px 0;">
+      <div class="sumbox lime" style="margin:8px 0;">
         <div class="lbl">名词解释</div>
         <p>${escapeHtml(item.term)}</p>
+      </div>` : ''}
+      ${item.consulting ? `
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin:8px 0;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>${escapeHtml(item.consulting)}</p>
       </div>` : ''}
       <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
         来源：<a href="${linkUrl}" target="_blank" style="color:var(--orange);text-decoration:underline;">${escapeHtml(item.source || '查看原文')} ↗</a>
