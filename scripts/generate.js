@@ -145,7 +145,9 @@ ${tweetsText}
 
     try {
       const raw = await callClaude(prompt, userMsg);
-      const cleaned = raw.replace(/```json\n?|\n?```/g, '').trim();
+      // R1 会输出思考链，提取 JSON 对象部分
+      const match = raw.match(/\{[\s\S]*\}/);
+      const cleaned = match ? match[0] : raw;
       let parsed = { summary: raw, consulting: '' };
       try { parsed = JSON.parse(cleaned); } catch(e) { parsed.summary = raw; }
       results.push({
@@ -223,7 +225,9 @@ ${podcast ? `\n播客：${podcast.title}\n${podcast.summary}` : ''}
       '你是专业的 AI 行业日报主编，擅长提炼关键信号。特别注意：金句翻译要像中国人说的话，简洁有力，绝不机器直译。',
       prompt
     );
-    const cleaned = raw.replace(/```json\n?|\n?```/g, '').trim();
+    // R1 会输出思考链，提取 JSON 对象部分
+    const match = raw.match(/\{[\s\S]*\}/);
+    const cleaned = match ? match[0] : raw.replace(/```json\n?|\n?```/g, '').trim();
     const result = JSON.parse(cleaned);
     console.log('✅ 编辑决策完成');
     return result;
@@ -343,8 +347,10 @@ async function fetchChinaNews(today) {
 
   try {
     const raw = await callDeepSeekSearch(prompt);
-    const cleaned = raw.replace(/```json\n?|\n?```/g, '').trim();
-    const news = JSON.parse(cleaned);
+    // R1 会输出思考链，需要提取 JSON 数组部分
+    const match = raw.match(/\[[\s\S]*\]/);
+    if (!match) throw new Error('未找到 JSON 数组');
+    const news = JSON.parse(match[0]);
     console.log(`✅ 国内新闻获取完成，共 ${news.length} 条`);
     return news;
   } catch (err) {
@@ -550,12 +556,12 @@ async function main() {
   ].filter(Boolean).join('\n    ');
 
   const html = template
-    .replace('{{DATE_SHORT}}', today)
-    .replace('{{DATE}}', formatChineseDate(today))
+    .replace(/\{\{DATE_SHORT\}\}/g, today)
+    .replace(/\{\{DATE\}\}/g, formatChineseDate(today))
     .replace(/\{\{VOL_NUM\}\}/g, String(vol).padStart(3, '0'))
-    .replace('{{BUILDER_COUNT}}', builders.length)
-    .replace('{{TWEET_COUNT}}', feedX.stats?.totalTweets || 0)
-    .replace('{{PODCAST_COUNT}}', hasPodcast ? '1' : '0')
+    .replace(/\{\{BUILDER_COUNT\}\}/g, builders.length)
+    .replace(/\{\{TWEET_COUNT\}\}/g, feedX.stats?.totalTweets || 0)
+    .replace(/\{\{PODCAST_COUNT\}\}/g, hasPodcast ? '1' : '0')
     .replace('{{HISTORY_LINKS}}', history)
     .replace('{{NAV_ITEMS}}', navItems)
     .replace('{{LEAD_HEADLINE}}', escapeHtml(editorial.headline))
