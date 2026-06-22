@@ -171,11 +171,18 @@ async function summarizePodcast(podcast, prompt) {
   if (!podcast) return null;
   console.log(`🎙️  生成播客摘要: ${podcast.title}...`);
 
-  const userMsg = `请为以下播客生成中文摘要，要求：
-1. 用流畅自然的中文段落写作，不要用编号列表（不要出现"1." "2."这样的格式）
-2. 分3-4个自然段，每段聚焦一个核心话题
-3. 语言像专业媒体的深度报道，不是逐字翻译
-4. 保留重要的英文专有名词
+  const userMsg = `请为以下播客生成两部分内容：
+
+第一部分：把播客标题翻译成精炼的中文（10-20字，让读者一眼读懂核心话题，不要直译，要意译）。
+第二部分：用流畅自然的中文段落写播客摘要，要求：
+- 不要用编号列表（不要出现"1." "2."格式）
+- 分3-4个自然段，每段聚焦一个核心话题
+- 语言像专业媒体的深度报道，不是逐字翻译
+- 保留重要的英文专有名词
+
+请按以下格式输出（不要有任何其他内容）：
+中文标题：[翻译后的标题]
+摘要：[正文内容]
 
 播客信息：
 - 节目名：${podcast.name}
@@ -186,9 +193,14 @@ async function summarizePodcast(podcast, prompt) {
 ${(podcast.transcript || '').slice(0, 8000)}`;
 
   try {
-    const summary = await callClaude('你是专业的播客内容编辑，擅长把英文播客提炼成深度中文报道。', userMsg);
+    const raw = await callClaude('你是专业的播客内容编辑，擅长把英文播客提炼成深度中文报道。', userMsg);
+    // 解析标题和摘要
+    const titleMatch = raw.match(/中文标题：(.+)/);
+    const summaryMatch = raw.match(/摘要：([\s\S]+)/);
+    const chineseTitle = titleMatch ? titleMatch[1].trim() : podcast.title;
+    const summary = summaryMatch ? summaryMatch[1].trim() : raw;
     console.log('✅ 播客摘要完成');
-    return { ...podcast, summary };
+    return { ...podcast, summary, chineseTitle };
   } catch (err) {
     console.error(`⚠️  播客摘要失败: ${err.message}`);
     return null;
@@ -321,8 +333,9 @@ function renderPodcastSection(podcast) {
   <div class="feature-wrap">
     <div class="feature-hero">
       <div class="feat-kicker">播客 · Podcast</div>
-      <h2 class="feat-hed">${escapeHtml(podcast.title)}</h2>
-      <p class="feat-deck">${escapeHtml(podcast.name)}</p>
+      <h2 class="feat-hed">${escapeHtml(podcast.chineseTitle || podcast.title)}</h2>
+      <p class="feat-deck" style="margin-bottom:4px;">${escapeHtml(podcast.name)}</p>
+      ${podcast.chineseTitle ? `<p style="font-size:11px;color:var(--ink4);font-style:italic;">${escapeHtml(podcast.title)}</p>` : ''}
     </div>
     <div class="feature-body-grid">
       <div class="feat-main">
@@ -366,9 +379,22 @@ async function fetchChinaNews(today) {
     try {
       const consultingPrompt = `新闻：${item.title}。${item.summary}
 
-你是咨询行业资深专家。判断这条新闻对咨询公司的工作提效、顾问角色转型或咨询公司AI转型是否有实质启示。没有就回复"无"。有的话用一两句话说你的判断，像和同行聊天，自然表达，普通咨询经理听完能懂。禁止：值得关注/带来机遇/面临挑战/赋能/加速/布局。`;
-      const result = await callDeepSeekSearch(consultingPrompt);
-      item.consulting = result.trim() === '无' ? '' : result.trim();
+你是咨询行业资深专家。判断这条新闻对咨询公司的工作提效、顾问角色转型或咨询公司AI转型是否有实质启示。
+没有就只回复两个字：无。
+有的话直接用中文说你的判断，一两句话，像和同行聊天，不要用JSON格式，不要加任何标签或引号包装，普通咨询经理听完能懂。禁止：值得关注/带来机遇/面临挑战/赋能/加速/布局。`;
+      let result = await callDeepSeekSearch(consultingPrompt);
+      // 清洗掉可能的 JSON 包装
+      result = result.trim();
+      try {
+        const parsed = JSON.parse(result);
+        // 如果是 JSON，提取里面的字符串值
+        const val = Object.values(parsed)[0];
+        result = typeof val === 'string' ? val : '';
+      } catch(e) {
+        // 不是 JSON，直接用
+      }
+      // 过滤掉"无"或空
+      item.consulting = (result === '无' || result === '' || result.length < 5) ? '' : result;
     } catch (e) {
       item.consulting = '';
     }
