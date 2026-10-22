@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Signal · 2026-10-22</title>
+  <style>
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Regular.otf') format('opentype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Medium.otf') format('opentype');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Bold.otf') format('opentype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Heavy.otf') format('opentype');
+      font-weight: 900;
+    }
+
+    /* ─── Quote of the Day ─── */
+    .qotd-wrap {
+      border: 2px solid var(--black);
+      border-radius: 4px;
+      box-shadow: 4px 4px 0 var(--black);
+      background: var(--black);
+      padding: 32px 40px;
+      margin: 32px 0 24px;
+    }
+    .qotd-label {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+    .qotd {
+      font-size: clamp(20px, 2.4vw, 30px);
+      font-weight: 700;
+      line-height: 1.5;
+      color: #fff;
+      border: none;
+      margin: 0 0 14px;
+      padding: 0;
+    }
+    .qotd-attr {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: 0.04em;
+    }
+    /* ─── Editorial + Tags ─── */
+    .editorial-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0;
+      border: 2px solid #373a3e;
+      box-shadow: 4px 4px 0 #373a3e;
+      margin-bottom: 28px;
+      background: #373a3e;
+    }
+    .editorial-box {
+      background: var(--orange-pale);
+      padding: 22px 26px;
+    }
+    .tags-box {
+      background: var(--white);
+      padding: 22px 26px;
+      min-width: 260px;
+      border-left: 2px solid #373a3e;
+    }
+    .editorial-label {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 10px;
+    }
+    .editorial-text {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.8;
+      color: var(--ink);
+    }
+    .tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      display: inline-block;
+      border: 2px solid #373a3e;
+      border-radius: 3px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #fff;
+      box-shadow: 2px 2px 0 #000;
+      cursor: default;
+    }
+    .tag:hover { background: var(--orange); }
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    ::selection { background: var(--orange); color: var(--black); }
+    ::-moz-selection { background: var(--orange); color: var(--black); }
+
+    /* ─── Tokens ─── */
+    :root {
+      --bg:        #f4f3ef;
+      --white:     #fffffe;
+      --black:     #373a3e;
+      --ink:       #1a1a1a;
+      --ink2:      #3d3d3d;
+      --ink3:      #777777;
+      --ink4:      #aaaaaa;
+      --lime: #ff8a00; --orange: #ff8a00;
+      --lime-pale: #fff0d4; --orange-pale: #fff0d4;
+      --yellow:    #fde047;
+      --border:    2px solid #373a3e;
+      --shadow:    4px 4px 0 #373a3e;
+      --shadow-sm: 2px 2px 0 #373a3e;
+      --shadow-lg: 6px 6px 0 #373a3e;
+      --rule:      1px solid #373a3e;
+      --rule-lt:   1px solid #ddd;
+      --gap:       20px;
+      --ff: 'SHSCN', 'Helvetica Neue', Arial, sans-serif;
+      --ff-title: 'SHSCN', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    html { background: #e8d5b0; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--ff);
+      font-size: 15px;
+      line-height: 1.75;
+      max-width: 1200px;
+      margin: 40px auto;
+      border: 3px solid var(--black);
+      box-shadow: 8px 8px 0 var(--black);
+    }
+
+    /* ══════════════════════════════════
+       MASTHEAD
+    ══════════════════════════════════ */
+    .masthead {
+      background: var(--white);
+      border-bottom: 3px solid var(--black);
+      padding: 0;
+    }
+
+    .mast-top {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .mast-top-left {
+      padding: 8px 18px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      border-right: 2px solid var(--black);
+      display: flex;
+      align-items: center;
+    }
+
+    .mast-top-right {
+      padding: 8px 18px;
+      font-size: 10.5px;
+      color: var(--ink3);
+      text-align: right;
+      line-height: 1.6;
+      display: flex;
+      align-items: center;
+    }
+
+    .mast-title-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 16px 24px;
+      gap: 0;
+    }
+
+    .mast-vol {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      line-height: 1.5;
+    }
+
+    .mast-name {
+      text-align: center;
+      font-size: clamp(38px, 6.5vw, 72px);
+      font-weight: 900;
+      font-family: var(--ff-title);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .mast-name .hi {
+      /* lime underline on the accent word */
+      display: inline;
+      background: var(--orange);
+      padding: 0 4px;
+    }
+
+    .mast-right-col {
+      text-align: right;
+      font-size: 11px;
+      color: var(--ink3);
+      line-height: 1.6;
+    }
+
+    /* nav strip */
+    .mast-nav {
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .mast-nav a,
+    .mast-nav span {
+      padding: 7px 18px;
+      border-right: 1px solid #444;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+    }
+    .mast-nav a:last-child,
+    .mast-nav span:last-child { border-right: none; }
+    .mast-nav a:hover { background: #4a4d52; }
+    .mast-nav a.active,
+    .mast-nav span.active {
+      background: var(--orange);
+      color: var(--black);
+      font-weight: 900;
+      box-shadow: inset 0 -3px 0 var(--black);
+    }
+
+    /* ══════════════════════════════════
+       LEAD BANNER
+    ══════════════════════════════════ */
+    .lead-banner {
+      background: var(--orange);
+      border-bottom: 3px solid var(--black);
+      padding: 28px 32px 24px;
+    }
+
+    .lead-kicker {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lead-kicker::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 3px;
+      background: var(--black);
+    }
+
+    .lead-headline {
+      font-size: clamp(22px, 3.2vw, 38px);
+      font-weight: 900;
+      font-family: var(--ff-title);
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+      color: var(--black);
+      margin-bottom: 16px;
+      max-width: 860px;
+    }
+
+    .lead-deck {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink2);
+      max-width: 680px;
+      line-height: 1.55;
+    }
+
+    /* ══════════════════════════════════
+       PAGE BODY
+    ══════════════════════════════════ */
+    .page {
+      padding: 0 28px 44px;
+      background: var(--bg);
+    }
+
+    /* ── Section header bar ── */
+    .sec-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 20px;
+      border-top: 3px solid var(--black);
+      border-bottom: 2px solid var(--black);
+      padding: 6px 0;
+      scroll-margin-top: 48px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .sec-bar.highlight {
+      border-top-color: var(--orange);
+      box-shadow: 0 -3px 0 var(--orange);
+    }
+
+    .sec-tag {
+      background: var(--black);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      flex-shrink: 0;
+    }
+
+    .sec-tag.lime {
+      background: var(--black);
+      color: var(--orange);
+    }
+
+    .sec-title {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .sec-count {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink4);
+      font-family: 'Courier New', monospace;
+      margin-left: auto;
+    }
+
+    /* ══════════════════════════════════
+       COLUMN GRIDS
+    ══════════════════════════════════ */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+      background: var(--black); /* gap color */
+    }
+
+    .grid-2-1 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+      background: var(--black);
+    }
+
+    .gcol {
+      background: var(--white);
+      padding: 28px 24px;
+      /* columns separated by 2px black gap via grid background */
+    }
+    .gcol + .gcol {
+      margin-left: 2px;
+    }
+
+    /* second row of 3 */
+    .grid-3-row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+      border-top: none;
+      background: var(--black);
+      margin-top: 2px; /* visual separation from row above inside same outer border, reuse border */
+    }
+
+    /* span helpers */
+    .span-2 { grid-column: span 2; }
+    .span-3 { grid-column: span 3; }
+
+    /* ══════════════════════════════════
+       ARTICLE CARD — inside a gcol
+    ══════════════════════════════════ */
+    .art-kicker {
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 5px;
+    }
+
+    .art-hed {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: var(--ff-title);
+      line-height: 1.35;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .art-hed.lg { font-size: 22px; }
+    .art-hed.sm { font-size: 15px; }
+
+    .art-deck {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      line-height: 1.5;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .byline {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: var(--rule);
+    }
+
+    .byline .handle {
+      font-weight: 500;
+      font-style: italic;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--ink4);
+    }
+
+    .byline .ts {
+      font-size: 9.5px;
+      font-weight: 400;
+      color: var(--ink4);
+      margin-left: 4px;
+    }
+
+    .art-body {
+      font-size: 14px;
+      color: var(--ink2);
+      line-height: 1.8;
+    }
+
+    .art-divider {
+      border: none;
+      border-top: var(--rule-lt);
+      margin: 14px 0;
+    }
+
+    /* ── Tweet original block ── */
+    .tweet-orig {
+      border: 2px solid var(--black);
+      background: var(--bg);
+      padding: 10px 12px;
+      margin: 10px 0;
+      font-size: 12.5px;
+      color: var(--ink3);
+      line-height: 1.6;
+      font-style: italic;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tweet-orig a {
+      display: block;
+      margin-top: 6px;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink4);
+      text-decoration: none;
+    }
+    .tweet-orig a:hover { text-decoration: underline; }
+
+    /* ── Pull quote ── */
+    .pull {
+      border-top: 3px solid var(--black);
+      border-bottom: 3px solid var(--black);
+      padding: 10px 0;
+      margin: 14px 0;
+    }
+    .pull p {
+      font-size: 14.5px;
+      font-weight: 900;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    /* ── Summary box ── */
+    .sumbox {
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      padding: 9px 12px;
+      margin: 10px 0;
+    }
+    .sumbox .lbl {
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 4px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #ddd;
+    }
+    .sumbox p {
+      font-size: 12.5px;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* highlight sumbox */
+    .sumbox.lime {
+      background: var(--orange-pale);
+      border-left: 3px solid var(--orange);
+      border-color: var(--black);
+    }
+    .sumbox.lime .lbl { border-bottom-color: rgba(0,0,0,0.15); color: var(--ink2); }
+    .sumbox.lime p { color: var(--ink); }
+
+    /* ── Engagement ── */
+    .engage {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 10px;
+      color: var(--ink4);
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+    }
+
+    /* ── Inline code ── */
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      background: var(--orange-pale);
+      padding: 1px 5px;
+      border: 1px solid var(--black);
+      font-weight: 700;
+    }
+
+    /* ══════════════════════════════════
+       FEATURE / PODCAST
+    ══════════════════════════════════ */
+    .feature-wrap {
+      border: 2px solid var(--black);
+      box-shadow: var(--shadow-lg);
+      margin-top: 0;
+      background: var(--white);
+    }
+
+    .feature-hero {
+      background: var(--orange-pale);
+      border-bottom: 2px solid var(--black);
+      padding: 24px 24px 20px;
+    }
+
+    .feat-kicker {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink2);
+      margin-bottom: 8px;
+    }
+
+    .feat-hed {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      color: var(--black);
+      margin-bottom: 10px;
+    }
+
+    .feat-deck {
+      font-size: 14px;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--ink2);
+      line-height: 1.5;
+      max-width: 680px;
+    }
+
+    .feature-body-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 0;
+      background: var(--black);
+      align-items: start;
+    }
+
+    .feat-main {
+      background: var(--white);
+      padding: 22px 22px 22px 24px;
+      max-height: 560px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--orange) var(--bg);
+    }
+    .feat-main::-webkit-scrollbar { width: 6px; }
+    .feat-main::-webkit-scrollbar-track { background: var(--bg); }
+    .feat-main::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
+
+    .feat-sidebar {
+      background: var(--bg);
+      padding: 22px 20px;
+      margin-left: 2px;
+      max-height: 560px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--orange) var(--bg);
+    }
+    .feat-sidebar::-webkit-scrollbar { width: 6px; }
+    .feat-sidebar::-webkit-scrollbar-track { background: var(--bg); }
+    .feat-sidebar::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
+
+    .feat-body {
+      font-size: 13.5px;
+      color: var(--ink2);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .feat-body .drop::first-letter {
+      font-size: 3.5em;
+      font-weight: 900;
+      float: left;
+      line-height: 0.8;
+      margin-right: 5px;
+      margin-top: 5px;
+      color: var(--black);
+      background: var(--orange);
+      padding: 0 3px;
+    }
+
+    .feat-pull {
+      border-top: 3px solid var(--black);
+      border-bottom: 3px solid var(--black);
+      padding: 10px 0;
+      margin: 16px 0;
+    }
+    .feat-pull p {
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.25;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    /* keypoints sidebar */
+    .kp-header {
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 14px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .kp {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #ccc;
+    }
+    .kp:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .kp-n {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1;
+      color: #ccc;
+      font-family: 'Courier New', monospace;
+      flex-shrink: 0;
+      width: 26px;
+    }
+
+    .kp-t {
+      font-size: 12.5px;
+      color: var(--ink2);
+      line-height: 1.6;
+    }
+    .kp-t strong { color: var(--ink); font-weight: 700; }
+
+    .feat-meta {
+      font-size: 10px;
+      color: var(--ink4);
+      line-height: 1.7;
+      border-top: 2px solid var(--black);
+      padding-top: 12px;
+      margin-top: 14px;
+    }
+    .feat-meta strong { color: var(--ink3); font-weight: 700; }
+    .feat-meta a { color: inherit; }
+    .feat-meta a:hover { text-decoration: underline; }
+
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
+    .site-footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-motto {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+    .footer-motto em {
+      color: var(--orange);
+      font-style: normal;
+    }
+
+    .footer-note {
+      font-size: 10px;
+      color: #888;
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    /* ── Speed Read ── */
+    .speed-read {
+      border: 2px solid var(--black);
+      box-shadow: var(--shadow);
+      background: var(--white);
+      margin: 24px 0 4px;
+    }
+    .speed-read-hd {
+      background: var(--orange);
+      border-bottom: 2px solid var(--black);
+      padding: 7px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sr-label {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+    .sr-time {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink2);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.1em;
+    }
+    .speed-items {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+    }
+    .sp-item {
+      background: var(--white);
+      padding: 14px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border-right: 1px solid #ddd;
+    }
+    .sp-item:last-child { border-right: none; }
+    .sp-n {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--orange);
+      font-family: 'Courier New', monospace;
+      flex-shrink: 0;
+      width: 28px;
+      margin-top: 2px;
+      -webkit-text-stroke: 1px var(--black);
+    }
+    .sp-t {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink2);
+      font-weight: 500;
+    }
+    .sp-t strong { color: var(--ink); }
+
+    /* ── Responsive ── */
+    @media (max-width: 780px) {
+      body { margin: 0; box-shadow: none; }
+      .grid-3, .grid-3-row2, .grid-2-1, .feature-body-grid {
+        display: block;
+        background: transparent;
+      }
+      .gcol, .feat-main, .feat-sidebar {
+        border: 2px solid var(--black);
+        margin-bottom: 12px;
+        box-shadow: var(--shadow-sm);
+      }
+      .gcol + .gcol { margin-left: 0; }
+      .page { padding: 0 14px 28px; }
+      .mast-title-row { grid-template-columns: 1fr; text-align: center; gap: 8px; }
+      .mast-vol, .mast-right-col { text-align: center; }
+    }
+
+    /* ══ TAB 面板 ══ */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* 总览区（始终可见）*/
+    .page-overview { padding: 0 28px 44px; background: var(--bg); }
+
+    /* ── 历史版本栏 ── */
+    .history-bar {
+      background: var(--white);
+      border-bottom: 2px solid var(--black);
+      padding: 7px 24px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-size: 11px;
+    }
+    .history-bar-label {
+      font-weight: 900;
+      color: var(--ink3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: 4px;
+      flex-shrink: 0;
+    }
+    .history-bar a {
+      display: inline-block;
+      padding: 2px 9px;
+      border: 1.5px solid var(--black);
+      font-weight: 700;
+      color: var(--ink2);
+      text-decoration: none;
+      background: var(--bg);
+      box-shadow: 1px 1px 0 var(--black);
+    }
+    .history-bar a:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .history-bar a.current {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+      pointer-events: none;
+    }
+
+    /* Tab 导航激活色改为橙色 */
+    .mast-nav a.active,
+    .mast-nav span.active {
+      background: var(--orange) !important;
+      color: #fff !important;
+      font-weight: 900;
+      box-shadow: inset 0 -3px 0 var(--black);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ MASTHEAD ══ -->
+<header class="masthead">
+  <div class="mast-top">
+    <span class="mast-top-left">AI Signal · Builder 动态 · 每日精选</span>
+    <div class="mast-top-right">Vol. I &nbsp;·&nbsp; No. 167 &nbsp;·&nbsp; 2026年10月22日 · 星期三</div>
+  </div>
+
+  <div class="mast-title-row">
+    <div class="mast-vol">
+      晨版 · Morning Edition<br>
+      Builder 动态 · 每日精选<br>
+      精选 13 位 Builder
+    </div>
+    <div class="mast-name">
+      AI&nbsp;<span class="hi">SIGNAL</span>
+    </div>
+    <div class="mast-right-col">
+      X 动态 · 31 篇<br>
+      播客专题 · 0 期<br>
+      深度摘要 · 全文
+    </div>
+  </div>
+
+  <!-- 历史版本 -->
+  <div class="history-bar">
+    <span class="history-bar-label">历史版本</span>
+    <a href="./index.html" class="current">2026-10-22 · 最新</a>
+    <a href="./2026-10-21.html">2026-10-21</a>
+    <a href="./2026-10-20.html">2026-10-20</a>
+    <a href="./2026-10-19.html">2026-10-19</a>
+    <a href="./2026-10-18.html">2026-10-18</a>
+    <a href="./2026-10-17.html">2026-10-17</a>
+    <a href="./2026-10-16.html">2026-10-16</a>
+  </div>
+  <nav class="mast-nav" id="main-nav">
+    <a href="#" data-tab="china" class="active">国内 AI 前线</a>
+    <a href="#" data-tab="global">海外 Builder 动态</a>
+  </nav>
+</header>
+
+<!-- ══ LEAD BANNER ══ -->
+<div class="lead-banner">
+  <div class="lead-kicker">头版头条 &nbsp;·&nbsp; Today's Signal</div>
+  <h1 class="lead-headline">别给我神，给我能上生产的东西</h1>
+  <p class="lead-deck">Swyx 把 Opus 移出关键路径：内容限制不可控、任务不稳定，模型再强也接不进生产流程。</p>
+</div>
+
+<!-- Tab 面板：国内资讯 -->
+<div class="tab-panel page" id="panel-china">
+  
+  <div class="sec-bar">
+    <span class="sec-tag">中文圈</span>
+    <span class="sec-title">国内 AI 前线</span>
+  </div>
+  <p style="padding:24px;color:var(--ink3);">今日暂无国内 AI 动态。</p>
+</div>
+
+<!-- Tab 面板：海外 Builder -->
+<div class="tab-panel page" id="panel-global">
+
+  <!-- ══ 30-SEC SPEED READ ══ -->
+  <div class="speed-read">
+    <div class="speed-read-hd">
+      <span class="sr-label">30 秒速览</span>
+      <span class="sr-time">/ TODAY'S BRIEF</span>
+    </div>
+    <div class="speed-items">
+      
+    <div class="sp-item">
+      <div class="sp-n">1</div>
+      <div class="sp-t"><strong>Thibault Sottiaux：</strong>Codex 登录用户缓存永久保留，API 缓存延到12小时</div>
+    </div>
+    <div class="sp-item">
+      <div class="sp-n">2</div>
+      <div class="sp-t"><strong>Aaron Levie：</strong>AI 新形态是按岗位切的自主系统，不是套壳</div>
+    </div>
+    <div class="sp-item">
+      <div class="sp-n">3</div>
+      <div class="sp-t"><strong>Zara Zhang：</strong>早期受众的价值是试错信号，不是分发</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- ══ QUOTE OF THE DAY ══ -->
+  <div class="qotd-wrap">
+    <div class="qotd-label">「一句话」 of the day</div>
+    <blockquote class="qotd">AI 会算出你懂什么、不懂什么，把中间那道差补上。只要你想，你能摸到自己能力的上限——而且免费。</blockquote>
+    <div class="qotd-attr">Guillermo Rauch · @rauchg</div>
+  </div>
+
+  <!-- ══ EDITORIAL + TAGS ══ -->
+  <div class="editorial-row">
+    <div class="editorial-box">
+      <div class="editorial-label">📝 主编按语</div>
+      <p class="editorial-text">今天的信号很一致：模型能力不再是瓶颈，能不能接进生产才是。缓存、额度、沙箱这些脏活决定谁被真正用起来，自主系统则把 Agent 从演示推到具体岗位。</p>
+    </div>
+    <div class="tags-box">
+      <div class="editorial-label">🏷️ 本期标签</div>
+      <div class="tags-list">
+        <span class="tag">#生产可用性</span>
+        <span class="tag">#自主Agent</span>
+        <span class="tag">#Codex</span>
+        <span class="tag">#早期信号</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 01 · X 动态 ══ -->
+  <div class="sec-bar" id="sec-x">
+    <span class="sec-tag">X / Twitter</span>
+    <span class="sec-title">Builder 动态</span>
+    <span class="sec-count">今日 13 位 builder · 31 条推文</span>
+  </div>
+
+  <div class="grid-3">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Swyx 用 Opus 写东西时被随机敏感词限制卡住，直言要做 AI 媒体业务，不能把这种不可控模型放在关键路径上，他要的是能上生产的工具而不是“神”</h2>
+      <div class="byline">
+        Swyx
+        <span class="handle">@swyx</span>
+        <span class="ts">2026-10-21</span>
+      </div>
+      
+      <div class="tweet-orig">
+        opus is great for writing... when you dont happen to have any random no-no words in your prompt.
+
+jfc, @CompleteSkeptic is right, give me prod, not god. i cant build an ai media or…
+        <a href="https://x.com/swyx/status/2112772374823407870" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Swyx 用 Opus 写东西时被随机敏感词限制卡住，直言要做 AI 媒体业务，不能把这种不可控模型放在关键路径上，他要的是能上生产的工具而不是“神”。他又试着让 Codex 生成动画讲解视频，结果直接失败。两条指向同一个问题：模型能力再强，内容限制和任务稳定性不解决，Builder 就没法把它接进生产流程。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>咨询公司将大模型嵌入客户交付流程时，真正的门槛不是模型能力，而是内容限制与失败模式能否被预测和兜底；关键路径上不能接受随机拒答，需按生产系统标准配置模型路由、评测集和人工复核。</p>
+      </div>
+      <div class="engage">❤ 36 &nbsp;↻ 3 &nbsp;💬 36</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Josh Woodward 透露 GeminiApp 的 Trusted Tester 社区昨天跨过一个重要节点——大量用户愿意在 Web、Android、iOS 上试用早期版本，之前报过名的已经全部纳入，新的报名入口也放了出来</h2>
+      <div class="byline">
+        Josh Woodward
+        <span class="handle">@joshwoodward</span>
+        <span class="ts">2026-10-20</span>
+      </div>
+      
+      <div class="tweet-orig">
+        We just crossed a big milestone for our @GeminiApp Trusted Tester community yesterday. TLDR: Lots of people want to try early stuff on Web, Android, and iOS! If you’ve signed up be…
+        <a href="https://x.com/joshwoodward/status/2112676777290248675" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Josh Woodward 透露 GeminiApp 的 Trusted Tester 社区昨天跨过一个重要节点——大量用户愿意在 Web、Android、iOS 上试用早期版本，之前报过名的已经全部纳入，新的报名入口也放了出来。他同时转述 Sundar 的表态：Google 一定要站在前沿，这是公司 DNA，没有第二种做法，并顺势喊人「来跟我们一起做」。整体看，Google 正把 Gemini 的早期版本测试做成规模化的公开社区，用多端同步的尝鲜名额换取真实反馈。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>Google 把前沿模型的验证从内部灰度转为公开规模的测试社区，意味着客户侧 AI 项目的交付节奏要按持续灰度与反馈运营来设计，而不是按版本上线的项目制里程碑排期；咨询的价值随之从选型建议转向反馈回路的运营与治理，否则交付物在客户上线前就已过期。</p>
+      </div>
+      <div class="engage">❤ 500 &nbsp;↻ 23 &nbsp;💬 44</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Codex 对登录用户在 Codex 和 Work 中永久保留缓存，回到旧对话或隔几小时再继续都不再额外计费，并保证命中缓存；API 侧缓存时长延长到 12 小时</h2>
+      <div class="byline">
+        Thibault Sottiaux
+        <span class="handle">@thsottiaux</span>
+        <span class="ts">2026-10-21</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Day 16/
+
+You can now cache for 12h in the API and for logged in users across Codex &amp;amp; Work we keep cache forever and you don’t have any penalty for coming back to an old convers…
+        <a href="https://x.com/thsottiaux/status/2112712984644784534" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Codex 对登录用户在 Codex 和 Work 中永久保留缓存，回到旧对话或隔几小时再继续都不再额外计费，并保证命中缓存；API 侧缓存时长延长到 12 小时。同时承认周末有部分用户额度消耗快于预期，查出约 4 万个账号的实际执行限制与所选套餐不一致，已逐个联系、修正并补发额度。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>Agent 类产品的成本结构从“按单次会话”转向“按长期留存上下文”计价，长周期任务的单位经济性假设要重算，交付方案里的 ROI 模型不能再沿用单次调用成本估算。4 万账号的额度执行与套餐不一致，说明计量层是独立于模型能力的交付风险点，客户合同应写清用量口径与对账机制。</p>
+      </div>
+      <div class="engage">❤ 10518 &nbsp;↻ 510 &nbsp;💬 1698</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Google Labs 把 Dreambeans 的宣传做成“Dreambeans Roulette”系列：打开产品、选一个故事，然后去现实里执行，Product Manager Sahana 和 VP of Product Brian 带着狗出镜</h2>
+      <div class="byline">
+        Google Labs
+        <span class="handle">@GoogleLabs</span>
+        <span class="ts">2026-10-20</span>
+      </div>
+      
+      <div class="tweet-orig">
+        What would happen if Dreambeans ☁️ dreamt up ☁️ your morning ☀️?
+
+We brought together Google Labs’ very own Sahana R. (Product Manager), Brian R. (VP of Product), and his impossibl…
+        <a href="https://x.com/GoogleLabs/status/2112606263163203970" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Google Labs 把 Dreambeans 的宣传做成“Dreambeans Roulette”系列：打开产品、选一个故事，然后去现实里执行，Product Manager Sahana 和 VP of Product Brian 带着狗出镜。推文没讲 Dreambeans 的具体能力，实质信息只有它目前在美国向 18+ 用户开放，更多地区待定。</p>
+      </div>
+      
+      <div class="engage">❤ 65 &nbsp;↻ 13 &nbsp;💬 4</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Vercel 把支撑 Eve 和 Workflows 的 durability 基础设施开放给所有 harness，Pi、OpenCode 都能接入，本地、Vercel 或自建均可，思路沿用当初 aisdk 的开源路线</h2>
+      <div class="byline">
+        Guillermo Rauch
+        <span class="handle">@rauchg</span>
+        <span class="ts">2026-10-20</span>
+      </div>
+      
+      <div class="tweet-orig">
+        AI will be able to compute the perfect delta of what you understand and don't, helping you progressively learn any idea and unravel any mystery.
+
+If you so desire, you'll reach the…
+        <a href="https://x.com/rauchg/status/2112638107749355867" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Vercel 把支撑 Eve 和 Workflows 的 durability 基础设施开放给所有 harness，Pi、OpenCode 都能接入，本地、Vercel 或自建均可，思路沿用当初 aisdk 的开源路线。他顺带点出 Claude Code 和 Codex 也能这样变 durable、可观测，但两者没为嵌入设计，效率更低、可移植性更差，还多一层 sandbox 要求。另一条推文讲教育：AI 能算出你已知与未知之间的差量，逐个概念补齐，相当于免费拿到个人能力上限。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>Agent 运行时的耐久性与可观测性正从厂商私有能力变成可移植的公共层，客户不必再为单一 harness 绑定付费，咨询项目的价值锚点要从选型与集成转向流程重构和审计留痕。Claude Code、Codex 这类非为嵌入设计的工具在沙箱与效率上的短板，会成为企业级落地评估的硬指标而非软性偏好。</p>
+      </div>
+      <div class="engage">❤ 2466 &nbsp;↻ 201 &nbsp;💬 184</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Levie 判断 AI 的新形态是面向特定任务和领域的自主系统，不再停留在 LLM wrapper</h2>
+      <div class="byline">
+        Aaron Levie
+        <span class="handle">@levie</span>
+        <span class="ts">2026-10-21</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Pretty cool that we clearly have an emerging form factor for what AI might look like for the foreseeable future as autonomous systems dedicated to specific tasks or domains.
+
+This …
+        <a href="https://x.com/levie/status/2112769686798832013" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Levie 判断 AI 的新形态是面向特定任务和领域的自主系统，不再停留在 LLM wrapper。模型能调用工具、操作电脑，直接执行原本由人完成的工作流，缺软件时还能自己写；垂直领域判断力提升；沙箱、文件系统和数据管道支持长任务与大规模数据处理。企业落地仍需 UX、实施和变更管理，并保留人工监督。IT 自动化、网络安全、药物发现、制造和 AI 研究已出现这类系统。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>Levie 把企业 AI 的竞争单位从模型下移到特定岗位的自主工作流，咨询公司若仍以模型选型和试点为主，交付会被客户内部平台团队替代。项目方法论应改为围绕工具权限、沙箱数据和人工监督设计可验收的 agent 工作流，顾问能力结构也要从写方案转向编排与验收。</p>
+      </div>
+      <div class="engage">❤ 89 &nbsp;↻ 6 &nbsp;💬 34</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">GStack 现在能识别 Capy 了，可以直接跑在对方的 software factory 里，通过 Captains 功能调用——他选择把自己的工具接入别人的智能体开发流水线，没有另起一套</h2>
+      <div class="byline">
+        Garry Tan
+        <span class="handle">@garrytan</span>
+        <span class="ts">2026-10-20</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Greatest unlock for any startup founder or anyone who has to get in touch with the right people https://t.co/FWdMrZ8VzV
+        <a href="https://x.com/garrytan/status/2112611824432742493" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>GStack 现在能识别 Capy 了，可以直接跑在对方的 software factory 里，通过 Captains 功能调用——他选择把自己的工具接入别人的智能体开发流水线，没有另起一套。另一条他只丢下一句「这是创始人、或者任何需要联系到对的人的最大解锁」，具体是什么没有展开。加州那条资产没收税是政治表态，与 AI 无关。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>咨询公司自建 AI 工具时若只做内部闭环、不与客户已有的智能体开发平台互通，交付物就无法沉淀到客户的工程流水线，工具投入会退化成一次性人力替代。判断标准应前置到选型阶段：能否被客户的技术栈直接调用，比功能数量更决定长期复用率。</p>
+      </div>
+      <div class="engage">❤ 693 &nbsp;↻ 41 &nbsp;💬 43</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">FirstMark 一天内连发多笔：领投 Daytona 的 B 轮（今年早些时候已领投其 A 轮），Baba 公布 A 轮，Gradium AI 开源了一套体量极小、却能在端侧跑出 SOTA 的 TTS 模型</h2>
+      <div class="byline">
+        Matt Turck
+        <span class="handle">@mattturck</span>
+        <span class="ts">2026-10-20</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Thrilled to double down at @daytonaio: @ivanburazin, @JukicVedran and team are building one of the iconic companies of the AI era.  We're grateful that they let us lead the Series …
+        <a href="https://x.com/mattturck/status/2112570721499042246" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>FirstMark 一天内连发多笔：领投 Daytona 的 B 轮（今年早些时候已领投其 A 轮），Baba 公布 A 轮，Gradium AI 开源了一套体量极小、却能在端侧跑出 SOTA 的 TTS 模型。Matt Turck 把端侧开源语音模型单独拎出来强调，Synthesia 和 Rillet 则直接包下纽约地铁广告位。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>同一家基金在一年内连续领投同一家 AI 基础设施公司的 A、B 两轮，说明基础设施层的资金正快速向少数已被验证的团队集中，客户做技术选型时的实际可选项在收窄。端侧小模型达到 SOTA，则把语音类项目的成本与合规架构从云端推回本地，交付方案的默认假设需要重写。</p>
+      </div>
+      <div class="engage">❤ 58 &nbsp;↻ 3 &nbsp;💬 8</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Zara Zhang 认为，产品早期自建受众的最大好处不是分发渠道，而是能低成本试不同想法和角度、看哪个真有反应，并顺手找到前 100 个早期用户</h2>
+      <div class="byline">
+        Zara Zhang
+        <span class="handle">@zarazhangrui</span>
+        <span class="ts">2026-10-20</span>
+      </div>
+      
+      <div class="tweet-orig">
+        If you’re a product builder in the earliest stages, the biggest advantage of having your own audience isn’t even the distribution.
+
+It’s being able to 
+- Test different ideas/angle…
+        <a href="https://x.com/zarazhangrui/status/2112530473994072225" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Zara Zhang 认为，产品早期自建受众的最大好处不是分发渠道，而是能低成本试不同想法和角度、看哪个真有反应，并顺手找到前 100 个早期用户。她的判断很直接：信号比分发更重要。有受众才有反馈回路，没受众的早期产品只能靠猜。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>自有受众正在替代传统咨询项目里的用户调研与概念验证环节：客户若能以周为单位拿到真实反馈，按人天计费的 discovery 阶段就难以维持原有定价，交付物必须从报告转向可验证的信号机制。咨询机构自身缺少直接受众，方法论迭代速度会慢于独立 builder，这是能力结构问题而非渠道问题。</p>
+      </div>
+      <div class="engage">❤ 159 &nbsp;↻ 7 &nbsp;💬 33</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">他把多智能体干活的方式拆成两段：Astra 做规划，Sol 6.1 写代码，让 Astra 在 worktree 里跑 codex cli，比依赖 subagent 效果明显更好</h2>
+      <div class="byline">
+        Peter Steinberger
+        <span class="handle">@steipete</span>
+        <span class="ts">2026-10-21</span>
+      </div>
+      
+      <div class="tweet-orig">
+        See you at @Cloudflare Connect tomorrow! Will be chatting with @dok2001 about agents https://t.co/P4oYlOZ80s
+        <a href="https://x.com/steipete/status/2112735411688857770" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>他把多智能体干活的方式拆成两段：Astra 做规划，Sol 6.1 写代码，让 Astra 在 worktree 里跑 codex cli，比依赖 subagent 效果明显更好。另外挂一个第二智能体专门监督进度、跟 Astra 对着挑刺，而不是让同一个 agent 自查文本；他为此写了个 OpenClaw 插件叫 smart goal。另有一条：ts 编译器本该快 9 倍，只是他们本来就跑在 7.1-dev 版本上，所以没吃到全部收益。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>多智能体在项目交付中的实际产出取决于角色编排而非模型能力：把规划、执行、对抗性复核拆给不同智能体后，质量把关从个人自查转为机制化的外部质询，咨询业以人力层级堆叠做质量控制的作业模型因此失去成本优势。</p>
+      </div>
+      <div class="engage">❤ 224 &nbsp;↻ 7 &nbsp;💬 17</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Dan Shipper 遇到一个自相矛盾的 agent 权限死锁：工具按设计需要请求人工批准，但审批策略被设成 never，所以它永远发不出请求；更糟的是它自己也说不清该怎么改这个策略</h2>
+      <div class="byline">
+        Dan Shipper
+        <span class="handle">@danshipper</span>
+        <span class="ts">2026-10-20</span>
+      </div>
+      
+      <div class="tweet-orig">
+        BOOK REVIEW: Will and Attention, Meghan O'Gieblyn author of God, Human, Animal Machine
+
+I loved this book. O'Gieblyn writes with an addictive mix of clarity, rigor, literary refere…
+        <a href="https://x.com/danshipper/status/2112561443249786901" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Dan Shipper 遇到一个自相矛盾的 agent 权限死锁：工具按设计需要请求人工批准，但审批策略被设成 never，所以它永远发不出请求；更糟的是它自己也说不清该怎么改这个策略。这类问题不是模型能力不足，而是权限系统的默认值和自主执行逻辑没对齐，卡住时用户拿不到任何可操作的出口。做 agent 产品的人可以把它当成一个具体的验收用例：不仅要验证&quot;能执行&quot;，还得验证&quot;该停下来问人的时候，它确实停下来，并且知道怎么让人改配置&quot;。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>企业级 agent 交付的主要摩擦已从模型能力转向权限治理：审批策略与自主执行的耦合设计不当，会产生无人察觉的静默失效，模型既不会执行也不会求助。咨询方在方案设计阶段就需固定权限分级与人工介入节点，而非留待运行期由客户自行配置。</p>
+      </div>
+      <div class="engage">❤ 41 &nbsp;↻ 0 &nbsp;💬 5</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">他把推理时扩展、子智能体、智能体集群，类比成 CPU 线程、多核、多节点分布式系统</h2>
+      <div class="byline">
+        Aditya Agarwal
+        <span class="handle">@adityaag</span>
+        <span class="ts">2026-10-20</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Call me an old hat computer scientist but the parallels between
+
+Inference time scaling ---&amp;gt; Subagents --&amp;gt; Agent Swarms
+
+looks an awful lot like
+
+CPU Threads --&amp;gt; Multi-cor…
+        <a href="https://x.com/adityaag/status/2112579526379401408" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>他把推理时扩展、子智能体、智能体集群，类比成 CPU 线程、多核、多节点分布式系统。判断是 AI 系统正沿计算架构的老路演进：单点能力之后，竞争点转向编排与系统治理。对 Builder 的用处：别只盯模型分数，先补多智能体调度、隔离和可观测性。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>客户侧 AI 项目会重复分布式系统的工程治理路径，咨询交付需前置多智能体编排、权限隔离与可观测性设计，单点模型选型不再构成方案壁垒。</p>
+      </div>
+      <div class="engage">❤ 433 &nbsp;↻ 23 &nbsp;💬 36</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Sam Altman 确认 Aleksander 已接受邀请，接手 OpenAI 面对超级智能的安全与安保工作</h2>
+      <div class="byline">
+        Sam Altman
+        <span class="handle">@sama</span>
+        <span class="ts">2026-10-20</span>
+      </div>
+      
+      <div class="tweet-orig">
+        I am very grateful Aleksander accepted our request to come take this on; the safety and security challenges in front of us as we confront superintelligence are immense, and he has …
+        <a href="https://x.com/sama/status/2112652656602923366" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Sam Altman 确认 Aleksander 已接受邀请，接手 OpenAI 面对超级智能的安全与安保工作。他直接把任务难点定在超级智能级别的安全与安保挑战，而不是普通产品风险。选 Aleksander 的理由是他具备匹配的技能组合。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>前沿实验室把超级智能安全与安保设为独立职责，说明AI治理项目正从合规文档转向模型能力、部署安全与组织权责的联合设计；咨询公司若只交付政策框架，将难以进入核心决策链。</p>
+      </div>
+      <div class="engage">❤ 4673 &nbsp;↻ 156 &nbsp;💬 371</div>
+    </div></div>
+
+</div><!-- /panel-global -->
+
+<!-- Tab 面板：播客专题 -->
+<div class="tab-panel page" id="panel-podcast">
+  <p style="padding:24px;color:var(--ink3);">今日暂无播客更新。</p>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-motto"><em>AI Signal</em> · Builder 动态 · 每日精选</div>
+  <div class="footer-note">
+    数据来源：X 公开推文 &amp; 播客转录 &nbsp;·&nbsp; AI 辅助摘要 &nbsp;·&nbsp; 观点归属原作者<br>
+    生成日期 2026-10-22 &nbsp;·&nbsp; 第 167 期
+  </div>
+</footer>
+
+<!-- ══ Tab 切换 JS ══ -->
+<script>
+(function () {
+  var nav = document.getElementById('main-nav');
+  if (!nav) return;
+  var tabs = Array.prototype.slice.call(nav.querySelectorAll('a[data-tab]'));
+
+  function activateTab(tabId) {
+    tabs.forEach(function(t) {
+      t.classList.toggle('active', t.getAttribute('data-tab') === tabId);
+    });
+    var panels = document.querySelectorAll('.tab-panel');
+    panels.forEach(function(p) {
+      p.classList.toggle('active', p.id === 'panel-' + tabId);
+    });
+    try { sessionStorage.setItem('activeTab', tabId); } catch(e) {}
+  }
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      activateTab(tab.getAttribute('data-tab'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  var saved;
+  try { saved = sessionStorage.getItem('activeTab'); } catch(e) {}
+  var firstTab = tabs.length ? tabs[0].getAttribute('data-tab') : null;
+  activateTab(saved && document.getElementById('panel-' + saved) ? saved : firstTab);
+})();
+</script>
+
+</body>
+</html>
