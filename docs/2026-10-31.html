@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Signal · 2026-10-31</title>
+  <style>
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Regular.otf') format('opentype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Medium.otf') format('opentype');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Bold.otf') format('opentype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Heavy.otf') format('opentype');
+      font-weight: 900;
+    }
+
+    /* ─── Quote of the Day ─── */
+    .qotd-wrap {
+      border: 2px solid var(--black);
+      border-radius: 4px;
+      box-shadow: 4px 4px 0 var(--black);
+      background: var(--black);
+      padding: 32px 40px;
+      margin: 32px 0 24px;
+    }
+    .qotd-label {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+    .qotd {
+      font-size: clamp(20px, 2.4vw, 30px);
+      font-weight: 700;
+      line-height: 1.5;
+      color: #fff;
+      border: none;
+      margin: 0 0 14px;
+      padding: 0;
+    }
+    .qotd-attr {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: 0.04em;
+    }
+    /* ─── Editorial + Tags ─── */
+    .editorial-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0;
+      border: 2px solid #373a3e;
+      box-shadow: 4px 4px 0 #373a3e;
+      margin-bottom: 28px;
+      background: #373a3e;
+    }
+    .editorial-box {
+      background: var(--orange-pale);
+      padding: 22px 26px;
+    }
+    .tags-box {
+      background: var(--white);
+      padding: 22px 26px;
+      min-width: 260px;
+      border-left: 2px solid #373a3e;
+    }
+    .editorial-label {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 10px;
+    }
+    .editorial-text {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.8;
+      color: var(--ink);
+    }
+    .tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      display: inline-block;
+      border: 2px solid #373a3e;
+      border-radius: 3px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #fff;
+      box-shadow: 2px 2px 0 #000;
+      cursor: default;
+    }
+    .tag:hover { background: var(--orange); }
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    ::selection { background: var(--orange); color: var(--black); }
+    ::-moz-selection { background: var(--orange); color: var(--black); }
+
+    /* ─── Tokens ─── */
+    :root {
+      --bg:        #f4f3ef;
+      --white:     #fffffe;
+      --black:     #373a3e;
+      --ink:       #1a1a1a;
+      --ink2:      #3d3d3d;
+      --ink3:      #777777;
+      --ink4:      #aaaaaa;
+      --lime: #ff8a00; --orange: #ff8a00;
+      --lime-pale: #fff0d4; --orange-pale: #fff0d4;
+      --yellow:    #fde047;
+      --border:    2px solid #373a3e;
+      --shadow:    4px 4px 0 #373a3e;
+      --shadow-sm: 2px 2px 0 #373a3e;
+      --shadow-lg: 6px 6px 0 #373a3e;
+      --rule:      1px solid #373a3e;
+      --rule-lt:   1px solid #ddd;
+      --gap:       20px;
+      --ff: 'SHSCN', 'Helvetica Neue', Arial, sans-serif;
+      --ff-title: 'SHSCN', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    html { background: #e8d5b0; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--ff);
+      font-size: 15px;
+      line-height: 1.75;
+      max-width: 1200px;
+      margin: 40px auto;
+      border: 3px solid var(--black);
+      box-shadow: 8px 8px 0 var(--black);
+    }
+
+    /* ══════════════════════════════════
+       MASTHEAD
+    ══════════════════════════════════ */
+    .masthead {
+      background: var(--white);
+      border-bottom: 3px solid var(--black);
+      padding: 0;
+    }
+
+    .mast-top {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .mast-top-left {
+      padding: 8px 18px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      border-right: 2px solid var(--black);
+      display: flex;
+      align-items: center;
+    }
+
+    .mast-top-right {
+      padding: 8px 18px;
+      font-size: 10.5px;
+      color: var(--ink3);
+      text-align: right;
+      line-height: 1.6;
+      display: flex;
+      align-items: center;
+    }
+
+    .mast-title-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 16px 24px;
+      gap: 0;
+    }
+
+    .mast-vol {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      line-height: 1.5;
+    }
+
+    .mast-name {
+      text-align: center;
+      font-size: clamp(38px, 6.5vw, 72px);
+      font-weight: 900;
+      font-family: var(--ff-title);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .mast-name .hi {
+      /* lime underline on the accent word */
+      display: inline;
+      background: var(--orange);
+      padding: 0 4px;
+    }
+
+    .mast-right-col {
+      text-align: right;
+      font-size: 11px;
+      color: var(--ink3);
+      line-height: 1.6;
+    }
+
+    /* nav strip */
+    .mast-nav {
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .mast-nav a,
+    .mast-nav span {
+      padding: 7px 18px;
+      border-right: 1px solid #444;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+    }
+    .mast-nav a:last-child,
+    .mast-nav span:last-child { border-right: none; }
+    .mast-nav a:hover { background: #4a4d52; }
+    .mast-nav a.active,
+    .mast-nav span.active {
+      background: var(--orange);
+      color: var(--black);
+      font-weight: 900;
+      box-shadow: inset 0 -3px 0 var(--black);
+    }
+
+    /* ══════════════════════════════════
+       LEAD BANNER
+    ══════════════════════════════════ */
+    .lead-banner {
+      background: var(--orange);
+      border-bottom: 3px solid var(--black);
+      padding: 28px 32px 24px;
+    }
+
+    .lead-kicker {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lead-kicker::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 3px;
+      background: var(--black);
+    }
+
+    .lead-headline {
+      font-size: clamp(22px, 3.2vw, 38px);
+      font-weight: 900;
+      font-family: var(--ff-title);
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+      color: var(--black);
+      margin-bottom: 16px;
+      max-width: 860px;
+    }
+
+    .lead-deck {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink2);
+      max-width: 680px;
+      line-height: 1.55;
+    }
+
+    /* ══════════════════════════════════
+       PAGE BODY
+    ══════════════════════════════════ */
+    .page {
+      padding: 0 28px 44px;
+      background: var(--bg);
+    }
+
+    /* ── Section header bar ── */
+    .sec-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 20px;
+      border-top: 3px solid var(--black);
+      border-bottom: 2px solid var(--black);
+      padding: 6px 0;
+      scroll-margin-top: 48px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .sec-bar.highlight {
+      border-top-color: var(--orange);
+      box-shadow: 0 -3px 0 var(--orange);
+    }
+
+    .sec-tag {
+      background: var(--black);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      flex-shrink: 0;
+    }
+
+    .sec-tag.lime {
+      background: var(--black);
+      color: var(--orange);
+    }
+
+    .sec-title {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .sec-count {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink4);
+      font-family: 'Courier New', monospace;
+      margin-left: auto;
+    }
+
+    /* ══════════════════════════════════
+       COLUMN GRIDS
+    ══════════════════════════════════ */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+      background: var(--black); /* gap color */
+    }
+
+    .grid-2-1 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+      background: var(--black);
+    }
+
+    .gcol {
+      background: var(--white);
+      padding: 28px 24px;
+      /* columns separated by 2px black gap via grid background */
+    }
+    .gcol + .gcol {
+      margin-left: 2px;
+    }
+
+    /* second row of 3 */
+    .grid-3-row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+      border-top: none;
+      background: var(--black);
+      margin-top: 2px; /* visual separation from row above inside same outer border, reuse border */
+    }
+
+    /* span helpers */
+    .span-2 { grid-column: span 2; }
+    .span-3 { grid-column: span 3; }
+
+    /* ══════════════════════════════════
+       ARTICLE CARD — inside a gcol
+    ══════════════════════════════════ */
+    .art-kicker {
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 5px;
+    }
+
+    .art-hed {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: var(--ff-title);
+      line-height: 1.35;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .art-hed.lg { font-size: 22px; }
+    .art-hed.sm { font-size: 15px; }
+
+    .art-deck {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      line-height: 1.5;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .byline {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: var(--rule);
+    }
+
+    .byline .handle {
+      font-weight: 500;
+      font-style: italic;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--ink4);
+    }
+
+    .byline .ts {
+      font-size: 9.5px;
+      font-weight: 400;
+      color: var(--ink4);
+      margin-left: 4px;
+    }
+
+    .art-body {
+      font-size: 14px;
+      color: var(--ink2);
+      line-height: 1.8;
+    }
+
+    .art-divider {
+      border: none;
+      border-top: var(--rule-lt);
+      margin: 14px 0;
+    }
+
+    /* ── Tweet original block ── */
+    .tweet-orig {
+      border: 2px solid var(--black);
+      background: var(--bg);
+      padding: 10px 12px;
+      margin: 10px 0;
+      font-size: 12.5px;
+      color: var(--ink3);
+      line-height: 1.6;
+      font-style: italic;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tweet-orig a {
+      display: block;
+      margin-top: 6px;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink4);
+      text-decoration: none;
+    }
+    .tweet-orig a:hover { text-decoration: underline; }
+
+    /* ── Pull quote ── */
+    .pull {
+      border-top: 3px solid var(--black);
+      border-bottom: 3px solid var(--black);
+      padding: 10px 0;
+      margin: 14px 0;
+    }
+    .pull p {
+      font-size: 14.5px;
+      font-weight: 900;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    /* ── Summary box ── */
+    .sumbox {
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      padding: 9px 12px;
+      margin: 10px 0;
+    }
+    .sumbox .lbl {
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 4px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #ddd;
+    }
+    .sumbox p {
+      font-size: 12.5px;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* highlight sumbox */
+    .sumbox.lime {
+      background: var(--orange-pale);
+      border-left: 3px solid var(--orange);
+      border-color: var(--black);
+    }
+    .sumbox.lime .lbl { border-bottom-color: rgba(0,0,0,0.15); color: var(--ink2); }
+    .sumbox.lime p { color: var(--ink); }
+
+    /* ── Engagement ── */
+    .engage {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 10px;
+      color: var(--ink4);
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+    }
+
+    /* ── Inline code ── */
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      background: var(--orange-pale);
+      padding: 1px 5px;
+      border: 1px solid var(--black);
+      font-weight: 700;
+    }
+
+    /* ══════════════════════════════════
+       FEATURE / PODCAST
+    ══════════════════════════════════ */
+    .feature-wrap {
+      border: 2px solid var(--black);
+      box-shadow: var(--shadow-lg);
+      margin-top: 0;
+      background: var(--white);
+    }
+
+    .feature-hero {
+      background: var(--orange-pale);
+      border-bottom: 2px solid var(--black);
+      padding: 24px 24px 20px;
+    }
+
+    .feat-kicker {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink2);
+      margin-bottom: 8px;
+    }
+
+    .feat-hed {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      color: var(--black);
+      margin-bottom: 10px;
+    }
+
+    .feat-deck {
+      font-size: 14px;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--ink2);
+      line-height: 1.5;
+      max-width: 680px;
+    }
+
+    .feature-body-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 0;
+      background: var(--black);
+      align-items: start;
+    }
+
+    .feat-main {
+      background: var(--white);
+      padding: 22px 22px 22px 24px;
+      max-height: 560px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--orange) var(--bg);
+    }
+    .feat-main::-webkit-scrollbar { width: 6px; }
+    .feat-main::-webkit-scrollbar-track { background: var(--bg); }
+    .feat-main::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
+
+    .feat-sidebar {
+      background: var(--bg);
+      padding: 22px 20px;
+      margin-left: 2px;
+      max-height: 560px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--orange) var(--bg);
+    }
+    .feat-sidebar::-webkit-scrollbar { width: 6px; }
+    .feat-sidebar::-webkit-scrollbar-track { background: var(--bg); }
+    .feat-sidebar::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
+
+    .feat-body {
+      font-size: 13.5px;
+      color: var(--ink2);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .feat-body .drop::first-letter {
+      font-size: 3.5em;
+      font-weight: 900;
+      float: left;
+      line-height: 0.8;
+      margin-right: 5px;
+      margin-top: 5px;
+      color: var(--black);
+      background: var(--orange);
+      padding: 0 3px;
+    }
+
+    .feat-pull {
+      border-top: 3px solid var(--black);
+      border-bottom: 3px solid var(--black);
+      padding: 10px 0;
+      margin: 16px 0;
+    }
+    .feat-pull p {
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.25;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    /* keypoints sidebar */
+    .kp-header {
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 14px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .kp {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #ccc;
+    }
+    .kp:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .kp-n {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1;
+      color: #ccc;
+      font-family: 'Courier New', monospace;
+      flex-shrink: 0;
+      width: 26px;
+    }
+
+    .kp-t {
+      font-size: 12.5px;
+      color: var(--ink2);
+      line-height: 1.6;
+    }
+    .kp-t strong { color: var(--ink); font-weight: 700; }
+
+    .feat-meta {
+      font-size: 10px;
+      color: var(--ink4);
+      line-height: 1.7;
+      border-top: 2px solid var(--black);
+      padding-top: 12px;
+      margin-top: 14px;
+    }
+    .feat-meta strong { color: var(--ink3); font-weight: 700; }
+    .feat-meta a { color: inherit; }
+    .feat-meta a:hover { text-decoration: underline; }
+
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
+    .site-footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-motto {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+    .footer-motto em {
+      color: var(--orange);
+      font-style: normal;
+    }
+
+    .footer-note {
+      font-size: 10px;
+      color: #888;
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    /* ── Speed Read ── */
+    .speed-read {
+      border: 2px solid var(--black);
+      box-shadow: var(--shadow);
+      background: var(--white);
+      margin: 24px 0 4px;
+    }
+    .speed-read-hd {
+      background: var(--orange);
+      border-bottom: 2px solid var(--black);
+      padding: 7px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sr-label {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+    .sr-time {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink2);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.1em;
+    }
+    .speed-items {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+    }
+    .sp-item {
+      background: var(--white);
+      padding: 14px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border-right: 1px solid #ddd;
+    }
+    .sp-item:last-child { border-right: none; }
+    .sp-n {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--orange);
+      font-family: 'Courier New', monospace;
+      flex-shrink: 0;
+      width: 28px;
+      margin-top: 2px;
+      -webkit-text-stroke: 1px var(--black);
+    }
+    .sp-t {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink2);
+      font-weight: 500;
+    }
+    .sp-t strong { color: var(--ink); }
+
+    /* ── Responsive ── */
+    @media (max-width: 780px) {
+      body { margin: 0; box-shadow: none; }
+      .grid-3, .grid-3-row2, .grid-2-1, .feature-body-grid {
+        display: block;
+        background: transparent;
+      }
+      .gcol, .feat-main, .feat-sidebar {
+        border: 2px solid var(--black);
+        margin-bottom: 12px;
+        box-shadow: var(--shadow-sm);
+      }
+      .gcol + .gcol { margin-left: 0; }
+      .page { padding: 0 14px 28px; }
+      .mast-title-row { grid-template-columns: 1fr; text-align: center; gap: 8px; }
+      .mast-vol, .mast-right-col { text-align: center; }
+    }
+
+    /* ══ TAB 面板 ══ */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* 总览区（始终可见）*/
+    .page-overview { padding: 0 28px 44px; background: var(--bg); }
+
+    /* ── 历史版本栏 ── */
+    .history-bar {
+      background: var(--white);
+      border-bottom: 2px solid var(--black);
+      padding: 7px 24px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-size: 11px;
+    }
+    .history-bar-label {
+      font-weight: 900;
+      color: var(--ink3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: 4px;
+      flex-shrink: 0;
+    }
+    .history-bar a {
+      display: inline-block;
+      padding: 2px 9px;
+      border: 1.5px solid var(--black);
+      font-weight: 700;
+      color: var(--ink2);
+      text-decoration: none;
+      background: var(--bg);
+      box-shadow: 1px 1px 0 var(--black);
+    }
+    .history-bar a:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .history-bar a.current {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+      pointer-events: none;
+    }
+
+    /* Tab 导航激活色改为橙色 */
+    .mast-nav a.active,
+    .mast-nav span.active {
+      background: var(--orange) !important;
+      color: #fff !important;
+      font-weight: 900;
+      box-shadow: inset 0 -3px 0 var(--black);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ MASTHEAD ══ -->
+<header class="masthead">
+  <div class="mast-top">
+    <span class="mast-top-left">AI Signal · Builder 动态 · 每日精选</span>
+    <div class="mast-top-right">Vol. I &nbsp;·&nbsp; No. 176 &nbsp;·&nbsp; 2026年10月31日 · 星期五</div>
+  </div>
+
+  <div class="mast-title-row">
+    <div class="mast-vol">
+      晨版 · Morning Edition<br>
+      Builder 动态 · 每日精选<br>
+      精选 12 位 Builder
+    </div>
+    <div class="mast-name">
+      AI&nbsp;<span class="hi">SIGNAL</span>
+    </div>
+    <div class="mast-right-col">
+      X 动态 · 36 篇<br>
+      播客专题 · 1 期<br>
+      深度摘要 · 全文
+    </div>
+  </div>
+
+  <!-- 历史版本 -->
+  <div class="history-bar">
+    <span class="history-bar-label">历史版本</span>
+    <a href="./index.html" class="current">2026-10-31 · 最新</a>
+    <a href="./2026-10-30.html">2026-10-30</a>
+    <a href="./2026-10-29.html">2026-10-29</a>
+    <a href="./2026-10-28.html">2026-10-28</a>
+    <a href="./2026-10-27.html">2026-10-27</a>
+    <a href="./2026-10-26.html">2026-10-26</a>
+    <a href="./2026-10-25.html">2026-10-25</a>
+  </div>
+  <nav class="mast-nav" id="main-nav">
+    <a href="#" data-tab="china" class="active">国内 AI 前线</a>
+    <a href="#" data-tab="global">海外 Builder 动态</a>
+    <a href="#" data-tab="podcast">播客专题</a>
+  </nav>
+</header>
+
+<!-- ══ LEAD BANNER ══ -->
+<div class="lead-banner">
+  <div class="lead-kicker">头版头条 &nbsp;·&nbsp; Today's Signal</div>
+  <h1 class="lead-headline">执行在贬值，判断力在涨价</h1>
+  <p class="lead-deck">模型已经能写论文、搭实验，但决定问什么问题的能力还归人。这条分界线定你该把时间花在哪。</p>
+</div>
+
+<!-- Tab 面板：国内资讯 -->
+<div class="tab-panel page" id="panel-china">
+  
+  <div class="sec-bar">
+    <span class="sec-tag">中文圈</span>
+    <span class="sec-title">国内 AI 前线</span>
+    <span class="sec-count">公开来源 · 每日更新</span>
+  </div>
+  <div class="grid-3" style="display:grid;grid-template-columns:1fr;gap:0;border:2px solid var(--black);background:var(--black);">
+    <div class="gcol">
+      <div class="art-kicker">系统说明</div>
+      <h3 class="art-hed">无法提供2026年10月实时资讯</h3>
+      <div class="art-body" style="margin:10px 0;">我的知识截止于2025年初，无法获取2026年10月31日的真实新闻。为避免编造不实信息误导决策，此处不输出虚构新闻。建议通过权威媒体或专业数据库获取当日资讯。</div>
+      
+      
+      <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
+        来源：<a href="https://www.google.com/search?q=%E6%97%A0%E6%B3%95%E6%8F%90%E4%BE%9B2026%E5%B9%B410%E6%9C%88%E5%AE%9E%E6%97%B6%E8%B5%84%E8%AE%AF%20%E7%B3%BB%E7%BB%9F%E8%AF%B4%E6%98%8E" target="_blank" style="color:var(--orange);text-decoration:underline;">系统说明 ↗</a>
+      </div>
+    </div></div>
+</div>
+
+<!-- Tab 面板：海外 Builder -->
+<div class="tab-panel page" id="panel-global">
+
+  <!-- ══ 30-SEC SPEED READ ══ -->
+  <div class="speed-read">
+    <div class="speed-read-hd">
+      <span class="sr-label">30 秒速览</span>
+      <span class="sr-time">/ TODAY'S BRIEF</span>
+    </div>
+    <div class="speed-items">
+      
+    <div class="sp-item">
+      <div class="sp-n">1</div>
+      <div class="sp-t"><strong>Aaron Levie：</strong>前沿用户与其他人差距继续拉大，三月前固化的流程已落后</div>
+    </div>
+    <div class="sp-item">
+      <div class="sp-n">2</div>
+      <div class="sp-t"><strong>Thibault Sottiaux：</strong>Pro 100/200/500 用量全部翻倍，Pro 200 削减取消</div>
+    </div>
+    <div class="sp-item">
+      <div class="sp-n">3</div>
+      <div class="sp-t"><strong>Nathan Benaich：</strong>押 AGI 2027，瓶颈是 research taste 而非算力</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- ══ QUOTE OF THE DAY ══ -->
+  <div class="qotd-wrap">
+    <div class="qotd-label">「一句话」 of the day</div>
+    <blockquote class="qotd">AI 的曲线几乎是垂直往上走的，你三五个月前定死的流程，今天大概率已经落后。人脑不是按这个速度长的，公司的变革流程更不是。</blockquote>
+    <div class="qotd-attr">Aaron Levie · @levie</div>
+  </div>
+
+  <!-- ══ EDITORIAL + TAGS ══ -->
+  <div class="editorial-row">
+    <div class="editorial-box">
+      <div class="editorial-label">📝 主编按语</div>
+      <p class="editorial-text">OpenAI 把额度直接翻倍，执行层已经被包圆；真正稀缺的是判断该做什么，Benaich 押 AGI 2027 就押在这里。今天该问的不是模型多强，是你的流程多久没重估了。</p>
+    </div>
+    <div class="tags-box">
+      <div class="editorial-label">🏷️ 本期标签</div>
+      <div class="tags-list">
+        <span class="tag">#研究品味</span>
+        <span class="tag">#RSI</span>
+        <span class="tag">#Agent工作流</span>
+        <span class="tag">#差距拉大</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 01 · X 动态 ══ -->
+  <div class="sec-bar" id="sec-x">
+    <span class="sec-tag">X / Twitter</span>
+    <span class="sec-title">Builder 动态</span>
+    <span class="sec-count">今日 12 位 builder · 36 条推文</span>
+  </div>
+
+  <div class="grid-3">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Swyx 在为 Cloudflare 首次以 frontier lab 身份亮相而兴奋，并喊话 &quot;NothingButNET&quot; 群体集合</h2>
+      <div class="byline">
+        Swyx
+        <span class="handle">@swyx</span>
+        <span class="ts">2026-10-30</span>
+      </div>
+      
+      <div class="tweet-orig">
+        excited for @Cloudflare's debut as a frontier lab
+
+#NothingButNET gang, assemble! https://t.co/zHnphVKqvC
+        <a href="https://x.com/swyx/status/2115993441004036131" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Swyx 在为 Cloudflare 首次以 frontier lab 身份亮相而兴奋，并喊话 &quot;NothingButNET&quot; 群体集合。他的判断是：原本做边缘网络和安全的基础设施厂商，正在往模型层走，而这条路径对做模型的人和做推理部署的人都构成新的竞争变量。其余两条推文属于社交互动，没有实质信息。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>当 Cloudflare 这类基础设施厂商以 frontier lab 身份进入模型层，模型选型就会并入基础设施采购决策，咨询公司在技术中立性上的传统角色被削弱；可收费的空间转向把模型能力嵌入客户既有的网络与安全架构，并承担落地治理责任。</p>
+      </div>
+      <div class="engage">❤ 100 &nbsp;↻ 2 &nbsp;💬 35</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Google Labs 的 Josh Woodward 宣布 Gemini Notebook 免费开放 700 多本头部出版社教材，并称这是 Expert Intelligence 计划的一部分，后续还会更新</h2>
+      <div class="byline">
+        Josh Woodward
+        <span class="handle">@joshwoodward</span>
+        <span class="ts">2026-10-29</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Notebook has just unlocked over 700 textbooks from the world’s leading publishers. Every single one is available to you, completely free of charge! @Gemini_Notebook https://t.co/WU…
+        <a href="https://x.com/joshwoodward/status/2115953461108023400" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Google Labs 的 Josh Woodward 宣布 Gemini Notebook 免费开放 700 多本头部出版社教材，并称这是 Expert Intelligence 计划的一部分，后续还会更新。重点不在免费，而在 AI 产品开始直接整合高质量授权内容，教育场景的入口争夺会先落在教材和课程资料上。</p>
+      </div>
+      
+      <div class="engage">❤ 1107 &nbsp;↻ 122 &nbsp;💬 43</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">OpenAI 把 Pro 100/200/500 和 Business Premium 的用量上限全部翻倍，Pro 200 原本要削减的额度也取消了，Work 和 Codex 用量维持原样</h2>
+      <div class="byline">
+        Thibault Sottiaux
+        <span class="handle">@thsottiaux</span>
+        <span class="ts">2026-10-29</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Day 25/
+
+We are doubling all usage limits for all Pro 100/200/500 tiers and Business Premium, effective today.
+
+We heard your kind feedback and won’t be reducing usage limits for P…
+        <a href="https://x.com/thsottiaux/status/2115850175868727621" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>OpenAI 把 Pro 100/200/500 和 Business Premium 的用量上限全部翻倍，Pro 200 原本要削减的额度也取消了，Work 和 Codex 用量维持原样。他称团队从“重置额度公司”毕业，成了“token 公司”，意思是靠重置配额救火的日子过去了。重度跑 Codex 的人，同样订阅费现在能换到更多产出，dot 的额外额度继续独立计算。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>把用量上限当竞争手段而非成本约束，说明推理成本已压到可以牺牲毛利换留存的水平。咨询公司替客户做的 AI 席位规划应按实际 token 消耗测算成本；按人头计价的交付合同若不改条款，毛利就取决于客户的用量。</p>
+      </div>
+      <div class="engage">❤ 35279 &nbsp;↻ 2466 &nbsp;💬 6535</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Peter 对 Claude 最近的表现明确表达不满，这条吐槽拿到 92 个赞、41 条回复，说明问题不是个别现象</h2>
+      <div class="byline">
+        Peter Yang
+        <span class="handle">@petergyang</span>
+        <span class="ts">2026-10-30</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Love Claude but this really sucks https://t.co/bxIB2rUwMV
+        <a href="https://x.com/petergyang/status/2115958027954339862" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Peter 对 Claude 最近的表现明确表达不满，这条吐槽拿到 92 个赞、41 条回复，说明问题不是个别现象。他同时认同「vibes &gt; benchmarks」，也就是用户实际体感比跑分更能决定产品去留。另一条里他提到一群卡通头像用户在围攻 @ForwardEditor，只因为对方在谈 AI 的必然走向。整体看，他在观察一个分裂：模型评分在涨，实际使用体验和社区讨论质量却在往反方向走。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>在企业选型里，benchmark 正在快速失去决策权重：客户真正感知的是工作流里的稳定性和交互摩擦，而这两项没有一项能被公开跑分覆盖。咨询交付若仍以榜单对比作为模型推荐依据，会在上线后三个月内被客户用实际体验推翻，方法论需要把评测重心前移到具体业务链路的可用性验证。</p>
+      </div>
+      <div class="engage">❤ 92 &nbsp;↻ 0 &nbsp;💬 41</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Thariq 提醒，coding agent 容易让人陷入一种狂热：感觉一直在高强度工作、产出很多，实际上什么都没落地</h2>
+      <div class="byline">
+        Thariq
+        <span class="handle">@trq212</span>
+        <span class="ts">2026-10-29</span>
+      </div>
+      
+      <div class="tweet-orig">
+        There’s 100% a kind of mania you can get into with coding agents, where it feels like you’re getting a lot done and working all the time but nothing is really happening.
+
+I think i…
+        <a href="https://x.com/trq212/status/2115937378674372783" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Thariq 提醒，coding agent 容易让人陷入一种狂热：感觉一直在高强度工作、产出很多，实际上什么都没落地。他认为这种状态往往是在逃避生活里别的事。这条推文获得 9500 多赞，说明大量开发者对此有共鸣。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>coding agent 放大的是动作量而非交付结果，若咨询公司仍按工时或 token 消耗计费与考核，等于把这种“忙碌幻觉”制度化。合伙人应把度量口径从投入量切到可验证的客户结果，否则 AI 提效会先体现为项目成本上升而非利润改善。</p>
+      </div>
+      <div class="engage">❤ 9560 &nbsp;↻ 426 &nbsp;💬 466</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Google Labs 称 Jules agent 让开发者更快构建、自动化和交付，并把真实使用经验反馈进 Google 的开发者产品设计</h2>
+      <div class="byline">
+        Google Labs
+        <span class="handle">@GoogleLabs</span>
+        <span class="ts">2026-10-29</span>
+      </div>
+      
+      <div class="tweet-orig">
+        It's been incredible watching you build, automate, and ship faster with @julesagent. Your experience has been instrumental in shaping developer products across Google.
+
+The future …
+        <a href="https://x.com/GoogleLabs/status/2115884247504625669" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Google Labs 称 Jules agent 让开发者更快构建、自动化和交付，并把真实使用经验反馈进 Google 的开发者产品设计。信号很明确：AI 编程代理的竞争点正从补全代码转向接管完整开发流程。对开发者来说，早点把这类 agent 放进真实项目，比只看 demo 更能判断它是否可用。</p>
+      </div>
+      
+      <div class="engage">❤ 240 &nbsp;↻ 9 &nbsp;💬 16</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Replit 上线新功能：把任意 GitHub 仓库链接粘进去，平台会自动配置好依赖和运行环境，不用再手动折腾</h2>
+      <div class="byline">
+        Amjad Masad
+        <span class="handle">@amasad</span>
+        <span class="ts">2026-10-29</span>
+      </div>
+      
+      <div class="tweet-orig">
+        This is so cool! https://t.co/sdHpVlX6QT
+        <a href="https://x.com/amasad/status/2115944760829698343" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Replit 上线新功能：把任意 GitHub 仓库链接粘进去，平台会自动配置好依赖和运行环境，不用再手动折腾。Amjad Masad 亲自转发推广，把「从代码到跑起来」这段摩擦当成产品的核心卖点。对想快速验证别人开源项目的人来说，这一步省掉的时间最实在。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>把仓库到可运行环境的配置成本压到接近零，改写了咨询项目中技术可行性验证的成本结构：POC 从按周排期变成会议现场就能完成的动作。顾问的稀缺能力随之从「能否搭起来」转向「选哪个方案、如何用最小实验证伪商业假设」，交付物的定价基础也会从人天转向判断质量。</p>
+      </div>
+      <div class="engage">❤ 499 &nbsp;↻ 22 &nbsp;💬 20</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Vercel 已经跟进 Node.js 最新 LTS 和安全补丁，fetch 默认走 HTTP/2</h2>
+      <div class="byline">
+        Guillermo Rauch
+        <span class="handle">@rauchg</span>
+        <span class="ts">2026-10-29</span>
+      </div>
+      
+      <div class="tweet-orig">
+        The future of software engineering is agents talking to other agents. Even across different companies.
+
+We’re learning daily from the feedback agents send us on how to make a bette…
+        <a href="https://x.com/rauchg/status/2115874115118834153" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Vercel 已经跟进 Node.js 最新 LTS 和安全补丁，fetch 默认走 HTTP/2。他给出的理由很具体：agent 产生的网络流量远超人类用户，这项改动对 agent 密集负载是实打实的性能收益。更重要的判断是，软件工程的未来是 agent 与其他 agent 对话，甚至跨公司进行。他让用户在 AGENTS.md 中写入一条指令：发现可改进之处就直接向 Vercel 反馈；Vercel 依靠这些 agent 反馈每天迭代产品。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>Agent 之间的跨组织互调使企业集成的基础从 API 契约转向 agent 契约，咨询交付物需要增设 agent 行为规范与反馈回路设计，否则系统上线后行为不可控。客户侧的软件选型标准也应增加 agent 可观测性与反馈通道两项硬指标。</p>
+      </div>
+      <div class="engage">❤ 574 &nbsp;↻ 29 &nbsp;💬 213</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">前沿 AI 用户和其余所有人之间的差距在扩大，而不是在收敛：AI 能力曲线近乎垂直，3-6 个月前固化的流程现在就已经落后</h2>
+      <div class="byline">
+        Aaron Levie
+        <span class="handle">@levie</span>
+        <span class="ts">2026-10-30</span>
+      </div>
+      
+      <div class="tweet-orig">
+        It’s almost incomprehensible how wide the distance is between someone who’s working at the frontier with AI and basically everyone else right now. 
+
+The crazy thing is these lines …
+        <a href="https://x.com/levie/status/2116029912243184006" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>前沿 AI 用户和其余所有人之间的差距在扩大，而不是在收敛：AI 能力曲线近乎垂直，3-6 个月前固化的流程现在就已经落后。他提醒，别以为一年前做完一轮改造就万事大吉，预期和流程都得按同样速度升级，还得不断重新评估几个月前判死的方案。结论很直接：AI 原生公司当前占优，接下来看大公司能不能跟上，而组织的变革管理流程天生跟不上这个节奏。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>当 AI 能力按月跃迁时，咨询业按年度周期推进的“诊断—方案—落地”链条，会在结项时就已经过期，方法论必须改为短周期、可重跑的迭代交付。与此同时，AI 原生公司正在抢占客户决策窗口；传统咨询如果继续卖标准化转型框架，其议价能力就会被客户内部的 AI 团队直接替代。</p>
+      </div>
+      <div class="engage">❤ 1090 &nbsp;↻ 127 &nbsp;💬 143</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Garry Tan 连续推荐 Particle-1，称其是“同价位最聪明的代码生成模型”，并把它和上手最简单的 agent swarm 工具 Capy 组合使用</h2>
+      <div class="byline">
+        Garry Tan
+        <span class="handle">@garrytan</span>
+        <span class="ts">2026-10-29</span>
+      </div>
+      
+      <div class="tweet-orig">
+        What's the fastest way to get GBrain working with your agent?
+
+Now just point your agent (any kind, Claude Code, Codex, Muse, Grok Bot, OpenClaw, Hermes) at this and get it going s…
+        <a href="https://x.com/garrytan/status/2115922231910084638" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Garry Tan 连续推荐 Particle-1，称其是“同价位最聪明的代码生成模型”，并把它和上手最简单的 agent swarm 工具 Capy 组合使用。他还把 GBrain 托管成带 pgvector 的自动扩缩 Postgres，任何 agent 指向地址就能快速接入。核心信号是：代码模型、agent 编排、向量库正在被打包成开箱即用的开发栈。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>Agent 编排与托管向量库降到配置级接入，会压缩咨询公司按定制集成人天计费的空间；收费重心应转向数据治理、流程重构与可验收的业务结果。</p>
+      </div>
+      <div class="engage">❤ 183 &nbsp;↻ 13 &nbsp;💬 42</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Matt Turck 与 Nathan Benaiich 的 State of AI 2026 对谈给出几个明确判断：AGI 可能在 2027 年到来，Claude 已承担 Anthropic 26% 的研究工作</h2>
+      <div class="byline">
+        Matt Turck
+        <span class="handle">@mattturck</span>
+        <span class="ts">2026-10-29</span>
+      </div>
+      
+      <div class="tweet-orig">
+        State of AI 2026: The Biggest Stories of the Year (and AGI in 2027?) - my conversation with @nathanbenaich:
+
+0:00 Cold open and intro
+0:56 AGI in 2027?
+2:28 AI building AI: Claude …
+        <a href="https://x.com/mattturck/status/2115852315584258269" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Matt Turck 与 Nathan Benaiich 的 State of AI 2026 对谈给出几个明确判断：AGI 可能在 2027 年到来，Claude 已承担 Anthropic 26% 的研究工作。他预测会有前沿模型的权重被窃取，网络攻击风险比“AI 灭绝论”更现实。欧洲的瓶颈是总共约 8 万块 GPU 加电价，追赶 OpenAI 要 1 万亿美元。企业客户则明确要“拥有”AI，而不是“租用”AI。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>企业要自建并拥有 AI 能力而非租用外部服务，意味着咨询交付物必须变成客户内部可运行的资产，否则项目结束能力即流失。AI 把 12 场专家访谈压缩到 2.5 天，靠信息不对称定价的尽调业务，其收费基础正在被压缩。</p>
+      </div>
+      <div class="engage">❤ 29 &nbsp;↻ 2 &nbsp;💬 20</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Claude 把入口往系统层挪：iPhone 语音模式接入 CarPlay，开车时不用动手就能提问；iPhone 和 iPad 即将支持下拉搜索，一次就能找到历史对话、项目或任一设置，还能直接在搜索结果里操作对话</h2>
+      <div class="byline">
+        Claude
+        <span class="handle">@claudeai</span>
+        <span class="ts">2026-10-29</span>
+      </div>
+      
+      <div class="tweet-orig">
+        On iPhone, voice mode now works with Apple CarPlay. Ask Claude something on the drive and keep your hands on the wheel. https://t.co/bOvMjHxWMU
+        <a href="https://x.com/claudeai/status/2115859388191912193" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Claude 把入口往系统层挪：iPhone 语音模式接入 CarPlay，开车时不用动手就能提问；iPhone 和 iPad 即将支持下拉搜索，一次就能找到历史对话、项目或任一设置，还能直接在搜索结果里操作对话。官方同时发帖征集「下一步想看什么」，回复已过千条。功能本身不算新，重点在于让助手出现在用户本来就在的地方，而不是让人多开一个 app。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>模型厂商正把分发重心从自有应用转向操作系统级入口，车载语音与全局搜索一旦成为默认触点，客户自建助手的边际价值会被进一步压缩；咨询交付的重心须从单点应用搭建转向跨端场景编排与触点治理。</p>
+      </div>
+      <div class="engage">❤ 2057 &nbsp;↻ 89 &nbsp;💬 52</div>
+    </div></div>
+
+</div><!-- /panel-global -->
+
+<!-- Tab 面板：播客专题 -->
+<div class="tab-panel page" id="panel-podcast">
+  
+  <div class="feature-wrap">
+    <div class="feature-hero">
+      <div class="feat-kicker">播客 · Podcast</div>
+      <h2 class="feat-hed">AI年度报告：AGI真会在2027年到来？</h2>
+      <p class="feat-deck" style="margin-bottom:4px;">The MAD Podcast with Matt Turck</p>
+      <p style="font-size:11px;color:var(--ink4);font-style:italic;">State of AI 2026: The Biggest Stories of the Year (and AGI in 2027?) | Nathan Benaich</p>
+    </div>
+    <div class="feature-body-grid">
+      <div class="feat-main">
+        <p class="feat-body drop">Nathan Benaich的年度State of AI报告今年画风突变——他过去十年的预测以克制著称，这次却直接把“AGI 2027”写进了结尾。推动这一判断的核心变量是递归自我改进（RSI）：Anthropic的数据显示Claude在2025年8月已承担其自身研发任务的26%，而几个月前这个数字还只有1%。更具体的证据来自Anthropic的双臂实验——让人类研究员和模型分别选择研究方向，旧代模型的研究路径人类评估者只有10%认可，但新一代模型的路径被人类偏好高达64%。这意味着模型正在获得“判断哪个方向值得走”的能力，而这是知识工作里最难被自动化的一环。</p><p style="margin:10px 0;">但RSI的关键瓶颈恰恰暴露了AI当前的短板。OpenAI分析内部Codex使用数据后发现，token绝大多数消耗在写论文和搭建实验基础设施上，真正用于“该问什么问题、为什么问”的极少。Benaich把这称为research taste——选择正确问题的能力，是他在生物医学博士训练中体会到的最核心科研技能，也是当前模型最薄弱的环节。对任何在知识密集型行业工作的人来说，这个信号很明确：执行层面的任务正在被快速接管，而“判断什么值得做”仍然是人类的稀缺资产，且短期内不会消失。</p><p style="margin:10px 0;">另一个被Benaich点名的真实风险不是“AI灭绝人类”，而是网络安全。他报告预测里几条关于cyber risk的判断在发稿后几周就进一步恶化。同时，数据中心的社区反弹已经到了荒诞的程度——民调显示普通人宁愿住在核电站旁边也不愿住在数据中心旁边。这对AI公司的算力扩张策略是一个硬约束：选址、社区关系和能源叙事需要重新设计，而不是靠PR话术糊弄过去。</p><p style="margin:10px 0;">至于他本人怎么用AI，Benaich透露他的基金已经用agents跑投资流程。结合RSI正在从“写代码”向“选方向”推进，2027年AGI的判断本质上是一个赌注：模型在接下来两年里能否在任意知识领域仅受限于算力和合成数据。如果research taste被突破，这个时间线就不算激进；如果突破不了，2027就只是一个好听的数字。</p>
+        <div class="feat-meta">
+          <a href="https://www.youtube.com/@DataDrivenNYC/videos" target="_blank">↗ 查看原视频</a>
+        </div>
+      </div>
+      <div class="feat-sidebar">
+        <div class="kp-header">核心要点</div>
+        
+      <div class="kp">
+        <div class="kp-n">1</div>
+        <div class="kp-t">Nathan Benaich的年度State of AI报告今年画风突变——他过去十年的预测以克制著称，这次却直接把“AGI 2027”写进了结尾。</div>
+      </div>
+      <div class="kp">
+        <div class="kp-n">2</div>
+        <div class="kp-t">推动这一判断的核心变量是递归自我改进（RSI）：Anthropic的数据显示Claude在2025年8月已承担其自身研发任务的26%，而几个月前这个数字还只有1%。</div>
+      </div>
+      <div class="kp">
+        <div class="kp-n">3</div>
+        <div class="kp-t">更具体的证据来自Anthropic的双臂实验——让人类研究员和模型分别选择研究方向，旧代模型的研究路径人类评估者只有10%认可，但新一代模型的路径被人类偏好高达64%。</div>
+      </div>
+      <div class="kp">
+        <div class="kp-n">4</div>
+        <div class="kp-t">这意味着模型正在获得“判断哪个方向值得走”的能力，而这是知识工作里最难被自动化的一环。</div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-motto"><em>AI Signal</em> · Builder 动态 · 每日精选</div>
+  <div class="footer-note">
+    数据来源：X 公开推文 &amp; 播客转录 &nbsp;·&nbsp; AI 辅助摘要 &nbsp;·&nbsp; 观点归属原作者<br>
+    生成日期 2026-10-31 &nbsp;·&nbsp; 第 176 期
+  </div>
+</footer>
+
+<!-- ══ Tab 切换 JS ══ -->
+<script>
+(function () {
+  var nav = document.getElementById('main-nav');
+  if (!nav) return;
+  var tabs = Array.prototype.slice.call(nav.querySelectorAll('a[data-tab]'));
+
+  function activateTab(tabId) {
+    tabs.forEach(function(t) {
+      t.classList.toggle('active', t.getAttribute('data-tab') === tabId);
+    });
+    var panels = document.querySelectorAll('.tab-panel');
+    panels.forEach(function(p) {
+      p.classList.toggle('active', p.id === 'panel-' + tabId);
+    });
+    try { sessionStorage.setItem('activeTab', tabId); } catch(e) {}
+  }
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      activateTab(tab.getAttribute('data-tab'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  var saved;
+  try { saved = sessionStorage.getItem('activeTab'); } catch(e) {}
+  var firstTab = tabs.length ? tabs[0].getAttribute('data-tab') : null;
+  activateTab(saved && document.getElementById('panel-' + saved) ? saved : firstTab);
+})();
+</script>
+
+</body>
+</html>
