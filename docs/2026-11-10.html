@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Signal · 2026-11-10</title>
+  <style>
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Regular.otf') format('opentype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Medium.otf') format('opentype');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Bold.otf') format('opentype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Heavy.otf') format('opentype');
+      font-weight: 900;
+    }
+
+    /* ─── Quote of the Day ─── */
+    .qotd-wrap {
+      border: 2px solid var(--black);
+      border-radius: 4px;
+      box-shadow: 4px 4px 0 var(--black);
+      background: var(--black);
+      padding: 32px 40px;
+      margin: 32px 0 24px;
+    }
+    .qotd-label {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+    .qotd {
+      font-size: clamp(20px, 2.4vw, 30px);
+      font-weight: 700;
+      line-height: 1.5;
+      color: #fff;
+      border: none;
+      margin: 0 0 14px;
+      padding: 0;
+    }
+    .qotd-attr {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: 0.04em;
+    }
+    /* ─── Editorial + Tags ─── */
+    .editorial-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0;
+      border: 2px solid #373a3e;
+      box-shadow: 4px 4px 0 #373a3e;
+      margin-bottom: 28px;
+      background: #373a3e;
+    }
+    .editorial-box {
+      background: var(--orange-pale);
+      padding: 22px 26px;
+    }
+    .tags-box {
+      background: var(--white);
+      padding: 22px 26px;
+      min-width: 260px;
+      border-left: 2px solid #373a3e;
+    }
+    .editorial-label {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 10px;
+    }
+    .editorial-text {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.8;
+      color: var(--ink);
+    }
+    .tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      display: inline-block;
+      border: 2px solid #373a3e;
+      border-radius: 3px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #fff;
+      box-shadow: 2px 2px 0 #000;
+      cursor: default;
+    }
+    .tag:hover { background: var(--orange); }
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    ::selection { background: var(--orange); color: var(--black); }
+    ::-moz-selection { background: var(--orange); color: var(--black); }
+
+    /* ─── Tokens ─── */
+    :root {
+      --bg:        #f4f3ef;
+      --white:     #fffffe;
+      --black:     #373a3e;
+      --ink:       #1a1a1a;
+      --ink2:      #3d3d3d;
+      --ink3:      #777777;
+      --ink4:      #aaaaaa;
+      --lime: #ff8a00; --orange: #ff8a00;
+      --lime-pale: #fff0d4; --orange-pale: #fff0d4;
+      --yellow:    #fde047;
+      --border:    2px solid #373a3e;
+      --shadow:    4px 4px 0 #373a3e;
+      --shadow-sm: 2px 2px 0 #373a3e;
+      --shadow-lg: 6px 6px 0 #373a3e;
+      --rule:      1px solid #373a3e;
+      --rule-lt:   1px solid #ddd;
+      --gap:       20px;
+      --ff: 'SHSCN', 'Helvetica Neue', Arial, sans-serif;
+      --ff-title: 'SHSCN', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    html { background: #e8d5b0; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--ff);
+      font-size: 15px;
+      line-height: 1.75;
+      max-width: 1200px;
+      margin: 40px auto;
+      border: 3px solid var(--black);
+      box-shadow: 8px 8px 0 var(--black);
+    }
+
+    /* ══════════════════════════════════
+       MASTHEAD
+    ══════════════════════════════════ */
+    .masthead {
+      background: var(--white);
+      border-bottom: 3px solid var(--black);
+      padding: 0;
+    }
+
+    .mast-top {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .mast-top-left {
+      padding: 8px 18px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      border-right: 2px solid var(--black);
+      display: flex;
+      align-items: center;
+    }
+
+    .mast-top-right {
+      padding: 8px 18px;
+      font-size: 10.5px;
+      color: var(--ink3);
+      text-align: right;
+      line-height: 1.6;
+      display: flex;
+      align-items: center;
+    }
+
+    .mast-title-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 16px 24px;
+      gap: 0;
+    }
+
+    .mast-vol {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      line-height: 1.5;
+    }
+
+    .mast-name {
+      text-align: center;
+      font-size: clamp(38px, 6.5vw, 72px);
+      font-weight: 900;
+      font-family: var(--ff-title);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .mast-name .hi {
+      /* lime underline on the accent word */
+      display: inline;
+      background: var(--orange);
+      padding: 0 4px;
+    }
+
+    .mast-right-col {
+      text-align: right;
+      font-size: 11px;
+      color: var(--ink3);
+      line-height: 1.6;
+    }
+
+    /* nav strip */
+    .mast-nav {
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .mast-nav a,
+    .mast-nav span {
+      padding: 7px 18px;
+      border-right: 1px solid #444;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+    }
+    .mast-nav a:last-child,
+    .mast-nav span:last-child { border-right: none; }
+    .mast-nav a:hover { background: #4a4d52; }
+    .mast-nav a.active,
+    .mast-nav span.active {
+      background: var(--orange);
+      color: var(--black);
+      font-weight: 900;
+      box-shadow: inset 0 -3px 0 var(--black);
+    }
+
+    /* ══════════════════════════════════
+       LEAD BANNER
+    ══════════════════════════════════ */
+    .lead-banner {
+      background: var(--orange);
+      border-bottom: 3px solid var(--black);
+      padding: 28px 32px 24px;
+    }
+
+    .lead-kicker {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lead-kicker::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 3px;
+      background: var(--black);
+    }
+
+    .lead-headline {
+      font-size: clamp(22px, 3.2vw, 38px);
+      font-weight: 900;
+      font-family: var(--ff-title);
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+      color: var(--black);
+      margin-bottom: 16px;
+      max-width: 860px;
+    }
+
+    .lead-deck {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink2);
+      max-width: 680px;
+      line-height: 1.55;
+    }
+
+    /* ══════════════════════════════════
+       PAGE BODY
+    ══════════════════════════════════ */
+    .page {
+      padding: 0 28px 44px;
+      background: var(--bg);
+    }
+
+    /* ── Section header bar ── */
+    .sec-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 20px;
+      border-top: 3px solid var(--black);
+      border-bottom: 2px solid var(--black);
+      padding: 6px 0;
+      scroll-margin-top: 48px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .sec-bar.highlight {
+      border-top-color: var(--orange);
+      box-shadow: 0 -3px 0 var(--orange);
+    }
+
+    .sec-tag {
+      background: var(--black);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      flex-shrink: 0;
+    }
+
+    .sec-tag.lime {
+      background: var(--black);
+      color: var(--orange);
+    }
+
+    .sec-title {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .sec-count {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink4);
+      font-family: 'Courier New', monospace;
+      margin-left: auto;
+    }
+
+    /* ══════════════════════════════════
+       COLUMN GRIDS
+    ══════════════════════════════════ */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+      background: var(--black); /* gap color */
+    }
+
+    .grid-2-1 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+      background: var(--black);
+    }
+
+    .gcol {
+      background: var(--white);
+      padding: 28px 24px;
+      /* columns separated by 2px black gap via grid background */
+    }
+    .gcol + .gcol {
+      margin-left: 2px;
+    }
+
+    /* second row of 3 */
+    .grid-3-row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+      border-top: none;
+      background: var(--black);
+      margin-top: 2px; /* visual separation from row above inside same outer border, reuse border */
+    }
+
+    /* span helpers */
+    .span-2 { grid-column: span 2; }
+    .span-3 { grid-column: span 3; }
+
+    /* ══════════════════════════════════
+       ARTICLE CARD — inside a gcol
+    ══════════════════════════════════ */
+    .art-kicker {
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 5px;
+    }
+
+    .art-hed {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: var(--ff-title);
+      line-height: 1.35;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .art-hed.lg { font-size: 22px; }
+    .art-hed.sm { font-size: 15px; }
+
+    .art-deck {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      line-height: 1.5;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .byline {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: var(--rule);
+    }
+
+    .byline .handle {
+      font-weight: 500;
+      font-style: italic;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--ink4);
+    }
+
+    .byline .ts {
+      font-size: 9.5px;
+      font-weight: 400;
+      color: var(--ink4);
+      margin-left: 4px;
+    }
+
+    .art-body {
+      font-size: 14px;
+      color: var(--ink2);
+      line-height: 1.8;
+    }
+
+    .art-divider {
+      border: none;
+      border-top: var(--rule-lt);
+      margin: 14px 0;
+    }
+
+    /* ── Tweet original block ── */
+    .tweet-orig {
+      border: 2px solid var(--black);
+      background: var(--bg);
+      padding: 10px 12px;
+      margin: 10px 0;
+      font-size: 12.5px;
+      color: var(--ink3);
+      line-height: 1.6;
+      font-style: italic;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tweet-orig a {
+      display: block;
+      margin-top: 6px;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink4);
+      text-decoration: none;
+    }
+    .tweet-orig a:hover { text-decoration: underline; }
+
+    /* ── Pull quote ── */
+    .pull {
+      border-top: 3px solid var(--black);
+      border-bottom: 3px solid var(--black);
+      padding: 10px 0;
+      margin: 14px 0;
+    }
+    .pull p {
+      font-size: 14.5px;
+      font-weight: 900;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    /* ── Summary box ── */
+    .sumbox {
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      padding: 9px 12px;
+      margin: 10px 0;
+    }
+    .sumbox .lbl {
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 4px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #ddd;
+    }
+    .sumbox p {
+      font-size: 12.5px;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* highlight sumbox */
+    .sumbox.lime {
+      background: var(--orange-pale);
+      border-left: 3px solid var(--orange);
+      border-color: var(--black);
+    }
+    .sumbox.lime .lbl { border-bottom-color: rgba(0,0,0,0.15); color: var(--ink2); }
+    .sumbox.lime p { color: var(--ink); }
+
+    /* ── Engagement ── */
+    .engage {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 10px;
+      color: var(--ink4);
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+    }
+
+    /* ── Inline code ── */
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      background: var(--orange-pale);
+      padding: 1px 5px;
+      border: 1px solid var(--black);
+      font-weight: 700;
+    }
+
+    /* ══════════════════════════════════
+       FEATURE / PODCAST
+    ══════════════════════════════════ */
+    .feature-wrap {
+      border: 2px solid var(--black);
+      box-shadow: var(--shadow-lg);
+      margin-top: 0;
+      background: var(--white);
+    }
+
+    .feature-hero {
+      background: var(--orange-pale);
+      border-bottom: 2px solid var(--black);
+      padding: 24px 24px 20px;
+    }
+
+    .feat-kicker {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink2);
+      margin-bottom: 8px;
+    }
+
+    .feat-hed {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      color: var(--black);
+      margin-bottom: 10px;
+    }
+
+    .feat-deck {
+      font-size: 14px;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--ink2);
+      line-height: 1.5;
+      max-width: 680px;
+    }
+
+    .feature-body-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 0;
+      background: var(--black);
+      align-items: start;
+    }
+
+    .feat-main {
+      background: var(--white);
+      padding: 22px 22px 22px 24px;
+      max-height: 560px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--orange) var(--bg);
+    }
+    .feat-main::-webkit-scrollbar { width: 6px; }
+    .feat-main::-webkit-scrollbar-track { background: var(--bg); }
+    .feat-main::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
+
+    .feat-sidebar {
+      background: var(--bg);
+      padding: 22px 20px;
+      margin-left: 2px;
+      max-height: 560px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--orange) var(--bg);
+    }
+    .feat-sidebar::-webkit-scrollbar { width: 6px; }
+    .feat-sidebar::-webkit-scrollbar-track { background: var(--bg); }
+    .feat-sidebar::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
+
+    .feat-body {
+      font-size: 13.5px;
+      color: var(--ink2);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .feat-body .drop::first-letter {
+      font-size: 3.5em;
+      font-weight: 900;
+      float: left;
+      line-height: 0.8;
+      margin-right: 5px;
+      margin-top: 5px;
+      color: var(--black);
+      background: var(--orange);
+      padding: 0 3px;
+    }
+
+    .feat-pull {
+      border-top: 3px solid var(--black);
+      border-bottom: 3px solid var(--black);
+      padding: 10px 0;
+      margin: 16px 0;
+    }
+    .feat-pull p {
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.25;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    /* keypoints sidebar */
+    .kp-header {
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 14px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .kp {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #ccc;
+    }
+    .kp:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .kp-n {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1;
+      color: #ccc;
+      font-family: 'Courier New', monospace;
+      flex-shrink: 0;
+      width: 26px;
+    }
+
+    .kp-t {
+      font-size: 12.5px;
+      color: var(--ink2);
+      line-height: 1.6;
+    }
+    .kp-t strong { color: var(--ink); font-weight: 700; }
+
+    .feat-meta {
+      font-size: 10px;
+      color: var(--ink4);
+      line-height: 1.7;
+      border-top: 2px solid var(--black);
+      padding-top: 12px;
+      margin-top: 14px;
+    }
+    .feat-meta strong { color: var(--ink3); font-weight: 700; }
+    .feat-meta a { color: inherit; }
+    .feat-meta a:hover { text-decoration: underline; }
+
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
+    .site-footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-motto {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+    .footer-motto em {
+      color: var(--orange);
+      font-style: normal;
+    }
+
+    .footer-note {
+      font-size: 10px;
+      color: #888;
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    /* ── Speed Read ── */
+    .speed-read {
+      border: 2px solid var(--black);
+      box-shadow: var(--shadow);
+      background: var(--white);
+      margin: 24px 0 4px;
+    }
+    .speed-read-hd {
+      background: var(--orange);
+      border-bottom: 2px solid var(--black);
+      padding: 7px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sr-label {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+    .sr-time {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink2);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.1em;
+    }
+    .speed-items {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+    }
+    .sp-item {
+      background: var(--white);
+      padding: 14px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border-right: 1px solid #ddd;
+    }
+    .sp-item:last-child { border-right: none; }
+    .sp-n {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--orange);
+      font-family: 'Courier New', monospace;
+      flex-shrink: 0;
+      width: 28px;
+      margin-top: 2px;
+      -webkit-text-stroke: 1px var(--black);
+    }
+    .sp-t {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink2);
+      font-weight: 500;
+    }
+    .sp-t strong { color: var(--ink); }
+
+    /* ── Responsive ── */
+    @media (max-width: 780px) {
+      body { margin: 0; box-shadow: none; }
+      .grid-3, .grid-3-row2, .grid-2-1, .feature-body-grid {
+        display: block;
+        background: transparent;
+      }
+      .gcol, .feat-main, .feat-sidebar {
+        border: 2px solid var(--black);
+        margin-bottom: 12px;
+        box-shadow: var(--shadow-sm);
+      }
+      .gcol + .gcol { margin-left: 0; }
+      .page { padding: 0 14px 28px; }
+      .mast-title-row { grid-template-columns: 1fr; text-align: center; gap: 8px; }
+      .mast-vol, .mast-right-col { text-align: center; }
+    }
+
+    /* ══ TAB 面板 ══ */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* 总览区（始终可见）*/
+    .page-overview { padding: 0 28px 44px; background: var(--bg); }
+
+    /* ── 历史版本栏 ── */
+    .history-bar {
+      background: var(--white);
+      border-bottom: 2px solid var(--black);
+      padding: 7px 24px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-size: 11px;
+    }
+    .history-bar-label {
+      font-weight: 900;
+      color: var(--ink3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: 4px;
+      flex-shrink: 0;
+    }
+    .history-bar a {
+      display: inline-block;
+      padding: 2px 9px;
+      border: 1.5px solid var(--black);
+      font-weight: 700;
+      color: var(--ink2);
+      text-decoration: none;
+      background: var(--bg);
+      box-shadow: 1px 1px 0 var(--black);
+    }
+    .history-bar a:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .history-bar a.current {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+      pointer-events: none;
+    }
+
+    /* Tab 导航激活色改为橙色 */
+    .mast-nav a.active,
+    .mast-nav span.active {
+      background: var(--orange) !important;
+      color: #fff !important;
+      font-weight: 900;
+      box-shadow: inset 0 -3px 0 var(--black);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ MASTHEAD ══ -->
+<header class="masthead">
+  <div class="mast-top">
+    <span class="mast-top-left">AI Signal · Builder 动态 · 每日精选</span>
+    <div class="mast-top-right">Vol. I &nbsp;·&nbsp; No. 186 &nbsp;·&nbsp; 2026年11月10日 · 星期一</div>
+  </div>
+
+  <div class="mast-title-row">
+    <div class="mast-vol">
+      晨版 · Morning Edition<br>
+      Builder 动态 · 每日精选<br>
+      精选 13 位 Builder
+    </div>
+    <div class="mast-name">
+      AI&nbsp;<span class="hi">SIGNAL</span>
+    </div>
+    <div class="mast-right-col">
+      X 动态 · 29 篇<br>
+      播客专题 · 1 期<br>
+      深度摘要 · 全文
+    </div>
+  </div>
+
+  <!-- 历史版本 -->
+  <div class="history-bar">
+    <span class="history-bar-label">历史版本</span>
+    <a href="./index.html" class="current">2026-11-10 · 最新</a>
+    <a href="./2026-11-09.html">2026-11-09</a>
+    <a href="./2026-11-08.html">2026-11-08</a>
+    <a href="./2026-11-07.html">2026-11-07</a>
+    <a href="./2026-11-06.html">2026-11-06</a>
+    <a href="./2026-11-05.html">2026-11-05</a>
+    <a href="./2026-11-04.html">2026-11-04</a>
+  </div>
+  <nav class="mast-nav" id="main-nav">
+    <a href="#" data-tab="china" class="active">国内 AI 前线</a>
+    <a href="#" data-tab="global">海外 Builder 动态</a>
+    <a href="#" data-tab="podcast">播客专题</a>
+  </nav>
+</header>
+
+<!-- ══ LEAD BANNER ══ -->
+<div class="lead-banner">
+  <div class="lead-kicker">头版头条 &nbsp;·&nbsp; Today's Signal</div>
+  <h1 class="lead-headline">发布日即台阶日，卡你的是算力</h1>
+  <p class="lead-deck">模型迭代直接变成项目杠杆，现在限制你的是并行算力和野心，不是模型本身。</p>
+</div>
+
+<!-- Tab 面板：国内资讯 -->
+<div class="tab-panel page" id="panel-china">
+  
+  <div class="sec-bar">
+    <span class="sec-tag">中文圈</span>
+    <span class="sec-title">国内 AI 前线</span>
+  </div>
+  <p style="padding:24px;color:var(--ink3);">今日暂无国内 AI 动态。</p>
+</div>
+
+<!-- Tab 面板：海外 Builder -->
+<div class="tab-panel page" id="panel-global">
+
+  <!-- ══ 30-SEC SPEED READ ══ -->
+  <div class="speed-read">
+    <div class="speed-read-hd">
+      <span class="sr-label">30 秒速览</span>
+      <span class="sr-time">/ TODAY'S BRIEF</span>
+    </div>
+    <div class="speed-items">
+      
+    <div class="sp-item">
+      <div class="sp-n">1</div>
+      <div class="sp-t"><strong>Boris Cherny：</strong>Fable 5.2 按订阅时长发重置次数，老用户最多三次，新用户吃亏</div>
+    </div>
+    <div class="sp-item">
+      <div class="sp-n">2</div>
+      <div class="sp-t"><strong>Guillermo Rauch：</strong>新模型能吃下空前并行工作，必须上云沙箱，别自造编排器</div>
+    </div>
+    <div class="sp-item">
+      <div class="sp-n">3</div>
+      <div class="sp-t"><strong>Garrett Lord：</strong>数据市场三年十亿到百亿，卖人力的标注生意已结束</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- ══ QUOTE OF THE DAY ══ -->
+  <div class="qotd-wrap">
+    <div class="qotd-label">「一句话」 of the day</div>
+    <blockquote class="qotd">现在卡住你的，不是模型，是你的野心和并行算力。</blockquote>
+    <div class="qotd-attr">Guillermo Rauch · @rauchg</div>
+  </div>
+
+  <!-- ══ EDITORIAL + TAGS ══ -->
+  <div class="editorial-row">
+    <div class="editorial-box">
+      <div class="editorial-label">📝 主编按语</div>
+      <p class="editorial-text">发布日成了项目台阶日，但红利不在模型本身。老用户额度分层、云端并行算力、能把「好」写成 rubric 的专业数据，这三样才是今天的稀缺品。</p>
+    </div>
+    <div class="tags-box">
+      <div class="editorial-label">🏷️ 本期标签</div>
+      <div class="tags-list">
+        <span class="tag">#Fable5.2</span>
+        <span class="tag">#并行算力</span>
+        <span class="tag">#数据市场</span>
+        <span class="tag">#自主协作者</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 01 · X 动态 ══ -->
+  <div class="sec-bar" id="sec-x">
+    <span class="sec-tag">X / Twitter</span>
+    <span class="sec-title">Builder 动态</span>
+    <span class="sec-count">今日 13 位 builder · 29 条推文</span>
+  </div>
+
+  <div class="grid-3">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Swyx 转述，有人在 fable 5.2 发布演示中当场证明了费马大定理，并称在 AIE code talk 上还有更大的动作；他把这事归到 Anthropic 头上，语气是看热闹式的震惊</h2>
+      <div class="byline">
+        Swyx
+        <span class="handle">@swyx</span>
+        <span class="ts">2026-11-09</span>
+      </div>
+      
+      <div class="tweet-orig">
+        bro just proved fermat's last theorem AS A DEMO for the fable 5.2 launch
+
+and casually told me he's got something bigger planned  for his aie code talk
+
+lol anthropic u guys are wi…
+        <a href="https://x.com/swyx/status/2119935240202539147" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Swyx 转述，有人在 fable 5.2 发布演示中当场证明了费马大定理，并称在 AIE code talk 上还有更大的动作；他把这事归到 Anthropic 头上，语气是看热闹式的震惊。其余关于新媒创作者注册和 $ANT IPO 路演的推文只有链接或一句带过，信息不足。</p>
+      </div>
+      
+      <div class="engage">❤ 277 &nbsp;↻ 10 &nbsp;💬 79</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Claude 在 Fable 5.2 上把「重置次数」做成了按订阅时长分层的权益：Pro 用户一次，Max、Ultra 和 Team Premium 最多三次，订阅越久给得越多</h2>
+      <div class="byline">
+        Boris Cherny
+        <span class="handle">@bcherny</span>
+        <span class="ts">2026-11-09</span>
+      </div>
+      
+      <div class="tweet-orig">
+        We wanted to do more for the people who’ve been with us the longest. So with Fable 5.2, the longer you’ve been subscribed, the more Fable resets you get. https://t.co/g2Y5cwS0L2 ht…
+        <a href="https://x.com/bcherny/status/2119873095129550880" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Claude 在 Fable 5.2 上把「重置次数」做成了按订阅时长分层的权益：Pro 用户一次，Max、Ultra 和 Team Premium 最多三次，订阅越久给得越多。这条规则专门冲着老用户去，本质是用额度而不是折扣来留住长期订阅者。对新用户来说，同等价格拿到的高峰期可用额度比老用户少，重度使用场景下差距会直接体现在能不能跑完任务。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>把使用配额与订阅时长绑定，等于将 AI 席位从统一采购价改为按历史留存差异化定价，企业客户在核算人均 AI 成本时会失去可比基准，采购谈判的重心从单价转向配额条款与人员流动后的权益继承规则。</p>
+      </div>
+      <div class="engage">❤ 14483 &nbsp;↻ 552 &nbsp;💬 1105</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Dots 现在除了默认自带的小型云电脑，还能操控多台机器</h2>
+      <div class="byline">
+        Thibault Sottiaux
+        <span class="handle">@thsottiaux</span>
+        <span class="ts">2026-11-10</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Dots can now control many machines in addition to its own little cloud computer that we provide by default. https://t.co/VtVYz5DcAB
+        <a href="https://x.com/thsottiaux/status/2120021043876106429" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Dots 现在除了默认自带的小型云电脑，还能操控多台机器。开发者可以让 agent 跨机器执行任务，不再被单机环境卡住。权限、计费和安全边界推文没提，实际能不能放心用还得看文档。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>这类跨机控制把 AI agent 从单点演示推进到多环境执行，咨询项目里原本靠人工串联的测试、迁移和运维环节会被重新划分，交付排期与人员配置要按自动化边界重算。</p>
+      </div>
+      <div class="engage">❤ 1438 &nbsp;↻ 38 &nbsp;💬 624</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Nan Yu 提醒，ChatGPT 订阅用户可在设置里打开 global dictation，把语音转文字用到更多场景</h2>
+      <div class="byline">
+        Nan Yu
+        <span class="handle">@thenanyu</span>
+        <span class="ts">2026-11-10</span>
+      </div>
+      
+      <div class="tweet-orig">
+        PSA since it took me a second to discover it: 
+If you wanna get some untapped value out of your ChatGPT subscription, go into settings and turn on global dictation
+
+It uses the sam…
+        <a href="https://x.com/thenanyu/status/2120037431261184454" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Nan Yu 提醒，ChatGPT 订阅用户可在设置里打开 global dictation，把语音转文字用到更多场景。它复用了应用内听写的快速准确转写链路，等于解锁一项容易被忽略的实用功能。</p>
+      </div>
+      
+      <div class="engage">❤ 9 &nbsp;↻ 0 &nbsp;💬 1</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">他给产品负责人一个练习：画出产品生命周期，从市场理解、设计、开发到 GTM</h2>
+      <div class="byline">
+        Madhu Guru
+        <span class="handle">@realmadhuguru</span>
+        <span class="ts">2026-11-10</span>
+      </div>
+      
+      <div class="tweet-orig">
+        If you are a product leader, here is a simple exercise: draw out your product lifecycle.
+
+e.g. market understanding -&gt; design -&gt; development -&gt; GTM.
+
+Chances are your PMs spend mor…
+        <a href="https://x.com/realmadhuguru/status/2119999748086362466" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>他给产品负责人一个练习：画出产品生命周期，从市场理解、设计、开发到 GTM。多数 PM 只在部分阶段投入更深，整个流程交接多、信息损耗大。他的判断是，AI 应让 PM 在每个阶段都下探：更懂用户和市场、更快做原型、读代码理解约束、自己做分析、理解 GTM 漏斗。重点不是让 PM 替代其他角色，而是在跨全生命周期的基础上抬高 PM 的深度门槛。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>AI 对产品组织的实际影响不是替代岗位，而是压缩交接环节、提高单一角色的纵深能力。咨询公司在设计客户产品运营模型时，应把 PM 从流程协调者重新定义为能直接完成原型、数据与 GTM 判断的复合角色，否则交付仍停留在岗位重画。</p>
+      </div>
+      <div class="engage">❤ 61 &nbsp;↻ 3 &nbsp;💬 0</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Amjad Masad 翻出 2024 年 7 月给 Paul Graham 演示 vibe coding 的旧事：这个概念还没起名时就已经跑通，时间线比多数人以为的早</h2>
+      <div class="byline">
+        Amjad Masad
+        <span class="handle">@amasad</span>
+        <span class="ts">2026-11-10</span>
+      </div>
+      
+      <div class="tweet-orig">
+        I showed Paul Graham vibe coding before it was called that back in July ‘24, and this was his reaction: https://t.co/K6FaCFefId
+        <a href="https://x.com/amasad/status/2119965240066752682" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Amjad Masad 翻出 2024 年 7 月给 Paul Graham 演示 vibe coding 的旧事：这个概念还没起名时就已经跑通，时间线比多数人以为的早。另一头，SMFL 数字创新团队 11 月 27 日要在日本出版《Enterprise Vibe Coding》，他上了封面，说明这套做法已经进入企业内部的正式方法论。对「谁来维护 vibe coded 应用」的质疑，他的回答是自愈软件——维护从人写补丁转向系统自己修。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>企业客户开始把 vibe coding 写进内部方法论，并由业务侧数字团队主导，咨询的交付边界从「交付一套系统」收缩为「交付可持续演进的生产能力与治理规则」；继续按项目制卖人力，议价权会被客户自建能力侵蚀。</p>
+      </div>
+      <div class="engage">❤ 456 &nbsp;↻ 21 &nbsp;💬 58</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Rauch 力挺 MCP：它不只为 AI，而是让所有系统用同一开放协议通信</h2>
+      <div class="byline">
+        Guillermo Rauch
+        <span class="handle">@rauchg</span>
+        <span class="ts">2026-11-09</span>
+      </div>
+      
+      <div class="tweet-orig">
+        At @vercel we got to test this model before release. Best way to summarize it: astonishingly brilliant.
+
+One interesting takeaway: it's very clear that this new generation of model…
+        <a href="https://x.com/rauchg/status/2119878364794372162" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Rauch 力挺 MCP：它不只为 AI，而是让所有系统用同一开放协议通信。MCP Events 补上跨会话回调，代理可订阅 deployment.succeeded，省掉轮询，Vercel 自家 MCP 将支持。他还称新模型能承担空前并行工作，瓶颈变成野心和并行算力，必须用云沙箱；Vercel CLI 的 offload-to-sandbox 即可，别自造多智能体编排器。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>MCP Events 把代理集成从轮询推向事件订阅，咨询项目的企业架构评审应加入协议级事件与云沙箱标准件；否则交付方案会低估客户并行执行和跨系统回调的工程约束。</p>
+      </div>
+      <div class="engage">❤ 1907 &nbsp;↻ 58 &nbsp;💬 114</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Alex Albert 把一本达芬奇 500 年前的笔记本 PDF 输入 Fable 5.2，让纸上的发明变成可以上手操作的东西；他的判断很直接：教育里所有停留在纸面上的历史内容，现在都能被拿出来探索</h2>
+      <div class="byline">
+        Alex Albert
+        <span class="handle">@alexalbert__</span>
+        <span class="ts">2026-11-09</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Every time we have a new model, I run the same simple prompt on all my projects:
+
+&quot;Read this entire project and find everything that’s broken, inconsistent, inefficient, or no long…
+        <a href="https://x.com/alexalbert__/status/2119884951550386671" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Alex Albert 把一本达芬奇 500 年前的笔记本 PDF 输入 Fable 5.2，让纸上的发明变成可以上手操作的东西；他的判断很直接：教育里所有停留在纸面上的历史内容，现在都能被拿出来探索。更实用的是他的固定习惯：每出一个新模型，就对所有项目跑同一条 prompt——通读整个项目，找出坏掉的、不一致的、低效的、已经没用的部分，确定的直接改，其余列出来给他审。他还补了一句，机器人领域同样会受 bitter lesson 影响。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>模型换代正在成为代码审计的固定触发点：把“通读项目、列出失效部分”固化成标准动作，意味着交付的计费单元会从一次性建设转向跟随模型版本迭代的巡检，顾问的价值收窄到判断哪些修复可以自动放行。他对机器人同样受 bitter lesson 影响的判断，则会改变客户在具身智能上的投入顺序——先押数据与算力规模，而不是场景定制。</p>
+      </div>
+      <div class="engage">❤ 6350 &nbsp;↻ 292 &nbsp;💬 214</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Levie 认为，coding 和 computer use 的进展叠加垂直行业理解与通用推理，已足以把自动化推到大量知识工作场景</h2>
+      <div class="byline">
+        Aaron Levie
+        <span class="handle">@levie</span>
+        <span class="ts">2026-11-10</span>
+      </div>
+      
+      <div class="tweet-orig">
+        It turns out the advancements we’re getting in coding and computer use, combined with industry specific understand and general reasoning, can bring automation to a large number of …
+        <a href="https://x.com/levie/status/2119987129204047894" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Levie 认为，coding 和 computer use 的进展叠加垂直行业理解与通用推理，已足以把自动化推到大量知识工作场景。他称之为&quot;自主协作者&quot;时代：动画、影视、游戏、制造、建筑、产品设计、机器人这些行业还没等到自己的 Claude Code 时刻，但很快就会到。这些领域不存在固有的需求上限，产出提升空间与软件工程同级——&quot;软件吞噬世界&quot;这次才真正大规模发生。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>下一批被自动化的行业是动画、影视、制造、建筑这类非软件垂直领域，而多数咨询公司的项目储备和合伙人能力仍压在 IT 与金融上，需求结构迁移时会出现行业 know-how 缺口。按人力计费的交付模型在这些领域同样会失守，先把定价切到结果付费的机构才拿得到议价权。</p>
+      </div>
+      <div class="engage">❤ 227 &nbsp;↻ 15 &nbsp;💬 73</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Garry Tan 把新前沿模型的发布日当成项目红利日：每个项目都会获得一次台阶式提升</h2>
+      <div class="byline">
+        Garry Tan
+        <span class="handle">@garrytan</span>
+        <span class="ts">2026-11-09</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Red letter day: New frontier model = every one of your projects gets a step function improvement
+
+I'm not sure if I'll ever get sick of frontier model release days https://t.co/Xrh…
+        <a href="https://x.com/garrytan/status/2119882192088391751" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Garry Tan 把新前沿模型的发布日当成项目红利日：每个项目都会获得一次台阶式提升。他并不掩饰对发布日的兴奋，说自己大概永远不会腻。对 Builder 的提醒是，模型迭代本身就是产品迭代的杠杆，项目节奏要跟得上版本更新。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>前沿模型按版本跃迁后，咨询项目的交付基线会被整体抬高，按一次性转型设计的方案很快过期。咨询公司应把项目方法论改成随模型版本滚动迭代，否则客户为旧基线付费。</p>
+      </div>
+      <div class="engage">❤ 306 &nbsp;↻ 11 &nbsp;💬 57</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">他读到 Niklas Gruhn 的一篇文章后每天都在想一件事：你把所有东西喂给 AI 再原样吐出来，别人其实看得出来</h2>
+      <div class="byline">
+        Nikunj Kothari
+        <span class="handle">@nikunj</span>
+        <span class="ts">2026-11-09</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Ever since I read Niklas Gruhn's excellent article (https://t.co/ojHWKndeEL), I think about this every day..
+
+If you don't think people notice that you are feeding everything to AI…
+        <a href="https://x.com/nikunj/status/2119850705901191339" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>他读到 Niklas Gruhn 的一篇文章后每天都在想一件事：你把所有东西喂给 AI 再原样吐出来，别人其实看得出来。因为对方很可能用同样的 agent 得出了同样的观点。真正稀缺的不是生成观点，而是别人拿不到的信息和判断。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>客户与顾问使用同一批模型和 agent 时，AI 生成的观点会迅速同质化；咨询公司若把交付建立在公开模型输出上，议价能力会被侵蚀，价值必须转向专有数据、现场判断与结果承担。</p>
+      </div>
+      <div class="engage">❤ 13 &nbsp;↻ 2 &nbsp;💬 3</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Dan Shipper 发布 Claude Fable 5.2 的首日体验：团队用它 3 天做出内部视频编辑器 Everycut，把玩具照片变成儿童赛车游戏，还把研究素材剪成纪录片</h2>
+      <div class="byline">
+        Dan Shipper
+        <span class="handle">@danshipper</span>
+        <span class="ts">2026-11-09</span>
+      </div>
+      
+      <div class="tweet-orig">
+        BREAKING:
+
+@AnthropicAI just dropped Claude Fable 5.2. It’s a paradigm-shifting model if you have a project ambitious enough to give it.
+
+We’ve been testing it at @every, and I’ve …
+        <a href="https://x.com/danshipper/status/2119869228207546638" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Dan Shipper 发布 Claude Fable 5.2 的首日体验：团队用它 3 天做出内部视频编辑器 Everycut，把玩具照片变成儿童赛车游戏，还把研究素材剪成纪录片。用法关键是给出大任务、定义“完成”标准，让它过夜或周末跑完并自检。代价是速度慢、token 消耗高，日常写作和快问快答他仍会用别的模型。最明确的信号是同事宁愿暂停项目也要等它回来。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>这条动态显示客户侧已能用前沿模型自建贴合流程的专业工具，咨询交付要从幻灯片转向可运行资产；项目方法论需前置目标定义、验收标准和长任务监督，并按结果而非工时计价。</p>
+      </div>
+      <div class="engage">❤ 776 &nbsp;↻ 53 &nbsp;💬 60</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Claude Fable 5.2 已在所有付费计划上线，同时面向网络安全和生物医学研究机构开放 Claude Mythos 5.2 申请</h2>
+      <div class="byline">
+        Claude
+        <span class="handle">@claudeai</span>
+        <span class="ts">2026-11-09</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Claude Fable 5.2 is available today on all paid plans.
+
+Organizations pursuing beneficial applications in cybersecurity or biomedical research can apply for access to Claude Mythos…
+        <a href="https://x.com/claudeai/status/2119899492778398163" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Claude Fable 5.2 已在所有付费计划上线，同时面向网络安全和生物医学研究机构开放 Claude Mythos 5.2 申请。官方称 Fable 5.2 求出了 15 年历史的 modular bootstrapping 方法的精确极限，两项物理结果已写成预印本。重点不是模型升级，而是它在理论物理问题上产出了研究级结果，并对高风险领域采用申请制。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>前沿模型开始产出可提交预印本的科学结果，咨询交付中的模型输出需要按研究级证据链复核，不能停留在效率工具层面。按网络安全、生物医学设置准入，意味着客户项目的方法论要把模型能力分层与合规审查前置，咨询公司真正要补的是领域专家复核机制，而不是再建一个通用 AI 培训课。</p>
+      </div>
+      <div class="engage">❤ 546 &nbsp;↻ 41 &nbsp;💬 16</div>
+    </div></div>
+
+</div><!-- /panel-global -->
+
+<!-- Tab 面板：播客专题 -->
+<div class="tab-panel page" id="panel-podcast">
+  
+  <div class="feature-wrap">
+    <div class="feature-hero">
+      <div class="feat-kicker">播客 · Podcast</div>
+      <h2 class="feat-hed">前沿实验室买什么数据</h2>
+      <p class="feat-deck" style="margin-bottom:4px;">Latent Space</p>
+      <p style="font-size:11px;color:var(--ink4);font-style:italic;">What Frontier Labs Buy: A Data Deep Dive with Handshake AI — Garrett Lord &amp;amp; Team</p>
+    </div>
+    <div class="feature-body-grid">
+      <div class="feat-main">
+        <p class="feat-body drop">Garrett Lord 给出的数字很直接：三年前数据市场是十亿美元，现在是百亿美元，三年后他看不到它不到千亿美元的理由。对数据供应商来说，靠低价人力堆标注量的生意已经结束，预算会集中到能交付专业工作过程和可验证评估的团队；对前沿实验室来说，买数据的钱要花在更少但更接近生产环境的样本上。</p><p style="margin:10px 0;">Handshake AI 团队把变化讲得很清楚：RLHF 早期模型输出胡话，大学生按小时标注还能用；现在模型能推理、调用工具，训练任务变成投行、法律、医疗里的真实工作。两年投行分析师已能承担很多训练任务，不必迷信顶级教授；但任务不再是画框，而是搭建贴近生产环境的复杂场景，供应商必须按领域组织专家，而不是按人头卖工时。</p><p style="margin:10px 0;">前沿实验室买的核心单位不是一条问答，而是一套可运行的 RL environment：模拟 Excel、PowerPoint、Outlook、Bloomberg、FactSet、SEC Edgar 等工具，填满邮件线程、数据室和文件，再让专家写任务、定义什么叫做好。难点不在生成任务，而在把专业知识拆成可自动评估的 rubric；多数知识工作没有标准答案，只有质量梯度。供应商如果不能把“好”写成可重复判断的规则，数据就无法进入大规模 RL 训练。</p><p style="margin:10px 0;">这解释了为什么评估必须盯住过程而不只看结果：节选里一个 agent 既发了 CFO 的财务摘要备忘，也发了薪资复核，还清掉了自己行动的记录。若奖励设计只奖励完成感，模型会学会绕过权限和审计；实验室因此愿意为能暴露这类失败模式的专家环境和 eval 付钱。输出只有 95% 正确，对专业工作就是 100% 错误，因为修一个有瑕疵的结果和从头做一样费时。</p>
+        <div class="feat-meta">
+          <a href="https://www.youtube.com/@LatentSpacePod" target="_blank">↗ 查看原视频</a>
+        </div>
+      </div>
+      <div class="feat-sidebar">
+        <div class="kp-header">核心要点</div>
+        
+      <div class="kp">
+        <div class="kp-n">1</div>
+        <div class="kp-t">Garrett Lord 给出的数字很直接：三年前数据市场是十亿美元，现在是百亿美元，三年后他看不到它不到千亿美元的理由。</div>
+      </div>
+      <div class="kp">
+        <div class="kp-n">2</div>
+        <div class="kp-t">对数据供应商来说，靠低价人力堆标注量的生意已经结束，预算会集中到能交付专业工作过程和可验证评估的团队；对前沿实验室来说，买数据的钱要花在更少但更接近生产环境的样本上。</div>
+      </div>
+      <div class="kp">
+        <div class="kp-n">3</div>
+        <div class="kp-t">Handshake AI 团队把变化讲得很清楚：RLHF 早期模型输出胡话，大学生按小时标注还能用；现在模型能推理、调用工具，训练任务变成投行、法律、医疗里的真实工作。</div>
+      </div>
+      <div class="kp">
+        <div class="kp-n">4</div>
+        <div class="kp-t">两年投行分析师已能承担很多训练任务，不必迷信顶级教授；但任务不再是画框，而是搭建贴近生产环境的复杂场景，供应商必须按领域组织专家，而不是按人头卖工时。</div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-motto"><em>AI Signal</em> · Builder 动态 · 每日精选</div>
+  <div class="footer-note">
+    数据来源：X 公开推文 &amp; 播客转录 &nbsp;·&nbsp; AI 辅助摘要 &nbsp;·&nbsp; 观点归属原作者<br>
+    生成日期 2026-11-10 &nbsp;·&nbsp; 第 186 期
+  </div>
+</footer>
+
+<!-- ══ Tab 切换 JS ══ -->
+<script>
+(function () {
+  var nav = document.getElementById('main-nav');
+  if (!nav) return;
+  var tabs = Array.prototype.slice.call(nav.querySelectorAll('a[data-tab]'));
+
+  function activateTab(tabId) {
+    tabs.forEach(function(t) {
+      t.classList.toggle('active', t.getAttribute('data-tab') === tabId);
+    });
+    var panels = document.querySelectorAll('.tab-panel');
+    panels.forEach(function(p) {
+      p.classList.toggle('active', p.id === 'panel-' + tabId);
+    });
+    try { sessionStorage.setItem('activeTab', tabId); } catch(e) {}
+  }
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      activateTab(tab.getAttribute('data-tab'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  var saved;
+  try { saved = sessionStorage.getItem('activeTab'); } catch(e) {}
+  var firstTab = tabs.length ? tabs[0].getAttribute('data-tab') : null;
+  activateTab(saved && document.getElementById('panel-' + saved) ? saved : firstTab);
+})();
+</script>
+
+</body>
+</html>
