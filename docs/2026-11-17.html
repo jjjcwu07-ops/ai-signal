@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Signal · 2026-11-17</title>
+  <style>
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Regular.otf') format('opentype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Medium.otf') format('opentype');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Bold.otf') format('opentype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'SHSCN';
+      src: url('SourceHanSansCN-Heavy.otf') format('opentype');
+      font-weight: 900;
+    }
+
+    /* ─── Quote of the Day ─── */
+    .qotd-wrap {
+      border: 2px solid var(--black);
+      border-radius: 4px;
+      box-shadow: 4px 4px 0 var(--black);
+      background: var(--black);
+      padding: 32px 40px;
+      margin: 32px 0 24px;
+    }
+    .qotd-label {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+    .qotd {
+      font-size: clamp(20px, 2.4vw, 30px);
+      font-weight: 700;
+      line-height: 1.5;
+      color: #fff;
+      border: none;
+      margin: 0 0 14px;
+      padding: 0;
+    }
+    .qotd-attr {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: 0.04em;
+    }
+    /* ─── Editorial + Tags ─── */
+    .editorial-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0;
+      border: 2px solid #373a3e;
+      box-shadow: 4px 4px 0 #373a3e;
+      margin-bottom: 28px;
+      background: #373a3e;
+    }
+    .editorial-box {
+      background: var(--orange-pale);
+      padding: 22px 26px;
+    }
+    .tags-box {
+      background: var(--white);
+      padding: 22px 26px;
+      min-width: 260px;
+      border-left: 2px solid #373a3e;
+    }
+    .editorial-label {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 10px;
+    }
+    .editorial-text {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.8;
+      color: var(--ink);
+    }
+    .tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      display: inline-block;
+      border: 2px solid #373a3e;
+      border-radius: 3px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #fff;
+      box-shadow: 2px 2px 0 #000;
+      cursor: default;
+    }
+    .tag:hover { background: var(--orange); }
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    ::selection { background: var(--orange); color: var(--black); }
+    ::-moz-selection { background: var(--orange); color: var(--black); }
+
+    /* ─── Tokens ─── */
+    :root {
+      --bg:        #f4f3ef;
+      --white:     #fffffe;
+      --black:     #373a3e;
+      --ink:       #1a1a1a;
+      --ink2:      #3d3d3d;
+      --ink3:      #777777;
+      --ink4:      #aaaaaa;
+      --lime: #ff8a00; --orange: #ff8a00;
+      --lime-pale: #fff0d4; --orange-pale: #fff0d4;
+      --yellow:    #fde047;
+      --border:    2px solid #373a3e;
+      --shadow:    4px 4px 0 #373a3e;
+      --shadow-sm: 2px 2px 0 #373a3e;
+      --shadow-lg: 6px 6px 0 #373a3e;
+      --rule:      1px solid #373a3e;
+      --rule-lt:   1px solid #ddd;
+      --gap:       20px;
+      --ff: 'SHSCN', 'Helvetica Neue', Arial, sans-serif;
+      --ff-title: 'SHSCN', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    html { background: #e8d5b0; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--ff);
+      font-size: 15px;
+      line-height: 1.75;
+      max-width: 1200px;
+      margin: 40px auto;
+      border: 3px solid var(--black);
+      box-shadow: 8px 8px 0 var(--black);
+    }
+
+    /* ══════════════════════════════════
+       MASTHEAD
+    ══════════════════════════════════ */
+    .masthead {
+      background: var(--white);
+      border-bottom: 3px solid var(--black);
+      padding: 0;
+    }
+
+    .mast-top {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .mast-top-left {
+      padding: 8px 18px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      border-right: 2px solid var(--black);
+      display: flex;
+      align-items: center;
+    }
+
+    .mast-top-right {
+      padding: 8px 18px;
+      font-size: 10.5px;
+      color: var(--ink3);
+      text-align: right;
+      line-height: 1.6;
+      display: flex;
+      align-items: center;
+    }
+
+    .mast-title-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 16px 24px;
+      gap: 0;
+    }
+
+    .mast-vol {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      line-height: 1.5;
+    }
+
+    .mast-name {
+      text-align: center;
+      font-size: clamp(38px, 6.5vw, 72px);
+      font-weight: 900;
+      font-family: var(--ff-title);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .mast-name .hi {
+      /* lime underline on the accent word */
+      display: inline;
+      background: var(--orange);
+      padding: 0 4px;
+    }
+
+    .mast-right-col {
+      text-align: right;
+      font-size: 11px;
+      color: var(--ink3);
+      line-height: 1.6;
+    }
+
+    /* nav strip */
+    .mast-nav {
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .mast-nav a,
+    .mast-nav span {
+      padding: 7px 18px;
+      border-right: 1px solid #444;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+    }
+    .mast-nav a:last-child,
+    .mast-nav span:last-child { border-right: none; }
+    .mast-nav a:hover { background: #4a4d52; }
+    .mast-nav a.active,
+    .mast-nav span.active {
+      background: var(--orange);
+      color: var(--black);
+      font-weight: 900;
+      box-shadow: inset 0 -3px 0 var(--black);
+    }
+
+    /* ══════════════════════════════════
+       LEAD BANNER
+    ══════════════════════════════════ */
+    .lead-banner {
+      background: var(--orange);
+      border-bottom: 3px solid var(--black);
+      padding: 28px 32px 24px;
+    }
+
+    .lead-kicker {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lead-kicker::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 3px;
+      background: var(--black);
+    }
+
+    .lead-headline {
+      font-size: clamp(22px, 3.2vw, 38px);
+      font-weight: 900;
+      font-family: var(--ff-title);
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+      color: var(--black);
+      margin-bottom: 16px;
+      max-width: 860px;
+    }
+
+    .lead-deck {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink2);
+      max-width: 680px;
+      line-height: 1.55;
+    }
+
+    /* ══════════════════════════════════
+       PAGE BODY
+    ══════════════════════════════════ */
+    .page {
+      padding: 0 28px 44px;
+      background: var(--bg);
+    }
+
+    /* ── Section header bar ── */
+    .sec-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 20px;
+      border-top: 3px solid var(--black);
+      border-bottom: 2px solid var(--black);
+      padding: 6px 0;
+      scroll-margin-top: 48px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .sec-bar.highlight {
+      border-top-color: var(--orange);
+      box-shadow: 0 -3px 0 var(--orange);
+    }
+
+    .sec-tag {
+      background: var(--black);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      flex-shrink: 0;
+    }
+
+    .sec-tag.lime {
+      background: var(--black);
+      color: var(--orange);
+    }
+
+    .sec-title {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .sec-count {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink4);
+      font-family: 'Courier New', monospace;
+      margin-left: auto;
+    }
+
+    /* ══════════════════════════════════
+       COLUMN GRIDS
+    ══════════════════════════════════ */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+      background: var(--black); /* gap color */
+    }
+
+    .grid-2-1 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+      background: var(--black);
+    }
+
+    .gcol {
+      background: var(--white);
+      padding: 28px 24px;
+      /* columns separated by 2px black gap via grid background */
+    }
+    .gcol + .gcol {
+      margin-left: 2px;
+    }
+
+    /* second row of 3 */
+    .grid-3-row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+      border-top: none;
+      background: var(--black);
+      margin-top: 2px; /* visual separation from row above inside same outer border, reuse border */
+    }
+
+    /* span helpers */
+    .span-2 { grid-column: span 2; }
+    .span-3 { grid-column: span 3; }
+
+    /* ══════════════════════════════════
+       ARTICLE CARD — inside a gcol
+    ══════════════════════════════════ */
+    .art-kicker {
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 5px;
+    }
+
+    .art-hed {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: var(--ff-title);
+      line-height: 1.35;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .art-hed.lg { font-size: 22px; }
+    .art-hed.sm { font-size: 15px; }
+
+    .art-deck {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      line-height: 1.5;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .byline {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: var(--rule);
+    }
+
+    .byline .handle {
+      font-weight: 500;
+      font-style: italic;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--ink4);
+    }
+
+    .byline .ts {
+      font-size: 9.5px;
+      font-weight: 400;
+      color: var(--ink4);
+      margin-left: 4px;
+    }
+
+    .art-body {
+      font-size: 14px;
+      color: var(--ink2);
+      line-height: 1.8;
+    }
+
+    .art-divider {
+      border: none;
+      border-top: var(--rule-lt);
+      margin: 14px 0;
+    }
+
+    /* ── Tweet original block ── */
+    .tweet-orig {
+      border: 2px solid var(--black);
+      background: var(--bg);
+      padding: 10px 12px;
+      margin: 10px 0;
+      font-size: 12.5px;
+      color: var(--ink3);
+      line-height: 1.6;
+      font-style: italic;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tweet-orig a {
+      display: block;
+      margin-top: 6px;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink4);
+      text-decoration: none;
+    }
+    .tweet-orig a:hover { text-decoration: underline; }
+
+    /* ── Pull quote ── */
+    .pull {
+      border-top: 3px solid var(--black);
+      border-bottom: 3px solid var(--black);
+      padding: 10px 0;
+      margin: 14px 0;
+    }
+    .pull p {
+      font-size: 14.5px;
+      font-weight: 900;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    /* ── Summary box ── */
+    .sumbox {
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      padding: 9px 12px;
+      margin: 10px 0;
+    }
+    .sumbox .lbl {
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 4px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #ddd;
+    }
+    .sumbox p {
+      font-size: 12.5px;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* highlight sumbox */
+    .sumbox.lime {
+      background: var(--orange-pale);
+      border-left: 3px solid var(--orange);
+      border-color: var(--black);
+    }
+    .sumbox.lime .lbl { border-bottom-color: rgba(0,0,0,0.15); color: var(--ink2); }
+    .sumbox.lime p { color: var(--ink); }
+
+    /* ── Engagement ── */
+    .engage {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 10px;
+      color: var(--ink4);
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+    }
+
+    /* ── Inline code ── */
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      background: var(--orange-pale);
+      padding: 1px 5px;
+      border: 1px solid var(--black);
+      font-weight: 700;
+    }
+
+    /* ══════════════════════════════════
+       FEATURE / PODCAST
+    ══════════════════════════════════ */
+    .feature-wrap {
+      border: 2px solid var(--black);
+      box-shadow: var(--shadow-lg);
+      margin-top: 0;
+      background: var(--white);
+    }
+
+    .feature-hero {
+      background: var(--orange-pale);
+      border-bottom: 2px solid var(--black);
+      padding: 24px 24px 20px;
+    }
+
+    .feat-kicker {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink2);
+      margin-bottom: 8px;
+    }
+
+    .feat-hed {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      color: var(--black);
+      margin-bottom: 10px;
+    }
+
+    .feat-deck {
+      font-size: 14px;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--ink2);
+      line-height: 1.5;
+      max-width: 680px;
+    }
+
+    .feature-body-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 0;
+      background: var(--black);
+      align-items: start;
+    }
+
+    .feat-main {
+      background: var(--white);
+      padding: 22px 22px 22px 24px;
+      max-height: 560px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--orange) var(--bg);
+    }
+    .feat-main::-webkit-scrollbar { width: 6px; }
+    .feat-main::-webkit-scrollbar-track { background: var(--bg); }
+    .feat-main::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
+
+    .feat-sidebar {
+      background: var(--bg);
+      padding: 22px 20px;
+      margin-left: 2px;
+      max-height: 560px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--orange) var(--bg);
+    }
+    .feat-sidebar::-webkit-scrollbar { width: 6px; }
+    .feat-sidebar::-webkit-scrollbar-track { background: var(--bg); }
+    .feat-sidebar::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
+
+    .feat-body {
+      font-size: 13.5px;
+      color: var(--ink2);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .feat-body .drop::first-letter {
+      font-size: 3.5em;
+      font-weight: 900;
+      float: left;
+      line-height: 0.8;
+      margin-right: 5px;
+      margin-top: 5px;
+      color: var(--black);
+      background: var(--orange);
+      padding: 0 3px;
+    }
+
+    .feat-pull {
+      border-top: 3px solid var(--black);
+      border-bottom: 3px solid var(--black);
+      padding: 10px 0;
+      margin: 16px 0;
+    }
+    .feat-pull p {
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.25;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    /* keypoints sidebar */
+    .kp-header {
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 14px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .kp {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #ccc;
+    }
+    .kp:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .kp-n {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1;
+      color: #ccc;
+      font-family: 'Courier New', monospace;
+      flex-shrink: 0;
+      width: 26px;
+    }
+
+    .kp-t {
+      font-size: 12.5px;
+      color: var(--ink2);
+      line-height: 1.6;
+    }
+    .kp-t strong { color: var(--ink); font-weight: 700; }
+
+    .feat-meta {
+      font-size: 10px;
+      color: var(--ink4);
+      line-height: 1.7;
+      border-top: 2px solid var(--black);
+      padding-top: 12px;
+      margin-top: 14px;
+    }
+    .feat-meta strong { color: var(--ink3); font-weight: 700; }
+    .feat-meta a { color: inherit; }
+    .feat-meta a:hover { text-decoration: underline; }
+
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
+    .site-footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-motto {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+    .footer-motto em {
+      color: var(--orange);
+      font-style: normal;
+    }
+
+    .footer-note {
+      font-size: 10px;
+      color: #888;
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    /* ── Speed Read ── */
+    .speed-read {
+      border: 2px solid var(--black);
+      box-shadow: var(--shadow);
+      background: var(--white);
+      margin: 24px 0 4px;
+    }
+    .speed-read-hd {
+      background: var(--orange);
+      border-bottom: 2px solid var(--black);
+      padding: 7px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sr-label {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+    .sr-time {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink2);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.1em;
+    }
+    .speed-items {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+    }
+    .sp-item {
+      background: var(--white);
+      padding: 14px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border-right: 1px solid #ddd;
+    }
+    .sp-item:last-child { border-right: none; }
+    .sp-n {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--orange);
+      font-family: 'Courier New', monospace;
+      flex-shrink: 0;
+      width: 28px;
+      margin-top: 2px;
+      -webkit-text-stroke: 1px var(--black);
+    }
+    .sp-t {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink2);
+      font-weight: 500;
+    }
+    .sp-t strong { color: var(--ink); }
+
+    /* ── Responsive ── */
+    @media (max-width: 780px) {
+      body { margin: 0; box-shadow: none; }
+      .grid-3, .grid-3-row2, .grid-2-1, .feature-body-grid {
+        display: block;
+        background: transparent;
+      }
+      .gcol, .feat-main, .feat-sidebar {
+        border: 2px solid var(--black);
+        margin-bottom: 12px;
+        box-shadow: var(--shadow-sm);
+      }
+      .gcol + .gcol { margin-left: 0; }
+      .page { padding: 0 14px 28px; }
+      .mast-title-row { grid-template-columns: 1fr; text-align: center; gap: 8px; }
+      .mast-vol, .mast-right-col { text-align: center; }
+    }
+
+    /* ══ TAB 面板 ══ */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* 总览区（始终可见）*/
+    .page-overview { padding: 0 28px 44px; background: var(--bg); }
+
+    /* ── 历史版本栏 ── */
+    .history-bar {
+      background: var(--white);
+      border-bottom: 2px solid var(--black);
+      padding: 7px 24px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-size: 11px;
+    }
+    .history-bar-label {
+      font-weight: 900;
+      color: var(--ink3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: 4px;
+      flex-shrink: 0;
+    }
+    .history-bar a {
+      display: inline-block;
+      padding: 2px 9px;
+      border: 1.5px solid var(--black);
+      font-weight: 700;
+      color: var(--ink2);
+      text-decoration: none;
+      background: var(--bg);
+      box-shadow: 1px 1px 0 var(--black);
+    }
+    .history-bar a:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .history-bar a.current {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+      pointer-events: none;
+    }
+
+    /* Tab 导航激活色改为橙色 */
+    .mast-nav a.active,
+    .mast-nav span.active {
+      background: var(--orange) !important;
+      color: #fff !important;
+      font-weight: 900;
+      box-shadow: inset 0 -3px 0 var(--black);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ MASTHEAD ══ -->
+<header class="masthead">
+  <div class="mast-top">
+    <span class="mast-top-left">AI Signal · Builder 动态 · 每日精选</span>
+    <div class="mast-top-right">Vol. I &nbsp;·&nbsp; No. 193 &nbsp;·&nbsp; 2026年11月17日 · 星期一</div>
+  </div>
+
+  <div class="mast-title-row">
+    <div class="mast-vol">
+      晨版 · Morning Edition<br>
+      Builder 动态 · 每日精选<br>
+      精选 12 位 Builder
+    </div>
+    <div class="mast-name">
+      AI&nbsp;<span class="hi">SIGNAL</span>
+    </div>
+    <div class="mast-right-col">
+      X 动态 · 29 篇<br>
+      播客专题 · 1 期<br>
+      深度摘要 · 全文
+    </div>
+  </div>
+
+  <!-- 历史版本 -->
+  <div class="history-bar">
+    <span class="history-bar-label">历史版本</span>
+    <a href="./index.html" class="current">2026-11-17 · 最新</a>
+    <a href="./2026-11-16.html">2026-11-16</a>
+    <a href="./2026-11-15.html">2026-11-15</a>
+    <a href="./2026-11-14.html">2026-11-14</a>
+    <a href="./2026-11-13.html">2026-11-13</a>
+    <a href="./2026-11-12.html">2026-11-12</a>
+    <a href="./2026-11-11.html">2026-11-11</a>
+  </div>
+  <nav class="mast-nav" id="main-nav">
+    <a href="#" data-tab="china" class="active">国内 AI 前线</a>
+    <a href="#" data-tab="global">海外 Builder 动态</a>
+    <a href="#" data-tab="podcast">播客专题</a>
+  </nav>
+</header>
+
+<!-- ══ LEAD BANNER ══ -->
+<div class="lead-banner">
+  <div class="lead-kicker">头版头条 &nbsp;·&nbsp; Today's Signal</div>
+  <h1 class="lead-headline">软件工厂是过渡，agent 协作才是正题</h1>
+  <p class="lead-deck">Thariq 一条推文拿到 4841 赞：把 agent 塞进固定流水线很快过时，真正该做的是让它和你并肩干活的工作空间。</p>
+</div>
+
+<!-- Tab 面板：国内资讯 -->
+<div class="tab-panel page" id="panel-china">
+  
+  <div class="sec-bar">
+    <span class="sec-tag">中文圈</span>
+    <span class="sec-title">国内 AI 前线</span>
+    <span class="sec-count">公开来源 · 每日更新</span>
+  </div>
+  <div class="grid-3" style="display:grid;grid-template-columns:1fr;gap:0;border:2px solid var(--black);background:var(--black);">
+    <div class="gcol">
+      <div class="art-kicker">系统</div>
+      <h3 class="art-hed">无法提供近期资讯</h3>
+      <div class="art-body" style="margin:10px 0;">当前知识库截止2024年6月，无法核实2026年11月17日前后国内AI新闻；为避免编造，不输出虚假条目。</div>
+      
+      
+      <div style="margin-top:10px;font-size:11px;font-weight:900;letter-spacing:0.06em;">
+        来源：<a href="https://www.google.com/search?q=%E6%97%A0%E6%B3%95%E6%8F%90%E4%BE%9B%E8%BF%91%E6%9C%9F%E8%B5%84%E8%AE%AF%20%E7%B3%BB%E7%BB%9F" target="_blank" style="color:var(--orange);text-decoration:underline;">系统 ↗</a>
+      </div>
+    </div></div>
+</div>
+
+<!-- Tab 面板：海外 Builder -->
+<div class="tab-panel page" id="panel-global">
+
+  <!-- ══ 30-SEC SPEED READ ══ -->
+  <div class="speed-read">
+    <div class="speed-read-hd">
+      <span class="sr-label">30 秒速览</span>
+      <span class="sr-time">/ TODAY'S BRIEF</span>
+    </div>
+    <div class="speed-items">
+      
+    <div class="sp-item">
+      <div class="sp-n">1</div>
+      <div class="sp-t"><strong>Garry Tan：</strong>用 Rust 重写 GBrain 引擎，记忆从个人汇总到公司</div>
+    </div>
+    <div class="sp-item">
+      <div class="sp-n">2</div>
+      <div class="sp-t"><strong>Aaron Levie：</strong>coding 一年前基本是垃圾，token 消耗还看不到顶</div>
+    </div>
+    <div class="sp-item">
+      <div class="sp-n">3</div>
+      <div class="sp-t"><strong>Peter Steinberger：</strong>macOS 权限弹窗正在拖死桌面 agent</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- ══ QUOTE OF THE DAY ══ -->
+  <div class="qotd-wrap">
+    <div class="qotd-label">「一句话」 of the day</div>
+    <blockquote class="qotd">软件工厂是临时问题，模型迟早自己会搭。真正有意思的是：怎么造一个 agent 能和你一起干活的工作空间。</blockquote>
+    <div class="qotd-attr">Thariq · @thariq</div>
+  </div>
+
+  <!-- ══ EDITORIAL + TAGS ══ -->
+  <div class="editorial-row">
+    <div class="editorial-box">
+      <div class="editorial-label">📝 主编按语</div>
+      <p class="editorial-text">今天两条线：agent 正从固定流水线转向协作空间，token 曲线却还看不到顶。别在错误的层上造产品。</p>
+    </div>
+    <div class="tags-box">
+      <div class="editorial-label">🏷️ 本期标签</div>
+      <div class="tags-list">
+        <span class="tag">#Agent协作</span>
+        <span class="tag">#Token经济</span>
+        <span class="tag">#AI原生工程</span>
+        <span class="tag">#基础设施出清</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 01 · X 动态 ══ -->
+  <div class="sec-bar" id="sec-x">
+    <span class="sec-tag">X / Twitter</span>
+    <span class="sec-title">Builder 动态</span>
+    <span class="sec-count">今日 12 位 builder · 29 条推文</span>
+  </div>
+
+  <div class="grid-3">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Swyx 提到 Together 把 megakernel 实现删掉了</h2>
+      <div class="byline">
+        Swyx
+        <span class="handle">@swyx</span>
+        <span class="ts">2026-11-17</span>
+      </div>
+      
+      <div class="tweet-orig">
+        women are destroying the men, wtf is happening rn https://t.co/KckmQKykvy
+        <a href="https://x.com/swyx/status/2122512082835067151" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Swyx 提到 Together 把 megakernel 实现删掉了。这类为特定模型手写的融合 kernel 一度是推理提速的核心手段，被供应商回退通常意味着维护成本或泛化性压过了那点性能收益。他另外吐槽 Gmail 搜不到通过 Gmail 发出的 Google Calendar 邀请，是产品层面长期没解决的老问题。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>主流推理供应商回退手工 megakernel，说明推理层的性能红利正从定制 kernel 转向编译器与通用算子库，供应商技术路线的可维护性开始压过单点吞吐指标。为客户做 AI 基础设施选型时，应把供应商是否在收缩自研底层路径纳入评估。</p>
+      </div>
+      <div class="engage">❤ 7 &nbsp;↻ 0 &nbsp;💬 2</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Josh Woodward 展示 Gemini Notebook 的新用法：把资料源直接转成可交互网站，并用元素周期表做了示例</h2>
+      <div class="byline">
+        Josh Woodward
+        <span class="handle">@joshwoodward</span>
+        <span class="ts">2026-11-16</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Turn your sources into interactive sites with @Gemini_Notebook - we made one with all the periodic table names. :) These are easy to make, easy to share. https://t.co/7atKNhzskL
+        <a href="https://x.com/joshwoodward/status/2122453269842886788" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Josh Woodward 展示 Gemini Notebook 的新用法：把资料源直接转成可交互网站，并用元素周期表做了示例。他强调这类站点制作和分享都很简单。对 Builder 来说，这等于把静态资料快速变成可浏览、可传播的网页产品，适合做知识库、教学页或客户演示。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>Gemini Notebook 把资料源转成交互站点，咨询交付物将从静态报告转向客户可自助探索的知识产品，项目方法论需要补上数据源治理、交互设计与维护责任。</p>
+      </div>
+      <div class="engage">❤ 294 &nbsp;↻ 29 &nbsp;💬 18</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Peter Yang 整理了 Nate Parrott 用 Claude 做设计的 5 条经验</h2>
+      <div class="byline">
+        Peter Yang
+        <span class="handle">@petergyang</span>
+        <span class="ts">2026-11-16</span>
+      </div>
+      
+      <div class="tweet-orig">
+        My top 5 takeaways from @nateparrott on how to get Claude to design without AI slop:
+
+1. Give Claude context upfront.
+
+Share screenshots, pages you like, and your past work. For an…
+        <a href="https://x.com/petergyang/status/2122347721298510021" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Peter Yang 整理了 Nate Parrott 用 Claude 做设计的 5 条经验。先喂截图、代码和过往作品补上下文，让 Claude 研究成熟产品的 UX 模式，并在 design.md 里提醒它避开衬线字体、灰白背景等固定偏好。流程上先做线框图再抠字体颜色，一次要 5 个方案再混搭；核心是用上下文和约束压掉 AI 味。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>对咨询项目而言，AI 产出质量取决于前置上下文和可复用设计规范，而非模型本身；交付流程需要把客户业务材料、既有界面和模型偏见清单固化为资产，顾问的工作重心前移到需求结构化与方案筛选。</p>
+      </div>
+      <div class="engage">❤ 138 &nbsp;↻ 12 &nbsp;💬 43</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Thariq 认为「软件工厂」式的自动化流水线只是过渡产物，模型迟早会自己学会搭建这些</h2>
+      <div class="byline">
+        Thariq
+        <span class="handle">@trq212</span>
+        <span class="ts">2026-11-16</span>
+      </div>
+      
+      <div class="tweet-orig">
+        software factories feel like a temporary problem. the models will learn to build them for you
+
+the more interesting question to me is how to build a workspace where agents can coll…
+        <a href="https://x.com/trq212/status/2122438326431154210" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Thariq 认为「软件工厂」式的自动化流水线只是过渡产物，模型迟早会自己学会搭建这些。他更在意的是另一个问题：怎么造出一个让 agent 和你并肩协作的工作空间，而不是把 agent 塞进固定流程里。配图是他和 agent 一起给自己游戏做新角色，正好是这个思路的演示。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>咨询公司当下主推的 agent 流水线搭建属于会被模型能力吞掉的中间态交付，可复制性高、续约率低；能长期收费的是人与 agent 协作界面的重新设计，这部分组织改造含量远高于工具实施。</p>
+      </div>
+      <div class="engage">❤ 4841 &nbsp;↻ 200 &nbsp;💬 374</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Google Labs 迎来做日历调度和日程管理的 Howie 团队，要一起为小企业做下一代更直观的 AI 工具</h2>
+      <div class="byline">
+        Google Labs
+        <span class="handle">@GoogleLabs</span>
+        <span class="ts">2026-11-16</span>
+      </div>
+      
+      <div class="tweet-orig">
+        We’re excited to welcome Howie to Google Labs! 
+
+The @Howie_ai team has spent years figuring out scheduling and calendar management.  We can’t wait to learn from them as we build t…
+        <a href="https://x.com/GoogleLabs/status/2122461899178820069" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Google Labs 迎来做日历调度和日程管理的 Howie 团队，要一起为小企业做下一代更直观的 AI 工具。Howie 团队多年只啃排期和日历管理，这类高频、规则碎的流程正好适合 AI 接管。对做小企业产品的人，信号是别只做聊天入口，先把排期、预约、跟进做成可自动执行的闭环。</p>
+      </div>
+      
+      <div class="engage">❤ 502 &nbsp;↻ 38 &nbsp;💬 15</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Rauch 认为软件用户正从人变成 agent，产品流程要从用户访谈转向跑 eval，并让 eval 驱动工程迭代</h2>
+      <div class="byline">
+        Guillermo Rauch
+        <span class="handle">@rauchg</span>
+        <span class="ts">2026-11-16</span>
+      </div>
+      
+      <div class="tweet-orig">
+        A new era of software is upon us. Personalized, fully owned, open source. And higher quality than what it replaces. https://t.co/r2HlwWWvvl
+        <a href="https://x.com/rauchg/status/2122396034186014919" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Rauch 认为软件用户正从人变成 agent，产品流程要从用户访谈转向跑 eval，并让 eval 驱动工程迭代。他给出的自持智能路线是：开放 SDK、用 Gateway 掌握模型选择、自己掌控 traces 和数据并强制 ZDR、用私有推理托管模型。他还判断，个性化、完全自有、开源的软件会以更高质量取代旧方案。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>如果客户产品的真实用户开始包含 agent，咨询项目中的需求调研与用户旅程设计必须转为 eval 设计与数据治理，否则交付物在 Agent 场景下不可验证。顾问能力结构要从访谈和流程设计转向模型网关、trace 管理与私有推理架构判断，这直接影响咨询交付是按人天计价还是沉淀为可复用的评测资产。</p>
+      </div>
+      <div class="engage">❤ 3933 &nbsp;↻ 142 &nbsp;💬 141</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Levie 认为企业人均 token 消耗还看不到天花板，当前仍处采用曲线早期</h2>
+      <div class="byline">
+        Aaron Levie
+        <span class="handle">@levie</span>
+        <span class="ts">2026-11-17</span>
+      </div>
+      
+      <div class="tweet-orig">
+        The chart of token spend per employee still has no ceiling in sight. And the closer you are to AI right now the deeper the sense is that we’re actually still in the early part of t…
+        <a href="https://x.com/levie/status/2122508098351038532" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Levie 认为企业人均 token 消耗还看不到天花板，当前仍处采用曲线早期。过去一年 coding 从“基本不可用”变得真正可用，计算机操作和工具调用随之打开更多知识工作场景。接下来 agent swarm 和后台 agent 会在财务、生命科学、网络安全等流程中并行跑任务，token 消耗只会继续上升。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>这条判断对咨询业的关键含义是：知识工作的交付单位会从“人天”转向“token+agent 工作流”，项目定价和人员金字塔都要重算。若 agent swarm 进入财务、生命科学和网络安全等流程，咨询公司的价值将更多落在流程重构、风险控制与结果验收，而非人力规模。</p>
+      </div>
+      <div class="engage">❤ 192 &nbsp;↻ 18 &nbsp;💬 57</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Garry Tan 正用 Rust 重写 GBrain 的后端引擎，准备替换掉 postgres+pgvector/pglite，用它统一承载向量检索、图检索、embedding、RAG 和 HNSW，几周内上线</h2>
+      <div class="byline">
+        Garry Tan
+        <span class="handle">@garrytan</span>
+        <span class="ts">2026-11-17</span>
+      </div>
+      
+      <div class="tweet-orig">
+        If you want individual employee brains rolling up into team brains and then a top level company brain, GBrain's Hosted option supports it out of the box 
+
+Memory works the way you …
+        <a href="https://x.com/garrytan/status/2122517681740124271" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Garry Tan 正用 Rust 重写 GBrain 的后端引擎，准备替换掉 postgres+pgvector/pglite，用它统一承载向量检索、图检索、embedding、RAG 和 HNSW，几周内上线。他把这套开发方式叫作软件工厂 Vorflux，自己先当第一个用户。另一条更实用：GBrain 托管版原生支持个人记忆汇总成团队记忆、再汇总成公司记忆，记忆的粒度已经细化到每个员工。竞争点从“能不能检索”变成“记忆归谁、怎么分层”。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>知识管理的价值单元正从机构级文档库下沉到个人记忆层，咨询公司若继续把统一知识库当作交付基础设施，合伙人判断人力调配时就缺少数据依据；需要重构的是记忆的归属与汇总规则，工具选型还在其次。</p>
+      </div>
+      <div class="engage">❤ 317 &nbsp;↻ 18 &nbsp;💬 51</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Nikunj 把 2026 年的 AI infra 竞争按季度切成了四段：Q1 是 vibe coding，Q2 是 harnesses，Q3 是 sandboxes，Q4 是 agentic CI，参与者多到他已经记不清</h2>
+      <div class="byline">
+        Nikunj Kothari
+        <span class="handle">@nikunj</span>
+        <span class="ts">2026-11-17</span>
+      </div>
+      
+      <div class="tweet-orig">
+        2026 infra wars in a nutshell..
+
+Vibe coding in Q1 
+Harnesses in Q2 
+Sandboxes in Q3 
+Agentic CI in Q4
+
+More providers than I can keep track of. 
+
+Any guesses for what comes next?
+        <a href="https://x.com/nikunj/status/2122543500814336281" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Nikunj 把 2026 年的 AI infra 竞争按季度切成了四段：Q1 是 vibe coding，Q2 是 harnesses，Q3 是 sandboxes，Q4 是 agentic CI，参与者多到他已经记不清。他的判断是，基础设施层会先经历一轮剧烈出清，整个互联网会在这一轮中“烧掉重来”，之后才会出现更强的形态，并对所有 infra 公司表达了 Hugops（同情与支持）。对 builder 的直接含义是：今年的产品窗口按季度轮换，卡在错误的层上就会被下一波覆盖。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>Agentic CI 与 sandbox 成为独立采购层，意味着客户 AI 项目的成败评估要从模型选型转向运行时治理与验证链路；咨询公司的交付方法论若不重构测试与审计环节，将难以支撑生产级部署。基础设施供应商的高淘汰率也要求项目设计默认具备跨供应商可迁移性。</p>
+      </div>
+      <div class="engage">❤ 109 &nbsp;↻ 0 &nbsp;💬 59</div>
+    </div></div>
+<div class="grid-3-row2">
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Peter Steinberger 吐槽 macOS 的权限弹窗正在拖住 agent：用户希望减少提醒、让 agents 少被人工看管，Apple 的回应却是更多吓人的新弹窗</h2>
+      <div class="byline">
+        Peter Steinberger
+        <span class="handle">@steipete</span>
+        <span class="ts">2026-11-16</span>
+      </div>
+      
+      <div class="tweet-orig">
+        People: Please reduce the number of permission alerts so agents can work on macOS without constant babysitting
+
+Apple: I hear you, here’s some new scary alerts https://t.co/Saw8ftc…
+        <a href="https://x.com/steipete/status/2122463466304971068" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Peter Steinberger 吐槽 macOS 的权限弹窗正在拖住 agent：用户希望减少提醒、让 agents 少被人工看管，Apple 的回应却是更多吓人的新弹窗。桌面端 agent 的落地摩擦不在模型，而在操作系统权限与安全提示的设计。对做 macOS 自动化或 agent 产品的人，这意味着权限流程要当成核心产品体验来打磨。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>桌面代理的落地瓶颈已从模型能力转向终端权限治理；咨询公司做内部 agent 和客户自动化项目时，若只改流程不接管 OS 权限、审计与异常处理，交付会卡在最后一公里。这类摩擦会迫使咨询方法论把 IT 安全治理纳入 agent 方案设计，而不是停留在工具选型。</p>
+      </div>
+      <div class="engage">❤ 1089 &nbsp;↻ 42 &nbsp;💬 143</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">Dan Shipper 提出一个反常识的排序思路：AI 时代的信息流不该按点击或点赞排，而该按「工作量证明」（proof of work）来排序，也就是让 agent 上报自己基于某篇内容消耗了多少 token，消耗越多说明这篇内容越值得被调用</h2>
+      <div class="byline">
+        Dan Shipper
+        <span class="handle">@danshipper</span>
+        <span class="ts">2026-11-17</span>
+      </div>
+      
+      <div class="tweet-orig">
+        musing:
+
+what if the best way to rank a feed in the AI age is proof of work. 
+
+allow agents to report how many tokens they’ve used based on a piece of content, and use that to rank…
+        <a href="https://x.com/danshipper/status/2122541401804054826" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>Dan Shipper 提出一个反常识的排序思路：AI 时代的信息流不该按点击或点赞排，而该按「工作量证明」（proof of work）来排序，也就是让 agent 上报自己基于某篇内容消耗了多少 token，消耗越多说明这篇内容越值得被调用。这样筛出来的 feed 可以同时服务人类和 agent 两类读者。对做内容产品的人来说，价值信号从「人看了多久」变成「机器花多少算力去消化」，排序所依据的衡量标准也得重做。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>如果 agent 的 token 消耗成为内容排序信号，知识型交付物的价值衡量标准就会从阅读量、引用次数转向被调用与被推理的深度；咨询公司内部知识库和交付物的质量评估标准、以及给客户衡量「知识资产 ROI」的方式，都需要按这个标准重建。</p>
+      </div>
+      <div class="engage">❤ 13 &nbsp;↻ 0 &nbsp;💬 14</div>
+    </div>
+    <div class="gcol">
+      <div class="art-kicker">AI 动态 · X Signal</div>
+      <h2 class="art-hed sm">他领投了印度半导体公司 Bharat Semi 的 2400 万美元种子轮，判断 hardtech 的关键是把 AI 尽可能嵌到离硅片最近的地方，并称印度造芯片从「不可能」变成正在被验证的事</h2>
+      <div class="byline">
+        Aditya Agarwal
+        <span class="handle">@adityaag</span>
+        <span class="ts">2026-11-16</span>
+      </div>
+      
+      <div class="tweet-orig">
+        Two thoughts:
+1/ Embedding AI as close to the silicon as possible will be critical for a lot of hardtech.
+2/ We can build semi-conductors in India. People said it wasn’t possible. …
+        <a href="https://x.com/adityaag/status/2122386958101959118" target="_blank">↗ 查看原推</a>
+      </div>
+      <div class="sumbox lime">
+        <div class="lbl">中文摘要</div>
+        <p>他领投了印度半导体公司 Bharat Semi 的 2400 万美元种子轮，判断 hardtech 的关键是把 AI 尽可能嵌到离硅片最近的地方，并称印度造芯片从「不可能」变成正在被验证的事。另一条里他提到，做可解释性研究的起点是先让方法本身足够可靠，如今终于能把它用到前沿模型上，这件事必须做对。</p>
+      </div>
+      
+      <div class="sumbox" style="border-left:3px solid var(--orange);background:var(--white);margin-top:8px;">
+        <div class="lbl" style="color:var(--orange);">🧭 顾问有话说</div>
+        <p>客户 AI 战略的重心正从模型选型下沉到算力与芯片供应链，咨询交付若只停留在应用层方案设计，会失去对成本与交付周期的解释权，需要补上软硬协同的工程判断力。印度半导体产能若成形，本地化交付与政企项目将构成新的竞争场，早建立当地工程团队的公司会拿到议价空间。</p>
+      </div>
+      <div class="engage">❤ 81 &nbsp;↻ 5 &nbsp;💬 4</div>
+    </div></div>
+
+</div><!-- /panel-global -->
+
+<!-- Tab 面板：播客专题 -->
+<div class="tab-panel page" id="panel-podcast">
+  
+  <div class="feature-wrap">
+    <div class="feature-hero">
+      <div class="feat-kicker">播客 · Podcast</div>
+      <h2 class="feat-hed">斯坦福如何教出AI原生工程师</h2>
+      <p class="feat-deck" style="margin-bottom:4px;">Latent Space</p>
+      <p style="font-size:11px;color:var(--ink4);font-style:italic;">[One Million AI Engineer Special] How Stanford Teaches AI-Native Engineering — Mihail Eric, Monaco</p>
+    </div>
+    <div class="feature-body-grid">
+      <div class="feat-main">
+        <p class="feat-body drop">Latent Space 这期百万订阅特辑请来 Mihail Eric：他在 Stanford 教 CS 146/146S《Modern Software Developer》，同时是 Monaco 的 Head of AI。这个组合说明，AI 原生开发已经从零散博客经验变成能同时进入课程和大规模代码库实践的方法论。听众可以直接用这门课的框架检查自己的日常工作流，而不是继续追着每个新工具跑。</p><p style="margin:10px 0;">课程从 2024 年 11 月启动，准备约九到十个月，2025 年秋季第一次开课，现在第二次更新。更新原因很具体：autonomous coding agents 的能力变化太快。上一版更像是对 SDLC 各环节 coding agent 的巡览，覆盖代码审查、spec 设计、SRE 等场景；这一版把重心转向更稳定的原则：context engineering、用 design/architecture 处理复杂任务。对工程师的直接含义是，把上下文供给、架构拆分和任务边界做成可复用流程，比收集工具清单更能提高产出。</p><p style="margin:10px 0;">这门课不是初学者编程入门，也不替代 algorithms 等传统 CS 基础，反而把这些课当 prereq。Mihail 在 Monaco 和大量公司看到的是 massive code base 场景，所以课程目标是把已有基础转成 production 环境里的交付能力。对工程师来说，CS 基本功仍是底座，但只会写题不够，要把 AI agent 放进真实代码库、评审流程和系统设计里练。</p><p style="margin:10px 0;">面对学生“还要不要学 CS、Claude Code 和 Codex 是否就够了”的焦虑，他的判断是 well-trained AI-native engineer 仍会是公司最有用的资产之一。别把 AI 原生工程师当标签，它要求你能定义问题、控制上下文、审查 agent 输出，并对架构负责；只会调用模型的人不会因为工具变强而自动增值。对在校生和转岗者，最实用的动作是做一个带真实约束的项目：大代码库、明确评审标准、可回滚的 agent 工作流。</p>
+        <div class="feat-meta">
+          <a href="https://www.youtube.com/@LatentSpacePod" target="_blank">↗ 查看原视频</a>
+        </div>
+      </div>
+      <div class="feat-sidebar">
+        <div class="kp-header">核心要点</div>
+        
+      <div class="kp">
+        <div class="kp-n">1</div>
+        <div class="kp-t">Latent Space 这期百万订阅特辑请来 Mihail Eric：他在 Stanford 教 CS 146/146S《Modern Software Developer》，同时是 Monaco 的 Head of AI。</div>
+      </div>
+      <div class="kp">
+        <div class="kp-n">2</div>
+        <div class="kp-t">这个组合说明，AI 原生开发已经从零散博客经验变成能同时进入课程和大规模代码库实践的方法论。</div>
+      </div>
+      <div class="kp">
+        <div class="kp-n">3</div>
+        <div class="kp-t">听众可以直接用这门课的框架检查自己的日常工作流，而不是继续追着每个新工具跑。</div>
+      </div>
+      <div class="kp">
+        <div class="kp-n">4</div>
+        <div class="kp-t">课程从 2024 年 11 月启动，准备约九到十个月，2025 年秋季第一次开课，现在第二次更新。</div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-motto"><em>AI Signal</em> · Builder 动态 · 每日精选</div>
+  <div class="footer-note">
+    数据来源：X 公开推文 &amp; 播客转录 &nbsp;·&nbsp; AI 辅助摘要 &nbsp;·&nbsp; 观点归属原作者<br>
+    生成日期 2026-11-17 &nbsp;·&nbsp; 第 193 期
+  </div>
+</footer>
+
+<!-- ══ Tab 切换 JS ══ -->
+<script>
+(function () {
+  var nav = document.getElementById('main-nav');
+  if (!nav) return;
+  var tabs = Array.prototype.slice.call(nav.querySelectorAll('a[data-tab]'));
+
+  function activateTab(tabId) {
+    tabs.forEach(function(t) {
+      t.classList.toggle('active', t.getAttribute('data-tab') === tabId);
+    });
+    var panels = document.querySelectorAll('.tab-panel');
+    panels.forEach(function(p) {
+      p.classList.toggle('active', p.id === 'panel-' + tabId);
+    });
+    try { sessionStorage.setItem('activeTab', tabId); } catch(e) {}
+  }
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      activateTab(tab.getAttribute('data-tab'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  var saved;
+  try { saved = sessionStorage.getItem('activeTab'); } catch(e) {}
+  var firstTab = tabs.length ? tabs[0].getAttribute('data-tab') : null;
+  activateTab(saved && document.getElementById('panel-' + saved) ? saved : firstTab);
+})();
+</script>
+
+</body>
+</html>
